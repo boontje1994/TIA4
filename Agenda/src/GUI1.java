@@ -22,7 +22,7 @@ public class GUI1
 	private String podium;
 	private String startTime;
 	private String endTime;
-	private int index;
+	private int index = 1;
 	private inputFrame frame2;
 	private JComboBox test;
 	public static void main(String args[])
@@ -107,7 +107,7 @@ public class GUI1
 			public void actionPerformed(ActionEvent e)
 			{
 				removeData();
-				index = 0;
+				index = 1;
 			}
 		});
 		
@@ -129,7 +129,7 @@ public class GUI1
 //				table.setValueAt(endTime, index, 4);
 				frame2.setType(false);
 				frame2.Visible(true);
-				index++;
+//				index++;
 //				pop.showConfirmDialog(null, "123","Test",JOptionPane.YES_NO_CANCEL_OPTION );
 			}
 		});
@@ -229,6 +229,11 @@ public class GUI1
 	public int getIndex()
 	{
 		return index;
+	}
+	
+	public void setIndex(int index)
+	{
+		this.index = index;
 	}
 	
 	public void setData()

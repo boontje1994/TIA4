@@ -109,22 +109,32 @@ public class inputFrame
 //				setPodium(podium1.getText());
 //				setStartTime(startTime1.getText());
 //				setEndTime(endTime1.getText());
-				setArtist(artist3.getSelectedItem().toString());
-				setPopularity(popularity3.getSelectedItem().toString());
-				setPodium(podium3.getSelectedItem().toString());
-				setStartTime(startTime3.getSelectedItem().toString());
-				setEndTime(endTime3.getSelectedItem().toString());
-				frame.setVisible(false);
-				gui.setInfo();
-				if(type ==true)
+				if(artist3.getSelectedItem() == null || popularity3.getSelectedItem() == null || podium3.getSelectedItem() == null||
+				startTime3.getSelectedItem() == null || endTime3.getSelectedItem() == null)
 				{
-					gui.setRow(gui.table.getSelectedRow());
+					JOptionPane error = new JOptionPane();
+					error.showConfirmDialog(null,"Een of meer velden is niet ingevuld","Error",JOptionPane.ERROR_MESSAGE);
 				}
-				if(type==false)
+				else
 				{
-					gui.setRow2();
+					setArtist(artist3.getSelectedItem().toString());
+					setPopularity(popularity3.getSelectedItem().toString());
+					setPodium(podium3.getSelectedItem().toString());
+					setStartTime(startTime3.getSelectedItem().toString());
+					setEndTime(endTime3.getSelectedItem().toString());
+					frame.setVisible(false);
+					gui.setInfo();
+					if(type ==true)
+					{
+						gui.setRow(gui.table.getSelectedRow());
+					}
+					if(type==false)
+					{
+						gui.setRow2();
+						gui.setIndex(gui.getIndex() + 1);
+					}
+					clearFields2();
 				}
-				clearFields2();
 //				clearFields();
 				
 			}
@@ -263,11 +273,11 @@ public class inputFrame
 			if (endTime3.getSelectedItem() != endTime3.getItemAt(i))
 				endTime3.addItem(endTime3.getSelectedItem());
 		}
-		artist3.setSelectedItem("");
-		popularity3.setSelectedItem("");
-		podium3.setSelectedItem("");
-		startTime3.setSelectedItem("");
-		endTime3.setSelectedItem("");
+		artist3.setSelectedItem(null);
+		popularity3.setSelectedItem(null);
+		podium3.setSelectedItem(null);
+		startTime3.setSelectedItem(null);
+		endTime3.setSelectedItem(null);
 	}
 	
 	public void clearFields3()
