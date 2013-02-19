@@ -13,6 +13,7 @@ public class inputFrame
 	private String startTime;
 	private String endTime;
 	public JButton button;
+	public JButton cancel;
 	private JTextField artist1;
 	private JTextField popularity1;
 	private JTextField podium1;
@@ -126,6 +127,17 @@ public class inputFrame
 				clearFields2();
 //				clearFields();
 				
+			}
+		});
+		
+		cancel = new JButton("Annuleren");
+		pane.add(cancel);
+		cancel.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				clearFields3();
+				frame.setVisible(false);
 			}
 		});
 		
@@ -251,7 +263,15 @@ public class inputFrame
 			if (endTime3.getSelectedItem() != endTime3.getItemAt(i))
 				endTime3.addItem(endTime3.getSelectedItem());
 		}
-		
+		artist3.setSelectedItem("");
+		popularity3.setSelectedItem("");
+		podium3.setSelectedItem("");
+		startTime3.setSelectedItem("");
+		endTime3.setSelectedItem("");
+	}
+	
+	public void clearFields3()
+	{
 		artist3.setSelectedItem("");
 		popularity3.setSelectedItem("");
 		podium3.setSelectedItem("");
