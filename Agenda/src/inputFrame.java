@@ -246,6 +246,11 @@ public class inputFrame
 			while (i < artist3.getItemCount())
 			{
 				if (artist3.getSelectedItem().equals(artist3.getItemAt(i)))
+				{
+					check = false;
+					break;
+				}
+				if (check)
 					artist3.addItem(artist3.getSelectedItem());
 			}
 			
@@ -254,6 +259,11 @@ public class inputFrame
 			while (i < popularity3.getItemCount())
 			{
 				if (popularity3.getSelectedItem().equals(popularity3.getItemAt(i)))
+				{
+					check = false;
+					break;
+				}
+				if (check)
 					popularity3.addItem(popularity3.getSelectedItem());
 			}
 			
@@ -262,6 +272,11 @@ public class inputFrame
 			while (i < podium3.getItemCount())
 			{
 				if (podium3.getSelectedItem().equals(podium3.getItemAt(i)))
+				{
+					check = false;
+					break;
+				}
+				if (check)
 					podium3.addItem(podium3.getSelectedItem());
 			}
 			
@@ -270,6 +285,11 @@ public class inputFrame
 			while (i < startTime3.getItemCount())
 			{
 				if (startTime3.getSelectedItem().equals(startTime3.getItemAt(i)))
+				{
+					check = false;
+					break;
+				}
+				if (check)
 					startTime3.addItem(startTime3.getSelectedItem());
 			}
 			
@@ -278,6 +298,11 @@ public class inputFrame
 			while (i < endTime3.getItemCount())
 			{
 				if (endTime3.getSelectedItem().equals(endTime3.getItemAt(i)))
+				{
+					check = false;
+					break;
+				}
+				if (check)
 					endTime3.addItem(endTime3.getSelectedItem());
 			}
 		}
