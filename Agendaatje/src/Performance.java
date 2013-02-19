@@ -9,12 +9,12 @@ public abstract class Performance
 		
 	}
 	
-	public void setAct(String newAct)
+	public void setPerformance(String newAct)
 	{
 		act = newAct;
 	}
 	
-	public String getAct()
+	public String getPerformance()
 	{
 		return act;
 	}
