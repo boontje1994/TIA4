@@ -39,9 +39,10 @@ public class GUI1
 	
 	public void makeFrame()
 	{
-		frame = new JFrame();
+		frame = new JFrame("Agenda");
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setSize(800,600);
+		frame.setResizable(false);
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -69,12 +70,12 @@ public class GUI1
 		
 		table = new JTable(20,5);
 		pane.add(table, BorderLayout.CENTER);
-		table.setValueAt("                Artiest",0,0);
-		table.setValueAt("               Populariteit",0,1);
-		table.setValueAt("                 Podium", 0, 2);
-		table.setValueAt("                Start Tijd",0,3);
-		table.setValueAt("                Eind Tijd",0,4);
-		table.setEnabled(false);
+		table.setValueAt("Artiest",0,0);
+		table.setValueAt("Populariteit",0,1);
+		table.setValueAt("Podium", 0, 2);
+		table.setValueAt("Start Tijd",0,3);
+		table.setValueAt("Eind Tijd",0,4);
+//		table.setEnabled(false);
 
 		
 //		button1 = new JButton("Set Data");
@@ -188,7 +189,7 @@ public class GUI1
 		
 		pop = new JOptionPane();
 		
-		
+		frame.pack();
 		frame.setVisible(true);
 	}
 	
