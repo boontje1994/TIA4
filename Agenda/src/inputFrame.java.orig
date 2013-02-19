@@ -109,32 +109,22 @@ public class inputFrame
 //				setPodium(podium1.getText());
 //				setStartTime(startTime1.getText());
 //				setEndTime(endTime1.getText());
-				if(artist3.getSelectedItem() == null || popularity3.getSelectedItem() == null || podium3.getSelectedItem() == null||
-				startTime3.getSelectedItem() == null || endTime3.getSelectedItem() == null)
+				setArtist(artist3.getSelectedItem().toString());
+				setPopularity(popularity3.getSelectedItem().toString());
+				setPodium(podium3.getSelectedItem().toString());
+				setStartTime(startTime3.getSelectedItem().toString());
+				setEndTime(endTime3.getSelectedItem().toString());
+				frame.setVisible(false);
+				gui.setInfo();
+				if(type ==true)
 				{
-					JOptionPane error = new JOptionPane();
-					error.showConfirmDialog(null,"Een of meer velden is niet ingevuld","Error",JOptionPane.ERROR_MESSAGE);
+					gui.setRow(gui.table.getSelectedRow());
 				}
-				else
+				if(type==false)
 				{
-					setArtist(artist3.getSelectedItem().toString());
-					setPopularity(popularity3.getSelectedItem().toString());
-					setPodium(podium3.getSelectedItem().toString());
-					setStartTime(startTime3.getSelectedItem().toString());
-					setEndTime(endTime3.getSelectedItem().toString());
-					frame.setVisible(false);
-					gui.setInfo();
-					if(type ==true)
-					{
-						gui.setRow(gui.table.getSelectedRow());
-					}
-					if(type==false)
-					{
-						gui.setRow2();
-						gui.setIndex(gui.getIndex() + 1);
-					}
-					clearFields2();
+					gui.setRow2();
 				}
+				clearFields2();
 //				clearFields();
 				
 			}
@@ -239,61 +229,53 @@ public class inputFrame
 	
 	public void clearFields2()
 	{
-		if (artist3.getItemCount() > 0)
+<<<<<<< HEAD
+		artist3.addItem(artist3.getSelectedItem());
+		popularity3.addItem(popularity3.getSelectedItem());
+		podium3.addItem(podium3.getSelectedItem());
+		startTime3.addItem(startTime3.getSelectedItem());
+		endTime3.addItem(endTime3.getSelectedItem());
+=======
+		int i = 0;
+		while (i < artist3.getItemCount())
 		{
-			int i = 0;
-			boolean check = true;
-			while (i < artist3.getItemCount())
-			{
-				if (artist3.getSelectedItem().equals(artist3.getItemAt(i)))
-					artist3.addItem(artist3.getSelectedItem());
-			}
-			
-			i = 0;
-			check = true;
-			while (i < popularity3.getItemCount())
-			{
-				if (popularity3.getSelectedItem().equals(popularity3.getItemAt(i)))
-					popularity3.addItem(popularity3.getSelectedItem());
-			}
-			
-			i = 0;
-			check = true;
-			while (i < podium3.getItemCount())
-			{
-				if (podium3.getSelectedItem().equals(podium3.getItemAt(i)))
-					podium3.addItem(podium3.getSelectedItem());
-			}
-			
-			i = 0;
-			check = true;
-			while (i < startTime3.getItemCount())
-			{
-				if (startTime3.getSelectedItem().equals(startTime3.getItemAt(i)))
-					startTime3.addItem(startTime3.getSelectedItem());
-			}
-			
-			i = 0;
-			check = true;
-			while (i < endTime3.getItemCount())
-			{
-				if (endTime3.getSelectedItem().equals(endTime3.getItemAt(i)))
-					endTime3.addItem(endTime3.getSelectedItem());
-			}
+			if (artist3.getSelectedItem() != artist3.getItemAt(i))
+				artist3.addItem(artist3.getSelectedItem());
 		}
-		else
+		
+		i = 0;
+		while (i < popularity3.getItemCount())
 		{
-			popularity3.addItem(popularity3.getSelectedItem());
-			podium3.addItem(podium3.getSelectedItem());
-			startTime3.addItem(startTime3.getSelectedItem());
-			artist3.addItem(artist3.getSelectedItem());
-			endTime3.addItem(endTime3.getSelectedItem());
+			if (popularity3.getSelectedItem() != popularity3.getItemAt(i))
+				popularity3.addItem(popularity3.getSelectedItem());
 		}
-		artist3.setSelectedItem(null);
-		popularity3.setSelectedItem(null);
-		podium3.setSelectedItem(null);
-		startTime3.setSelectedItem(null);
-		endTime3.setSelectedItem(null);
+		
+		i = 0;
+		while (i < podium3.getItemCount())
+		{
+			if (podium3.getSelectedItem() != podium3.getItemAt(i))
+				podium3.addItem(podium3.getSelectedItem());
+		}
+		
+		i = 0;
+		while (i < startTime3.getItemCount())
+		{
+			if (startTime3.getSelectedItem() != startTime3.getItemAt(i))
+				startTime3.addItem(startTime3.getSelectedItem());
+		}
+		
+		i = 0;
+		while (i < endTime3.getItemCount())
+		{
+			if (endTime3.getSelectedItem() != endTime3.getItemAt(i))
+				endTime3.addItem(endTime3.getSelectedItem());
+		}
+>>>>>>> 123567aed4231e3351676816edcddc561b28491f
+		artist3.setSelectedItem("");
+		popularity3.setSelectedItem("");
+		podium3.setSelectedItem("");
+		startTime3.setSelectedItem("");
+		endTime3.setSelectedItem("");
 	}
 	
 	public void clearFields3()
