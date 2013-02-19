@@ -74,6 +74,7 @@ public class GUI1
 		table.setValueAt("                 Podium", 0, 2);
 		table.setValueAt("                Start Tijd",0,3);
 		table.setValueAt("                Eind Tijd",0,4);
+		table.setEnabled(false);
 
 		
 //		button1 = new JButton("Set Data");
