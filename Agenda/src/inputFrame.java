@@ -229,11 +229,40 @@ public class inputFrame
 	
 	public void clearFields2()
 	{
-		artist3.addItem(artist3.getSelectedItem());
-		popularity3.addItem(popularity3.getSelectedItem());
-		podium3.addItem(podium3.getSelectedItem());
-		startTime3.addItem(startTime3.getSelectedItem());
-		endTime3.addItem(endTime3.getSelectedItem());
+		int i = 0;
+		while (i < artist3.getItemCount())
+		{
+			if (artist3.getSelectedItem() != artist3.getItemAt(i))
+				artist3.addItem(artist3.getSelectedItem());
+		}
+		
+		i = 0;
+		while (i < popularity3.getItemCount())
+		{
+			if (popularity3.getSelectedItem() != popularity3.getItemAt(i))
+				popularity3.addItem(popularity3.getSelectedItem());
+		}
+		
+		i = 0;
+		while (i < podium3.getItemCount())
+		{
+			if (podium3.getSelectedItem() != podium3.getItemAt(i))
+				podium3.addItem(podium3.getSelectedItem());
+		}
+		
+		i = 0;
+		while (i < startTime3.getItemCount())
+		{
+			if (startTime3.getSelectedItem() != startTime3.getItemAt(i))
+				startTime3.addItem(startTime3.getSelectedItem());
+		}
+		
+		i = 0;
+		while (i < endTime3.getItemCount())
+		{
+			if (endTime3.getSelectedItem() != endTime3.getItemAt(i))
+				endTime3.addItem(endTime3.getSelectedItem());
+		}
 		artist3.setSelectedItem("");
 		popularity3.setSelectedItem("");
 		podium3.setSelectedItem("");
