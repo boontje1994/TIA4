@@ -30,10 +30,18 @@ public class IOWrite {
 			
  
 			br = new BufferedReader(new FileReader(fileName));
- 
+			boolean firstLine = true;
 			while ((sCurrentLine = br.readLine()) != null) {
 				//System.out.println(sCurrentLine);
+				if (firstLine)
+				{
+					if (sCurrentLine.equals(""))
+					{
+						
+					}
+				}
 				file += sCurrentLine + "\n";
+				firstLine = false;
 			}
 			
 			

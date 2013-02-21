@@ -382,7 +382,7 @@ public class GUI1
 	
 	public void writeFile()
 	{
-		String dataStream = "Stages;\n";
+		String dataStream = "AGENDAFILE\nStages;\n";
 		for (Stage item : stages)
 		{
 			dataStream += item.getName() + ";\n";
@@ -411,10 +411,14 @@ public class GUI1
 	{
 		IOWrite reader = new IOWrite();
 		String dataStream = reader.read(fileName);
-		String[] dataChunks = dataStream.split("Acts;");
-		for (String chunk : dataChunks)
+		if (!dataStream.equals(""))
 		{
-			System.out.println(chunk + "\n");
+			String[] dataChunks = dataStream.split("Acts;");
+		}
+		else
+		{
+			System.out.println("File doesn't match expectations, aborting");
+			fileName = null;
 		}
 	}
 }
