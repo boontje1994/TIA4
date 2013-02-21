@@ -151,15 +151,15 @@ public class AgendaFrame
 		datas.add(new Act("Paul", 1, "Ergens", "8:45", "17:00"));
 	}
 	
-	public void addList2()
-	{
-		addList(datas.get(0).getArtiest());
-		addList("" + datas.get(0).getPopulariteit());
-		addList(datas.get(0).getStage());
-		addList(datas.get(0).getStartTijd());
-		addList(datas.get(0).getEindTijd());
-	}
-	
+//	public void addList2()
+//	{
+//		addList(datas.get(0).getArtiest());
+//		addList("" + datas.get(0).getPopulariteit());
+//		addList(datas.get(0).getStage());
+//		addList(datas.get(0).getStartTijd());
+//		addList(datas.get(0).getEindTijd());
+//	}
+//	
 	public void addList(String data)
 	{
 		JLabel knop = new JLabel(data);
@@ -170,3 +170,4 @@ public class AgendaFrame
 	
 
 }
+//
