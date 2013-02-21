@@ -35,13 +35,13 @@ public class IOWrite {
 				//System.out.println(sCurrentLine);
 				if (firstLine)
 				{
-					if (sCurrentLine.equals(""))
+					if (!sCurrentLine.equals("AGENDAFILE"))
 					{
-						
+						break;
 					}
+					firstLine = false;
 				}
 				file += sCurrentLine + "\n";
-				firstLine = false;
 			}
 			
 			

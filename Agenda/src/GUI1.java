@@ -380,6 +380,15 @@ public class GUI1
 		table.setValueAt(endTime,index,4);
 	}
 	
+	public void setRowSane(int index2, String artist, String popu, String podium, String start, String end)
+	{
+		table.setValueAt(artist,index2,0);
+		table.setValueAt(popu, index2, 1);
+		table.setValueAt(podium,index2,2);
+		table.setValueAt(start,index2,3);
+		table.setValueAt(end,index2,4);
+	}
+	
 	public void writeFile()
 	{
 		String dataStream = "AGENDAFILE\nStages;\n";
@@ -413,7 +422,29 @@ public class GUI1
 		String dataStream = reader.read(fileName);
 		if (!dataStream.equals(""))
 		{
+			removeData();
+			stages = new ArrayList<Stage>();
+			acts = new ArrayList<Act>();
 			String[] dataChunks = dataStream.split("Acts;");
+			String actData = dataChunks[0].split("AGENDAFILE")[1].split("Stages;")[1];
+			System.out.println(actData);
+			for (String item : actData.split("\n"))
+			{
+				System.out.println("adding stage " + item);
+				newStage(item);
+			}
+			System.out.println(dataChunks[1]);
+			for (String item : dataChunks[1].split("\n"))
+			{
+				if (item.contains(";"))
+				{
+					String[] actdata = item.split(";");
+					System.out.println("adding an act with artist " + actdata[0] + ", an endtime of " + actdata[1] + ", an popularity of " + actdata[2] + ", on the " + actdata[3] + " stage, ending on " + actdata[4]);
+					setRowSane(getIndex(), actdata[0], actdata[2], actdata[3], actdata[4], actdata[1]);
+					setIndex(getIndex() + 1);
+					addAct(actdata[0], Integer.parseInt(actdata[2]), actdata[3], actdata[4], actdata[1]);
+				}
+			}
 		}
 		else
 		{
