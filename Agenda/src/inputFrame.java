@@ -252,6 +252,7 @@ public class inputFrame
 				}
 				if (check)
 					artist3.addItem(artist3.getSelectedItem());
+				i++;
 			}
 			
 			i = 0;
@@ -265,6 +266,7 @@ public class inputFrame
 				}
 				if (check)
 					popularity3.addItem(popularity3.getSelectedItem());
+				i++;
 			}
 			
 			i = 0;
@@ -278,6 +280,7 @@ public class inputFrame
 				}
 				if (check)
 					podium3.addItem(podium3.getSelectedItem());
+				i++;
 			}
 			
 			i = 0;
@@ -291,6 +294,7 @@ public class inputFrame
 				}
 				if (check)
 					startTime3.addItem(startTime3.getSelectedItem());
+				i++;
 			}
 			
 			i = 0;
@@ -304,6 +308,7 @@ public class inputFrame
 				}
 				if (check)
 					endTime3.addItem(endTime3.getSelectedItem());
+				i++;
 			}
 		}
 		else
