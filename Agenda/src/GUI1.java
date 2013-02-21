@@ -27,6 +27,8 @@ public class GUI1
 	private inputFrame frame2;
 	private JComboBox test;
 	private ArrayList<Stage> Stage;
+	private String fileName;
+	
 	public static void main(String args[])
 	{
 		new GUI1();
@@ -64,20 +66,32 @@ public class GUI1
 		}
 		
 		JMenuBar menu = new JMenuBar();
-		JMenu m1 = new JMenu("file");
-		JMenuItem mi1 = new JMenuItem("Open");
-		JMenuItem mi2 = new JMenuItem("Save");
-		JMenuItem mi3 = new JMenuItem("Close");
+		JMenu m1 = new JMenu("Bestand");
+		JMenuItem mi1 = new JMenuItem("Open Bestand");
+		JMenuItem mi2 = new JMenuItem("Opslaan");
+		JMenuItem mi3 = new JMenuItem("Opslaan Als");
+		JMenuItem mi4 = new JMenuItem("Close");
 		mi1.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
+				JFileChooser chooser = new JFileChooser();
+			    int returnVal = chooser.showOpenDialog(frame);
+			    if(returnVal == JFileChooser.APPROVE_OPTION)
+			    {
+			       fileName = chooser.getSelectedFile().getAbsolutePath();
+			       readFile();
+			    }
+//			    if(returnVal == JFileChooser.CANCEL_OPTION)
+//			    {
+//			    	
+//			    }
 			}
 		});
 		m1.add(mi1);
 		m1.add(mi2);
 		m1.add(mi3);
+		m1.add(mi4);
 		menu.add(m1);
 		frame.setJMenuBar(menu);
 		pane = new JPanel();
@@ -334,12 +348,15 @@ public class GUI1
 	
 	public void writeFile()
 	{
-		//TODO fill stub
+		String dataStream = "";
+		IOWrite writer = new IOWrite();
+		writer.write(dataStream, fileName);
 	}
 	
 	public void readFile()
 	{
-		//TODO fill stub
+		IOWrite reader = new IOWrite();
+		String dataStream = reader.read(fileName);
 	}
 }
 
