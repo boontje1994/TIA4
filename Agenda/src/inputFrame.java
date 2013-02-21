@@ -292,7 +292,10 @@ public class inputFrame
 					break;
 				}
 				if (check)
+				{
 					podium3.addItem(podium3.getSelectedItem());
+					gui.newStage(podium3.getSelectedItem().toString());
+				}
 				i++;
 			}
 
