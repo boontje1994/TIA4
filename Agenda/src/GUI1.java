@@ -63,6 +63,23 @@ public class GUI1
 			e1.printStackTrace();
 		}
 		
+		JMenuBar menu = new JMenuBar();
+		JMenu m1 = new JMenu("file");
+		JMenuItem mi1 = new JMenuItem("Open");
+		JMenuItem mi2 = new JMenuItem("Save");
+		JMenuItem mi3 = new JMenuItem("Close");
+		mi1.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				
+			}
+		});
+		m1.add(mi1);
+		m1.add(mi2);
+		m1.add(mi3);
+		menu.add(m1);
+		frame.setJMenuBar(menu);
 		pane = new JPanel();
 		frame.add(pane);
 		pane.setLayout(new BorderLayout());
@@ -313,6 +330,16 @@ public class GUI1
 		table.setValueAt(podium,index,2);
 		table.setValueAt(startTime,index,3);
 		table.setValueAt(endTime,index,4);
+	}
+	
+	public void writeFile()
+	{
+		//TODO fill stub
+	}
+	
+	public void readFile()
+	{
+		//TODO fill stub
 	}
 }
 

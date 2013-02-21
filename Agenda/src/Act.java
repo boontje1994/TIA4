@@ -1,6 +1,3 @@
-
-
-
 public class Act 
 {
 	private String artist;
