@@ -387,3 +387,4 @@ public class inputFrame
 	}
 	
 }
+//conflict info
