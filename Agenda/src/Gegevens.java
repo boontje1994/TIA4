@@ -1,15 +1,14 @@
 
-
-
-public class Gegevens 
+public class Gegevens
 {
 	private String artiest;
 	private int populariteit;
 	private String Stage;
 	private String startTijd;
 	private String eindTijd;
-	
-	public Gegevens(String artist, int pop, String stage, String starttijd, String eindtijd)
+
+	public Gegevens(String artist, int pop, String stage, String starttijd,
+			String eindtijd)
 	{
 		artiest = artist;
 		populariteit = pop;
@@ -17,56 +16,55 @@ public class Gegevens
 		startTijd = starttijd;
 		eindTijd = eindtijd;
 	}
-	
-	public String getArtiest() 
+
+	public String getArtiest()
 	{
 		return artiest;
 	}
-	
-	public void setArtiest(String artiest) 
+
+	public void setArtiest(String artiest)
 	{
 		this.artiest = artiest;
 	}
-	
-	public int getPopulariteit() 
+
+	public int getPopulariteit()
 	{
 		return populariteit;
 	}
-	
-	public void setPopulariteit(int populariteit) 
+
+	public void setPopulariteit(int populariteit)
 	{
 		this.populariteit = populariteit;
 	}
 
-	public String getStage() 
+	public String getStage()
 	{
 		return Stage;
 	}
 
-	public void setStage(String stage) 
+	public void setStage(String stage)
 	{
 		Stage = stage;
 	}
 
-	public String getStartTijd() 
+	public String getStartTijd()
 	{
 		return startTijd;
 	}
 
-	public void setStartTijd(String startTijd) 
+	public void setStartTijd(String startTijd)
 	{
 		this.startTijd = startTijd;
 	}
 
-	public String getEindTijd() 
+	public String getEindTijd()
 	{
 		return eindTijd;
 	}
 
-	public void setEindTijd(String eindTijd) 
+	public void setEindTijd(String eindTijd)
 	{
 		this.eindTijd = eindTijd;
 	}
-	
-	
+
 }
