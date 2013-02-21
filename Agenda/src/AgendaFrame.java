@@ -135,7 +135,7 @@ public class AgendaFrame
 		texts.add(Etijd);
 
 		texts.setVisible(true);
-
+		frame.pack();
 		frame.setVisible(true);
 
 	}

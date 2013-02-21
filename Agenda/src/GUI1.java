@@ -1,8 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class GUI1
 {
@@ -68,6 +71,8 @@ public class GUI1
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		Dimension buttonSize = new Dimension(230, 50);
 
 		pane = new JPanel(new BorderLayout(25, 25));
 		frame.add(pane);	
@@ -79,19 +84,45 @@ public class GUI1
 		JPanel buttons2a = new JPanel(new BorderLayout(25, 25));
 		buttons2 = new JPanel(new GridLayout(3, 1, 25, 25));
 		buttons2a.add(buttons2, BorderLayout.WEST);
-				
-		JPanel tablea = new JPanel(new BorderLayout(25, 25));
-		table = new JTable(12, 5);
+		
+		JPanel tablea = new JPanel(new BorderLayout());
+		table = new JTable(80, 5);
+		Dimension tableDimension = new Dimension(800, 600);
+		table.setPreferredSize(tableDimension);
+		table.setRowHeight(table.getRowHeight(0)*2);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setFont(new Font("Consolas", Font.PLAIN, 11));
 		JScrollPane scrollpane = new JScrollPane(table);
-		table.setValueAt("Artiest", 0, 0);
-		table.setValueAt("Populariteit", 0, 1);
-		table.setValueAt("Podium", 0, 2);
-		table.setValueAt("Start Tijd", 0, 3);
-		table.setValueAt("Eind Tijd", 0, 4);
-		// table.setEnabled(false);
+		
+		JTableHeader th0 = table.getTableHeader();
+		TableColumnModel tcm0 = th0.getColumnModel();
+		TableColumn tc0 = tcm0.getColumn(0);
+		tc0.setHeaderValue("Artiest");
+		th0.repaint();
+		JTableHeader th1 = table.getTableHeader();
+		TableColumnModel tcm1 = th1.getColumnModel();
+		TableColumn tc1 = tcm1.getColumn(1);
+		tc1.setHeaderValue("Populariteit");
+		th1.repaint();
+		JTableHeader th2 = table.getTableHeader();
+		TableColumnModel tcm2 = th2.getColumnModel();
+		TableColumn tc2 = tcm2.getColumn(2);
+		tc2.setHeaderValue("Podium");
+		th2.repaint();
+		JTableHeader th3 = table.getTableHeader();
+		TableColumnModel tcm3 = th3.getColumnModel();
+		TableColumn tc3 = tcm3.getColumn(3);
+		tc3.setHeaderValue("Begintijd");
+		th3.repaint();
+		JTableHeader th4 = table.getTableHeader();
+		TableColumnModel tcm4 = th4.getColumnModel();
+		TableColumn tc4 = tcm4.getColumn(4);
+		tc4.setHeaderValue("Eindtijd");
+		th4.repaint();
+		
+		table.getTableHeader().setFont(new Font("Consolas", Font.BOLD, 11));
 		table.setGridColor(Color.LIGHT_GRAY);
-		tablea.add(scrollpane, BorderLayout.CENTER);
-		tablea.add(table, BorderLayout.CENTER);
+		tablea.add(scrollpane);
 		
 		JPanel top = new JPanel(new BorderLayout(25, 25));
 		
@@ -107,8 +138,14 @@ public class GUI1
 		// }
 		// });
 		
-		button2 = new JButton("Simulator");
+		
+		Icon simulatorIcon = new ImageIcon("btn_simulator.png");
+		button2 = new JButton(simulatorIcon);	
+		button2.setPreferredSize(buttonSize);
+		button2.setFocusPainted(false);
+		button2.setBorderPainted(false);
 		buttons2.add(button2);
+		button2.setContentAreaFilled(false);
 		button2.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -118,7 +155,12 @@ public class GUI1
 
 		});
 
-		button3 = new JButton("Verwijder alles");
+		Icon removeAllIcon = new ImageIcon("btn_removeall.png");
+		button3 = new JButton(removeAllIcon);		
+		button3.setPreferredSize(buttonSize);
+		button3.setContentAreaFilled(false);
+		button3.setBorderPainted(false);
+		button3.setFocusPainted(false);
 		buttons2.add(button3);
 		button3.addActionListener(new ActionListener()
 		{
@@ -128,32 +170,42 @@ public class GUI1
 				index = 1;
 			}
 		});
-
-		button4 = new JButton("Voeg Data toe");
+		
+		Icon addIcon = new ImageIcon("btn_add.png");
+		button4 = new JButton(addIcon);
+		button4.setPreferredSize(buttonSize);
+		button4.setContentAreaFilled(false);
+		button4.setFocusPainted(false);
+		button4.setBorderPainted(false);
 		buttons1.add(button4);
 		button4.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				artist = pop.showInputDialog(null, "Artiest");
-				popu = pop.showInputDialog(null, "Populariteit");
-				podium = pop.showInputDialog(null, "Podium");
-				startTime = pop.showInputDialog(null, "Start Tijd:");
-				endTime =pop.showInputDialog(null, "Eind Tijd: ");
-				table.setValueAt(artist,index,0);
-				table.setValueAt(popu,index,1);
-				table.setValueAt(podium,index,2);
-				table.setValueAt(startTime,index,3);
-				table.setValueAt(endTime, index, 4);
+				//artist = pop.showInputDialog(null, "Artiest");
+				//popu = pop.showInputDialog(null, "Populariteit");
+				//podium = pop.showInputDialog(null, "Podium");
+				//startTime = pop.showInputDialog(null, "Start Tijd:");
+				//endTime =pop.showInputDialog(null, "Eind Tijd: ");
+				//table.setValueAt(artist,index,0);
+				//table.setValueAt(popu,index,1);
+				//table.setValueAt(podium,index,2);
+				//table.setValueAt(startTime,index,3);
+				//table.setValueAt(endTime, index, 4);
 				frame2.setType(false);
 				frame2.Visible(true);
-				index++;
+				//index++;
 				// pop.showConfirmDialog(null,
 				// "123","Test",JOptionPane.YES_NO_CANCEL_OPTION );
 			}
 		});
 
-		button5 = new JButton("Verwijder Data");
+		Icon removeIcon = new ImageIcon("btn_remove.png");
+		button5 = new JButton(removeIcon);		
+		button5.setPreferredSize(buttonSize);
+		button5.setContentAreaFilled(false);
+		button5.setBorderPainted(false);
+		button5.setFocusPainted(false);
 		buttons1.add(button5);
 		button5.addActionListener(new ActionListener()
 		{
@@ -167,7 +219,12 @@ public class GUI1
 			}
 		});
 
-		button6 = new JButton("Wijzig Data");
+		Icon editIcon = new ImageIcon("btn_edit.png");
+		button6 = new JButton(editIcon);		
+		button6.setPreferredSize(buttonSize);
+		button6.setContentAreaFilled(false);
+		button6.setBorderPainted(false);
+		button6.setFocusPainted(false);
 		buttons1.add(button6);
 		button6.addActionListener(new ActionListener()
 		{
@@ -204,7 +261,7 @@ public class GUI1
 		
 		pane.add(buttons1a, BorderLayout.WEST);
 		pane.add(buttons2a, BorderLayout.EAST);
-		pane.add(table, BorderLayout.CENTER);
+		pane.add(tablea, BorderLayout.CENTER);
 		pane.add(bottom, BorderLayout.NORTH);
 		pane.add(top, BorderLayout.SOUTH);
 

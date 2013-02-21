@@ -52,10 +52,12 @@ public class inputFrame
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(300, 300);
 
-		pane = new JPanel();
-		frame.add(pane);
+		pane = new JPanel();		
 		pane.setLayout(new GridLayout(0, 2));
-
+		
+		JPanel top = new JPanel(new BorderLayout(25, 25));
+		JPanel bottom = new JPanel(new BorderLayout(25, 25));
+		
 		// artist1 = new JTextField(10);
 		artist3 = new JComboBox();
 		artist3.setSelectedItem("");
@@ -153,7 +155,12 @@ public class inputFrame
 			}
 		});
 		
+		frame.add(top, BorderLayout.NORTH);
+		frame.add(bottom, BorderLayout.SOUTH);
+		frame.add(pane, BorderLayout.CENTER);
+		
 		frame.setLocationRelativeTo(null);
+		frame.pack();
 
 	}
 
