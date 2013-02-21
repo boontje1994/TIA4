@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +26,7 @@ public class GUI1
 	private int index = 1;
 	private inputFrame frame2;
 	private JComboBox test;
+	private ArrayList<Stage> Stage;
 	public static void main(String args[])
 	{
 		new GUI1();
@@ -35,6 +37,7 @@ public class GUI1
 		makeFrame();
 		frame2 = new inputFrame();
 		frame2.getGui(this);
+		Stage = new ArrayList<Stage>();
 	}
 	
 	public void makeFrame()
@@ -200,6 +203,21 @@ public class GUI1
 		podium = frame2.getPodium();
 		startTime = frame2.getStartTime();
 		endTime = frame2.getEndTime();
+	}
+	
+	public void newStage()
+	{
+		Stage.add(new Stage());
+	}
+	
+	public void setAct(int index,String artist,int pop,String stage,String startTime,String endTime)
+	{
+		Stage.get(index).setAct(artist, pop, stage, startTime, endTime);
+	}
+	
+	public int getStageNumberOfActs(int index)
+	{
+		return Stage.get(index).getActSize();
 	}
 	
 	public int getSRow()

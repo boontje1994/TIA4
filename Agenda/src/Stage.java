@@ -13,9 +13,14 @@ public class Stage
 		acts.add(new Act(artist, pop, stage, startTime, endTime));
 	}
 	
-	public Act setAct(int index)
+	public Act getAct(int index)
 	{
 		return acts.get(index);
+	}
+	
+	public int getActSize()
+	{
+		return acts.size();
 	}
 	
 }
