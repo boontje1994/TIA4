@@ -2,25 +2,15 @@ import java.util.*;
 
 public class Stage 
 {
-	private ArrayList<Act> acts;
-	public Stage()
+	private String name;
+	public Stage(String name)
 	{
-		acts = new ArrayList<Act>();
+		this.name = name;
 	}
 	
-	public void setAct(String artist,int pop,String stage,String startTime,String endTime)
+	public String getName()
 	{
-		acts.add(new Act(artist, pop, stage, startTime, endTime));
-	}
-	
-	public Act getAct(int index)
-	{
-		return acts.get(index);
-	}
-	
-	public int getActSize()
-	{
-		return acts.size();
+		return name;
 	}
 	
 }

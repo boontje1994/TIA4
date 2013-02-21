@@ -26,8 +26,9 @@ public class GUI1
 	private int index = 1;
 	private inputFrame frame2;
 	private JComboBox test;
-	private ArrayList<Stage> Stage;
+	private ArrayList<Stage> stages;
 	private String fileName;
+	private ArrayList<Act> acts;
 	
 	public static void main(String args[])
 	{
@@ -39,7 +40,8 @@ public class GUI1
 		makeFrame();
 		frame2 = new inputFrame();
 		frame2.getGui(this);
-		Stage = new ArrayList<Stage>();
+		stages = new ArrayList<Stage>();
+		acts = new ArrayList<Act>();
 	}
 	
 	public void makeFrame()
@@ -79,13 +81,39 @@ public class GUI1
 			    int returnVal = chooser.showOpenDialog(frame);
 			    if(returnVal == JFileChooser.APPROVE_OPTION)
 			    {
-			       fileName = chooser.getSelectedFile().getAbsolutePath();
+			    	try
+			    	{
+			    		fileName = chooser.getSelectedFile().getAbsolutePath();
+			    	} catch (Exception e1)
+			    	{
+			    		System.err.println("File does not exist!");
+			    	}
 			       readFile();
 			    }
 //			    if(returnVal == JFileChooser.CANCEL_OPTION)
 //			    {
 //			    	
 //			    }
+			}
+		});
+		mi2.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (fileName == null)
+				{
+					JFileChooser chooser = new JFileChooser();
+				    int returnVal = chooser.showOpenDialog(frame);
+				    if(returnVal == JFileChooser.APPROVE_OPTION)
+				    {
+				       fileName = chooser.getSelectedFile().getAbsolutePath();
+				    }
+//				    if(returnVal == JFileChooser.CANCEL_OPTION)
+//				    {
+//				    	
+//				    }
+				}
+				writeFile();
 			}
 		});
 		m1.add(mi1);
@@ -236,19 +264,25 @@ public class GUI1
 		endTime = frame2.getEndTime();
 	}
 	
-	public void newStage()
+	public void newStage(String name)
 	{
-		Stage.add(new Stage());
+		stages.add(new Stage(name));
 	}
 	
-	public void setAct(int index,String artist,int pop,String stage,String startTime,String endTime)
+	public void addAct(String artist,int pop,String stage,String startTime,String endTime)
 	{
-		Stage.get(index).setAct(artist, pop, stage, startTime, endTime);
+		acts.add(new Act(artist, pop, stage, startTime, endTime));
+	}
+	
+	public ArrayList<Stage> getStages()
+	{
+		return stages;
 	}
 	
 	public int getStageNumberOfActs(int index)
 	{
-		return Stage.get(index).getActSize();
+		return index;
+		//return Stages.get(index).getActSize();
 	}
 	
 	public int getSRow()
@@ -348,15 +382,40 @@ public class GUI1
 	
 	public void writeFile()
 	{
-		String dataStream = "";
+		String dataStream = "Stages;\n";
+		for (Stage item : stages)
+		{
+			dataStream += item.getName() + ";\n";
+		}
+		dataStream += "Acts;\n";
+		for (Act item : acts)
+		{
+			dataStream += item.getArtist()
+						+ ";"
+						+ item.getEndTime()
+						+ ";"
+						+ item.getPopularity()
+						+ ";"
+						+ item.getStage()
+						+ ";"
+						+ item.getStartTime()
+						+ ";"
+						+ "\n";
+		}
 		IOWrite writer = new IOWrite();
 		writer.write(dataStream, fileName);
+		System.out.println(dataStream);
 	}
 	
 	public void readFile()
 	{
 		IOWrite reader = new IOWrite();
 		String dataStream = reader.read(fileName);
+		String[] dataChunks = dataStream.split("Acts;");
+		for (String chunk : dataChunks)
+		{
+			System.out.println(chunk + "\n");
+		}
 	}
 }
 

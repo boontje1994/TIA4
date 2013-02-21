@@ -319,6 +319,8 @@ public class inputFrame
 			artist3.addItem(artist3.getSelectedItem());
 			endTime3.addItem(endTime3.getSelectedItem());
 		}
+		gui.addAct(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString());
+		//System.out.println(podium3.getSelectedItem().toString();
 		artist3.setSelectedItem(null);
 		popularity3.setSelectedItem(null);
 		podium3.setSelectedItem(null);
