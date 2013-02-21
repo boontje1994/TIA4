@@ -1,7 +1,7 @@
 
 
 
-public class Gegevens 
+public class Optreden 
 {
 	private String artiest;
 	private int populariteit;
@@ -9,7 +9,7 @@ public class Gegevens
 	private String startTijd;
 	private String eindTijd;
 	
-	public Gegevens(String artist, int pop, String stage, String starttijd, String eindtijd)
+	public Optreden(String artist, int pop, String stage, String starttijd, String eindtijd)
 	{
 		artiest = artist;
 		populariteit = pop;

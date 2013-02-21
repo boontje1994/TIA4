@@ -3,7 +3,7 @@ import java.util.*;
 
 public class AgendaData 
 {
-	private ArrayList<Gegevens> data;
+	private ArrayList<Optreden> data;
 	
 	public static void main(String[] args)
 	{
@@ -12,7 +12,7 @@ public class AgendaData
 	
 	public AgendaData()
 	{
-		data = new ArrayList<Gegevens>();
+		data = new ArrayList<Optreden>();
 	}
 	
 	public void getData()
@@ -22,7 +22,7 @@ public class AgendaData
 	
 	public void setData(String artist,int pop, String stage , String sTijd, String eTijd)
 	{
-		data.add(new Gegevens(artist,pop,stage,sTijd,eTijd));
+		data.add(new Optreden(artist,pop,stage,sTijd,eTijd));
 	}
 	
 	
