@@ -11,7 +11,7 @@ public class AgendaFrame
 	private JButton button;
 	private JPanel buttons;
 	private JPanel data;
-	private ArrayList<Optreden> datas;
+	private ArrayList<Act> datas;
 	private JPanel lijst;
 	private JPanel texts;
 	private JTextField artist;
@@ -27,7 +27,7 @@ public class AgendaFrame
 	
 	public AgendaFrame()
 	{
-		datas = new ArrayList<Optreden>();
+		datas = new ArrayList<Act>();
 		makeFrame();
 	}
 	
@@ -143,12 +143,12 @@ public class AgendaFrame
 	
 	public void addData(String artist, int pop, String stage, String sTijd, String eTijd)
 	{
-		datas.add(new Optreden(artist,pop,stage,sTijd,eTijd));
+		datas.add(new Act(artist,pop,stage,sTijd,eTijd));
 	}
 	
 	public void testData()
 	{
-		datas.add(new Optreden("Paul", 1, "Ergens", "8:45", "17:00"));
+		datas.add(new Act("Paul", 1, "Ergens", "8:45", "17:00"));
 	}
 	
 	public void addList2()
