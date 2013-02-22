@@ -419,7 +419,7 @@ public class GUI1
 	public void removeData()
 	{
 		int index1 = 0;
-		int index2 = 1;
+		int index2 = 0;
 		while (index1 < 5)
 		{
 			while (index2 < 10)
@@ -428,7 +428,7 @@ public class GUI1
 				index2++;
 			}
 			index1++;
-			index2 = 1;
+			index2 = 0;
 		}
 	}
 
