@@ -28,7 +28,7 @@ public class GUI1
 	private String podium;
 	private String startTime;
 	private String endTime;
-	private int index = 1;
+	private int index = 0;
 	private inputFrame frame2;
 	private JComboBox test;
 	private ArrayList<Stage> stages;
@@ -230,7 +230,7 @@ public class GUI1
 			public void actionPerformed(ActionEvent e)
 			{
 				removeData();
-				index = 1;
+				index = 0;
 			}
 		});
 		
