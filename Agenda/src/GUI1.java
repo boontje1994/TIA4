@@ -1,7 +1,10 @@
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
+import java.io.File;
+
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -88,6 +91,9 @@ public class GUI1
 			public void actionPerformed(ActionEvent e)
 			{
 				JFileChooser chooser = new JFileChooser();
+				chooser.setFileFilter(new XMLFilter());
+				chooser.setFileFilter(new JSONFilter());
+				chooser.setFileFilter(new CSVFilter());
 			    int returnVal = chooser.showOpenDialog(frame);
 			    if(returnVal == JFileChooser.APPROVE_OPTION)
 			    {
@@ -113,7 +119,10 @@ public class GUI1
 				if (fileName == null)
 				{
 					JFileChooser chooser = new JFileChooser();
-				    int returnVal = chooser.showOpenDialog(frame);
+					chooser.setFileFilter(new XMLFilter());
+					chooser.setFileFilter(new JSONFilter());
+					chooser.setFileFilter(new CSVFilter());
+				    int returnVal = chooser.showSaveDialog(frame);
 				    if(returnVal == JFileChooser.APPROVE_OPTION)
 				    {
 				       fileName = chooser.getSelectedFile().getAbsolutePath();
@@ -532,4 +541,55 @@ public class GUI1
 			fileName = null;
 		}
 	}
+}
+
+class CSVFilter extends FileFilter  
+{  
+	//Type of file that should be display in JFileChooser will be set here  
+	//We choose to display only directory and text file  
+	public boolean accept(File f)  
+	{
+		return f.isDirectory()||f.getName().toLowerCase().endsWith(".csv");
+	}  
+	 
+	//Set description for the type of file that should be display  
+	public String getDescription()  
+	{  
+		return ".csv files";  
+	}
+
+}
+
+class JSONFilter extends FileFilter  
+{  
+	//Type of file that should be display in JFileChooser will be set here  
+	//We choose to display only directory and text file  
+	public boolean accept(File f)  
+	{
+		return f.isDirectory()||f.getName().toLowerCase().endsWith(".json");
+	}  
+	 
+	//Set description for the type of file that should be display  
+	public String getDescription()  
+	{  
+		return ".json files";  
+	}
+
+}
+
+class XMLFilter extends FileFilter  
+{  
+	//Type of file that should be display in JFileChooser will be set here  
+	//We choose to display only directory and text file  
+	public boolean accept(File f)  
+	{
+		return f.isDirectory()||f.getName().toLowerCase().endsWith(".xml");
+	}  
+	 
+	//Set description for the type of file that should be display  
+	public String getDescription()  
+	{  
+		return ".xml files";  
+	}
+
 }
