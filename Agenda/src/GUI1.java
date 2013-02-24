@@ -502,6 +502,7 @@ public class GUI1
 			dataStream = genCSV();
 		else if (fileName.endsWith(".xml"))
 			dataStream = genXML();
+		//TODO make exception for unsupported extensions
 		IOWrite writer = new IOWrite();
 		writer.write(dataStream, fileName);
 		System.out.println(dataStream);
@@ -516,6 +517,10 @@ public class GUI1
 			removeData();
 			if (fileName.endsWith(".csv"))
 				parseCSV(dataStream);
+			else if (fileName.endsWith(".xml"))
+				parseXML(dataStream);
+			//else
+				//TODO make exception for other filetypes
 			
 		}
 		else
@@ -530,7 +535,7 @@ public class GUI1
 		stages = new ArrayList<Stage>();
 		acts = new ArrayList<Act>();
 		String[] dataChunks = buffer.split("Acts;");
-		String actData = dataChunks[0].split("AGENDAFILE")[1].split("Stages;")[1];
+		String actData = dataChunks[0].split("Stages;")[1];
 		System.out.println(actData);
 		for (String item : actData.split("\n"))
 		{
@@ -553,6 +558,7 @@ public class GUI1
 	
 	public String genCSV()
 	{
+		//this generates the CSV file used in the saving process
 		String dataStream = "AGENDAFILE\nStages;\n";
 		for (Stage item : stages)
 		{
@@ -576,6 +582,33 @@ public class GUI1
 		return dataStream;
 	}
 	
+
+	public void parseXML(String buffer)
+	{
+		//>not hardcoding parsers
+		//>losing performance by using libraries
+		//>2013
+		stages = new ArrayList<Stage>();
+		acts = new ArrayList<Act>();
+		String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0].split("</stages>");
+		for (String item : dataChunks[0].split("<stages>")[1].split("<stage>"))
+		{
+			if (item.contains("<name"))
+				newStage(item.split("<name>")[1].split("</")[0]);
+		}
+		for (String item : dataChunks[1].split("<acts>")[1].split("</acts>")[0].split("<act>"))
+		{
+			item = item.split("</act>")[0];
+			//
+			String[] lel = item.split("<artist>");
+			if (lel.length >= 2)
+			{
+				setRowSane(getIndex(), item.split("<artist>")[1].split("</")[0], item.split("<popularity>")[1].split("</")[0], item.split("<stage>")[1].split("</")[0], item.split("<stime>")[1].split("</")[0], item.split("<etime>")[1].split("</")[0]);
+				setIndex(getIndex() + 1);
+				addAct(item.split("<artist>")[1].split("</")[0], Integer.parseInt(item.split("<popularity>")[1].split("</")[0]), item.split("<stage>")[1].split("</")[0], item.split("<stime>")[1].split("</")[0], item.split("<etime>")[1].split("</")[0]);
+			}
+		}
+	}
 	
 	public String genXML()
 	{
@@ -604,14 +637,11 @@ public class GUI1
 
 class CSVFilter extends FileFilter  
 {  
-	//Type of file that should be display in JFileChooser will be set here  
-	//We choose to display only directory and text file  
 	public boolean accept(File f)  
 	{
 		return f.isDirectory()||f.getName().toLowerCase().endsWith(".csv");
 	}  
 	 
-	//Set description for the type of file that should be display  
 	public String getDescription()  
 	{  
 		return ".csv files";  
@@ -621,14 +651,11 @@ class CSVFilter extends FileFilter
 
 class XMLFilter extends FileFilter  
 {  
-	//Type of file that should be display in JFileChooser will be set here  
-	//We choose to display only directory and text file  
 	public boolean accept(File f)  
 	{
 		return f.isDirectory()||f.getName().toLowerCase().endsWith(".xml");
 	}  
 	 
-	//Set description for the type of file that should be display  
 	public String getDescription()  
 	{  
 		return ".xml files";  
