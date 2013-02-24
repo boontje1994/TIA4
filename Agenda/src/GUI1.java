@@ -91,8 +91,6 @@ public class GUI1
 			public void actionPerformed(ActionEvent e)
 			{
 				JFileChooser chooser = new JFileChooser();
-				chooser.setFileFilter(new XMLFilter());
-				chooser.setFileFilter(new JSONFilter());
 				chooser.setFileFilter(new CSVFilter());
 			    int returnVal = chooser.showOpenDialog(frame);
 			    if(returnVal == JFileChooser.APPROVE_OPTION)
@@ -119,8 +117,6 @@ public class GUI1
 				if (fileName == null)
 				{
 					JFileChooser chooser = new JFileChooser();
-					chooser.setFileFilter(new XMLFilter());
-					chooser.setFileFilter(new JSONFilter());
 					chooser.setFileFilter(new CSVFilter());
 				    int returnVal = chooser.showSaveDialog(frame);
 				    if(returnVal == JFileChooser.APPROVE_OPTION)
@@ -556,40 +552,6 @@ class CSVFilter extends FileFilter
 	public String getDescription()  
 	{  
 		return ".csv files";  
-	}
-
-}
-
-class JSONFilter extends FileFilter  
-{  
-	//Type of file that should be display in JFileChooser will be set here  
-	//We choose to display only directory and text file  
-	public boolean accept(File f)  
-	{
-		return f.isDirectory()||f.getName().toLowerCase().endsWith(".json");
-	}  
-	 
-	//Set description for the type of file that should be display  
-	public String getDescription()  
-	{  
-		return ".json files";  
-	}
-
-}
-
-class XMLFilter extends FileFilter  
-{  
-	//Type of file that should be display in JFileChooser will be set here  
-	//We choose to display only directory and text file  
-	public boolean accept(File f)  
-	{
-		return f.isDirectory()||f.getName().toLowerCase().endsWith(".xml");
-	}  
-	 
-	//Set description for the type of file that should be display  
-	public String getDescription()  
-	{  
-		return ".xml files";  
 	}
 
 }
