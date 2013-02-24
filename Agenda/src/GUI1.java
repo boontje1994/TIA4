@@ -92,6 +92,7 @@ public class GUI1
 			{
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileFilter(new CSVFilter());
+				chooser.setFileFilter(new XMLFilter());
 			    int returnVal = chooser.showOpenDialog(frame);
 			    if(returnVal == JFileChooser.APPROVE_OPTION)
 			    {
@@ -118,6 +119,7 @@ public class GUI1
 				{
 					JFileChooser chooser = new JFileChooser();
 					chooser.setFileFilter(new CSVFilter());
+					chooser.setFileFilter(new XMLFilter());
 				    int returnVal = chooser.showSaveDialog(frame);
 				    if(returnVal == JFileChooser.APPROVE_OPTION)
 				    {
@@ -129,6 +131,25 @@ public class GUI1
 //				    }
 				}
 				writeFile();
+			}
+		});
+		mi3.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileFilter(new CSVFilter());
+				chooser.setFileFilter(new XMLFilter());
+			    int returnVal = chooser.showSaveDialog(frame);
+			    if(returnVal == JFileChooser.APPROVE_OPTION)
+			    {
+			       fileName = chooser.getSelectedFile().getAbsolutePath();
+			    }
+//				    if(returnVal == JFileChooser.CANCEL_OPTION)
+//				    {
+//				    	
+//				    }
+			writeFile();
 			}
 		});
 		m1.add(mi1);
@@ -476,6 +497,62 @@ public class GUI1
 	
 	public void writeFile()
 	{
+		String dataStream = "";
+		if (fileName.endsWith(".csv"))
+			dataStream = genCSV();
+		else if (fileName.endsWith(".xml"))
+			dataStream = genXML();
+		IOWrite writer = new IOWrite();
+		writer.write(dataStream, fileName);
+		System.out.println(dataStream);
+	}
+	
+	public void readFile()
+	{
+		IOWrite reader = new IOWrite();
+		String dataStream = reader.read(fileName);
+		if (!dataStream.equals(""))
+		{
+			removeData();
+			if (fileName.endsWith(".csv"))
+				parseCSV(dataStream);
+			
+		}
+		else
+		{
+			System.out.println("File doesn't match expectations, aborting");
+			fileName = null;
+		}
+	}
+	
+	public void parseCSV(String buffer)
+	{
+		stages = new ArrayList<Stage>();
+		acts = new ArrayList<Act>();
+		String[] dataChunks = buffer.split("Acts;");
+		String actData = dataChunks[0].split("AGENDAFILE")[1].split("Stages;")[1];
+		System.out.println(actData);
+		for (String item : actData.split("\n"))
+		{
+			System.out.println("adding stage " + item);
+			newStage(item);
+		}
+		System.out.println(dataChunks[1]);
+		for (String item : dataChunks[1].split("\n"))
+		{
+			if (item.contains(";"))
+			{
+				String[] actdata = item.split(";");
+				System.out.println("adding an act with artist " + actdata[0] + ", an endtime of " + actdata[1] + ", an popularity of " + actdata[2] + ", on the " + actdata[3] + " stage, ending on " + actdata[4]);
+				setRowSane(getIndex(), actdata[0], actdata[2], actdata[3], actdata[4], actdata[1]);
+				setIndex(getIndex() + 1);
+				addAct(actdata[0], Integer.parseInt(actdata[2]), actdata[3], actdata[4], actdata[1]);
+			}
+		}
+	}
+	
+	public String genCSV()
+	{
 		String dataStream = "AGENDAFILE\nStages;\n";
 		for (Stage item : stages)
 		{
@@ -496,46 +573,32 @@ public class GUI1
 						+ ";"
 						+ "\n";
 		}
-		IOWrite writer = new IOWrite();
-		writer.write(dataStream, fileName);
-		System.out.println(dataStream);
+		return dataStream;
 	}
 	
-	public void readFile()
+	
+	public String genXML()
 	{
-		IOWrite reader = new IOWrite();
-		String dataStream = reader.read(fileName);
-		if (!dataStream.equals(""))
+		String dataStream = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<xml>";
+		dataStream += "\n\t<stages>";
+		for (Stage item : stages)
 		{
-			removeData();
-			stages = new ArrayList<Stage>();
-			acts = new ArrayList<Act>();
-			String[] dataChunks = dataStream.split("Acts;");
-			String actData = dataChunks[0].split("AGENDAFILE")[1].split("Stages;")[1];
-			System.out.println(actData);
-			for (String item : actData.split("\n"))
-			{
-				System.out.println("adding stage " + item);
-				newStage(item);
-			}
-			System.out.println(dataChunks[1]);
-			for (String item : dataChunks[1].split("\n"))
-			{
-				if (item.contains(";"))
-				{
-					String[] actdata = item.split(";");
-					System.out.println("adding an act with artist " + actdata[0] + ", an endtime of " + actdata[1] + ", an popularity of " + actdata[2] + ", on the " + actdata[3] + " stage, ending on " + actdata[4]);
-					setRowSane(getIndex(), actdata[0], actdata[2], actdata[3], actdata[4], actdata[1]);
-					setIndex(getIndex() + 1);
-					addAct(actdata[0], Integer.parseInt(actdata[2]), actdata[3], actdata[4], actdata[1]);
-				}
-			}
+			dataStream += "\n\t\t<stage>\n\t\t\t<name>" + item.getName() + "</name>\n\t\t</stage>";
 		}
-		else
+		dataStream += "\n\t</stages>";
+		dataStream += "\n\t<acts>";
+		for (Act item : acts)
 		{
-			System.out.println("File doesn't match expectations, aborting");
-			fileName = null;
+			dataStream += "\n\t\t<act>"
+						+ "\n\t\t\t<artist>" + item.getArtist() + "</artist>"
+						+ "\n\t\t\t<etime>" + item.getEndTime() + "</etime>"
+						+ "\n\t\t\t<popularity>" + item.getPopularity() + "</popularity>"
+						+ "\n\t\t\t<stage>" + item.getStage() + "</stage>"
+						+ "\n\t\t\t<stime>" + item.getStartTime() + "</stime>"
+						+ "\n\t\t</act>";
 		}
+		dataStream += "\n\t</acts>\n</xml>";
+		return dataStream;
 	}
 }
 
@@ -552,6 +615,23 @@ class CSVFilter extends FileFilter
 	public String getDescription()  
 	{  
 		return ".csv files";  
+	}
+
+}
+
+class XMLFilter extends FileFilter  
+{  
+	//Type of file that should be display in JFileChooser will be set here  
+	//We choose to display only directory and text file  
+	public boolean accept(File f)  
+	{
+		return f.isDirectory()||f.getName().toLowerCase().endsWith(".xml");
+	}  
+	 
+	//Set description for the type of file that should be display  
+	public String getDescription()  
+	{  
+		return ".xml files";  
 	}
 
 }
