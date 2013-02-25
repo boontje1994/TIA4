@@ -300,10 +300,10 @@ public class GUI1
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (table.getSelectedRow() != 0)
-				{
+				
+				
 					removeRow(table.getSelectedRow());
-				}
+				
 
 			}
 		});
