@@ -1,21 +1,32 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.regex.Pattern;
-
 import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class inputFrame
 {
 	private JFrame frame;
 	private JFrame frame2;
-	private JPanel pane;
 	private String artist;
 	private String popularity;
 	private String podium;
 	private String startTime;
 	private String endTime;
-	public JButton button;
-	public JButton cancel;
 	private JTextField artist1;
 	private JTextField popularity1;
 	private JTextField podium1;
@@ -26,13 +37,7 @@ public class inputFrame
 	private JComboBox podium3;
 	private JComboBox startTime3;
 	private JComboBox endTime3;
-	// private JPanel pane2;
-	// private JTextField artist2;
-	// private JTextField popularity2;
-	// private JTextField podium2;
-	// private JTextField startTime2;
-	// private JTextField endTime2;
-	// public JButton button2;
+
 	private boolean type;
 
 	private GUI1 gui;
@@ -45,7 +50,6 @@ public class inputFrame
 	public inputFrame()
 	{
 		makeFrame();
-		// makeFrame2();
 	}
 
 	public void makeFrame()
@@ -53,64 +57,68 @@ public class inputFrame
 		frame = new JFrame("Editor");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(300, 300);
-
-		pane = new JPanel();		
-		pane.setLayout(new GridLayout(0, 2));
+		
+		Dimension buttonSize = new Dimension(230, 50);
+		
+		JPanel mainPanel = new JPanel(new BorderLayout(25, 25));	
 		
 		JPanel top = new JPanel(new BorderLayout(25, 25));
-		JPanel bottom = new JPanel(new BorderLayout(25, 25));
+		JPanel bottom = new JPanel(new GridLayout(1, 2, 5, 5));
+		JPanel center = new JPanel(new GridLayout(5, 1, 5, 5));
 		
-		// artist1 = new JTextField(10);
 		artist3 = new JComboBox();
 		artist3.setSelectedItem("");
 		artist3.setEditable(true);
 		JLabel label1 = new JLabel("Artiest");
-		pane.add(label1);
-		pane.add(artist3);
+		label1.setFont(new Font("Consolas", Font.BOLD, 11));
+		center.add(label1);
+		center.add(artist3);
 
 		JLabel label2 = new JLabel("Populariteit");
-		// popularity1 = new JTextField(10);
 		popularity3 = new JComboBox();
 		popularity3.setSelectedItem("");
 		popularity3.setEditable(true);
-		pane.add(label2);
-		pane.add(popularity3);
+		label2.setFont(new Font("Consolas", Font.BOLD, 11));
+		center.add(label2);
+		center.add(popularity3);
 
 		JLabel label3 = new JLabel("Podium");
-		// podium1 = new JTextField(10);
 		podium3 = new JComboBox();
 		podium3.setSelectedItem("");
 		podium3.setEditable(true);
-		pane.add(label3);
-		pane.add(podium3);
+		label3.setFont(new Font("Consolas", Font.BOLD, 11));
+		center.add(label3);
+		center.add(podium3);
 
 		JLabel label4 = new JLabel("Start Tijd");
-		// startTime1 = new JTextField(10);
 		startTime3 = new JComboBox();
 		startTime3.setSelectedItem("");
 		startTime3.setEditable(true);
-		pane.add(label4);
-		pane.add(startTime3);
+		label4.setFont(new Font("Consolas", Font.BOLD, 11));
+		center.add(label4);
+		center.add(startTime3);
 
 		JLabel label5 = new JLabel("Eind Tijd");
-		// endTime1 = new JTextField(10);
 		endTime3 = new JComboBox();
 		endTime3.setSelectedItem("");
 		endTime3.setEditable(true);
-		pane.add(label5);
-		pane.add(endTime3);
+		label5.setFont(new Font("Consolas", Font.BOLD, 11));
+		center.add(label5);
+		center.add(endTime3);
 
-		button = new JButton("Save");
-		pane.add(button);
-		button.addActionListener(new ActionListener()
+		ImageIcon savea = new ImageIcon("btn_opslaan.png");		
+		Image imgb = savea.getImage();
+		Image newimgb = imgb.getScaledInstance(115, 25, java.awt.Image.SCALE_SMOOTH);
+		savea = new ImageIcon(newimgb);
+		JButton save = new JButton(savea);
+		save.setContentAreaFilled(false);
+		save.setFocusPainted(false);
+		save.setBorderPainted(false);
+		bottom.add(save);
+		save.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				// setArtist(artist1.getText());
-				// setPopularity(popularity1.getText());
-				// setPodium(podium1.getText());
-				// setStartTime(startTime1.getText());
-				// setEndTime(endTime1.getText());
 				if (artist3.getSelectedItem() == null
 						|| popularity3.getSelectedItem() == null
 						|| podium3.getSelectedItem() == null
@@ -118,9 +126,7 @@ public class inputFrame
 						|| endTime3.getSelectedItem() == null)
 				{
 					JOptionPane error = new JOptionPane();
-					error.showConfirmDialog(null,
-							"Een of meer velden is niet ingevuld", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					error.showConfirmDialog(null, "Een of meer velden is niet ingevuld", "Error", JOptionPane.ERROR_MESSAGE);
 				} else
 				{
 					if (!Pattern.matches("[a-zA-Z]+", popularity3.getSelectedItem().toString()))
@@ -144,13 +150,18 @@ public class inputFrame
 					}
 					clearFields2();
 				}
-				// clearFields();
-
 			}
 		});
-
-		cancel = new JButton("Annuleren");
-		pane.add(cancel);
+		
+		ImageIcon cancela = new ImageIcon("btn_annuleren.png");		
+		Image img = cancela.getImage();
+		Image newimg = img.getScaledInstance(115, 25, java.awt.Image.SCALE_SMOOTH);
+		cancela = new ImageIcon(newimg);
+		JButton cancel = new JButton(cancela);
+		cancel.setContentAreaFilled(false);
+		cancel.setFocusPainted(false);
+		cancel.setBorderPainted(false);
+		bottom.add(cancel);
 		cancel.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -160,75 +171,15 @@ public class inputFrame
 			}
 		});
 		
-		frame.add(top, BorderLayout.NORTH);
-		frame.add(bottom, BorderLayout.SOUTH);
-		frame.add(pane, BorderLayout.CENTER);
+		mainPanel.add(top, BorderLayout.NORTH);
+		mainPanel.add(center, BorderLayout.CENTER);
+		mainPanel.add(bottom, BorderLayout.SOUTH);
 		
+		frame.add(mainPanel, BorderLayout.CENTER);
 		frame.setLocationRelativeTo(null);
 		frame.pack();
 
 	}
-
-	// public void makeFrame2()
-	// {
-	// frame2 = new JFrame();
-	// frame2.setDefaultCloseOperation(frame2.EXIT_ON_CLOSE);
-	// frame2.setSize(300,300);
-	//
-	// pane2 = new JPanel();
-	// frame.add(pane2);
-	// pane2.setLayout(new GridLayout(0,2));
-	//
-	// JLabel label6 = new JLabel("Artiest");
-	// artist2 = new JTextField(10);
-	// pane2.add(label6);
-	// pane2.add(artist2);
-	//
-	// JLabel label7 = new JLabel("Populariteit");
-	// popularity2 = new JTextField(10);
-	// pane2.add(label7);
-	// pane2.add(popularity2);
-	//
-	// JLabel label8 = new JLabel("Podium");
-	// podium2 = new JTextField(10);
-	// pane2.add(label8);
-	// pane2.add(podium2);
-	//
-	// JLabel label9 = new JLabel("Start Tijd");
-	// startTime2 = new JTextField(10);
-	// pane2.add(label9);
-	// pane2.add(startTime2);
-	//
-	// JLabel label10 = new JLabel("Eind Tijd");
-	// endTime2 = new JTextField(10);
-	// pane2.add(label10);
-	// pane2.add(endTime2);
-	//
-	// button2 = new JButton("Save");
-	// pane2.add(button2);
-	// button2.addActionListener(new ActionListener()
-	// {
-	// public void actionPerformed(ActionEvent e)
-	// {
-	// setArtist(artist2.getText());
-	// setPopularity(popularity2.getText());
-	// setPodium(podium2.getText());
-	// setStartTime(startTime2.getText());
-	// setEndTime(endTime2.getText());
-	// frame2.setVisible(false);
-	// gui.setInfo();
-	// if ( type ==true)
-	// {
-	// gui.setRow2();
-	// }
-	// if(type == false)
-	// {
-	// gui.setRow(gui.getIndex());
-	// }
-	// clearFields2();
-	// }
-	// });
-	// }
 
 	public String getEndTime()
 	{
@@ -361,6 +312,12 @@ public class inputFrame
 			endTime3.setSelectedItem(null);
 		}
 		//TODO add exception to notify user when NaN occurs
+		gui.addAct(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString());
+		artist3.setSelectedItem(null);
+		popularity3.setSelectedItem(null);
+		podium3.setSelectedItem(null);
+		startTime3.setSelectedItem(null);
+		endTime3.setSelectedItem(null);
 	}
 
 	public void clearFields3()
@@ -371,16 +328,7 @@ public class inputFrame
 		startTime3.setSelectedItem("");
 		endTime3.setSelectedItem("");
 	}
-
-	// public void clearFields2()
-	// {
-	// artist2.setText(null);
-	// popularity2.setText(null);
-	// podium2.setText(null);
-	// startTime2.setText(null);
-	// endTime2.setText(null);
-	// }
-
+	
 	public void setEndTime(String endTime)
 	{
 		this.endTime = endTime;
@@ -437,4 +385,3 @@ public class inputFrame
 	}
 
 }
-// conflict info
