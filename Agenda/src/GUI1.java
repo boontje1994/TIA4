@@ -528,7 +528,7 @@ public class GUI1
 			if (fileName.endsWith(".csv"))
 				parseCSV(dataStream);
 			else if (fileName.endsWith(".xml"))
-				parseXML(new File(fileName));
+				parseXML(dataStream);
 			//else				//TODO make exception for other filetypes
 			
 		}
@@ -592,46 +592,11 @@ public class GUI1
 	}
 	
 
-	public void parseXML(File file)
+	public void parseXML(String buffer)
 	{
-		
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = null;
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-			try {
-				Document doc = dBuilder.parse(file);
-				doc.getDocumentElement().normalize();
-				NodeList stageList = doc.getElementsByTagName("stages");
-				NodeList actList = doc.getElementsByTagName("act");
-				
-				for (int temp = 0; temp < actList.getLength(); temp++) {
-					 
-					Node act = actList.item(temp);
-					Element actElement = (Element) act;
-					System.out.println("\nCurrent Element :" + act.getNodeName());
-					System.out.println("Staff id : " + actElement.getAttribute("*"));
-					
-				}
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-		
-		
-		
 		stages = new ArrayList<Stage>();
 		acts = new ArrayList<Act>();
-		/*String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0].split("</stages>");
+		String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0].split("</stages>");
 		for (String item : dataChunks[0].split("<stages>")[1].split("<stage>"))
 		{
 			if (item.contains("<name"))
@@ -648,7 +613,7 @@ public class GUI1
 				setIndex(getIndex() + 1);
 				addAct(item.split("<artist>")[1].split("</")[0], Integer.parseInt(item.split("<popularity>")[1].split("</")[0]), item.split("<stage>")[1].split("</")[0], item.split("<stime>")[1].split("</")[0], item.split("<etime>")[1].split("</")[0]);
 			}
-		}*/
+		}
 	}
 	
 	public String genXML()
