@@ -63,6 +63,7 @@ public class inputFrame
 		artist3.setSelectedItem("");
 		artist3.setEditable(true);
 		JLabel label1 = new JLabel("Artiest");
+		label1.setFont(new Font("Consolas", Font.BOLD, 11));
 		pane.add(label1);
 		pane.add(artist3);
 
@@ -71,6 +72,7 @@ public class inputFrame
 		popularity3 = new JComboBox();
 		popularity3.setSelectedItem("");
 		popularity3.setEditable(true);
+		label2.setFont(new Font("Consolas", Font.BOLD, 11));
 		pane.add(label2);
 		pane.add(popularity3);
 
@@ -79,6 +81,7 @@ public class inputFrame
 		podium3 = new JComboBox();
 		podium3.setSelectedItem("");
 		podium3.setEditable(true);
+		label3.setFont(new Font("Consolas", Font.BOLD, 11));
 		pane.add(label3);
 		pane.add(podium3);
 
@@ -87,6 +90,7 @@ public class inputFrame
 		startTime3 = new JComboBox();
 		startTime3.setSelectedItem("");
 		startTime3.setEditable(true);
+		label4.setFont(new Font("Consolas", Font.BOLD, 11));
 		pane.add(label4);
 		pane.add(startTime3);
 
@@ -95,6 +99,7 @@ public class inputFrame
 		endTime3 = new JComboBox();
 		endTime3.setSelectedItem("");
 		endTime3.setEditable(true);
+		label5.setFont(new Font("Consolas", Font.BOLD, 11));
 		pane.add(label5);
 		pane.add(endTime3);
 

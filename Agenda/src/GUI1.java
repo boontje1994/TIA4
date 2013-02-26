@@ -16,7 +16,6 @@ public class GUI1
 	private JFrame frame;
 	private JPanel pane;
 	private JPanel buttons1;
-	private JPanel buttons2;
 	private JPanel top;
 	private JPanel bottom;
 	private JButton button2;
@@ -167,12 +166,11 @@ public class GUI1
 		frame.add(pane);	
 		
 		JPanel buttons1a = new JPanel(new BorderLayout(25, 25));
-		buttons1 = new JPanel(new GridLayout(3, 1, 25, 25));	
+		buttons1 = new JPanel(new GridLayout(5, 1, 0, 0));	
 		buttons1a.add(buttons1, BorderLayout.EAST);
 		
-		JPanel buttons2a = new JPanel(new BorderLayout(25, 25));
-		buttons2 = new JPanel(new GridLayout(3, 1, 25, 25));
-		buttons2a.add(buttons2, BorderLayout.WEST);
+		JPanel info = new JPanel(new BorderLayout(25, 25));
+		info = new JPanel(new GridLayout(3, 1, 25, 25));
 		
 		JPanel tablea = new JPanel(new BorderLayout());
 		table = new JTable(80, 5);
@@ -226,39 +224,7 @@ public class GUI1
 		// setData();
 		// }
 		// });
-		
-		
-		Icon simulatorIcon = new ImageIcon("btn_simulator.png");
-		button2 = new JButton(simulatorIcon);	
-		button2.setPreferredSize(buttonSize);
-		button2.setFocusPainted(false);
-		button2.setBorderPainted(false);
-		buttons2.add(button2);
-		button2.setContentAreaFilled(false);
-		button2.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//s = new Simulator();
-			}
 
-		});
-
-		Icon removeAllIcon = new ImageIcon("btn_removeall.png");
-		button3 = new JButton(removeAllIcon);		
-		button3.setPreferredSize(buttonSize);
-		button3.setContentAreaFilled(false);
-		button3.setBorderPainted(false);
-		button3.setFocusPainted(false);
-		buttons2.add(button3);
-		button3.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				removeData();
-				index = 0;
-			}
-		});
 		
 		Icon addIcon = new ImageIcon("btn_add.png");
 		button4 = new JButton(addIcon);
@@ -333,6 +299,38 @@ public class GUI1
 				// endTime = frame2.getEndTime();
 			}
 		});
+		
+		Icon removeAllIcon = new ImageIcon("btn_removeall.png");
+		button3 = new JButton(removeAllIcon);		
+		button3.setPreferredSize(buttonSize);
+		button3.setContentAreaFilled(false);
+		button3.setBorderPainted(false);
+		button3.setFocusPainted(false);
+		buttons1.add(button3);
+		button3.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				removeData();
+				index = 0;
+			}
+		});
+		
+		Icon simulatorIcon = new ImageIcon("btn_simulator.png");
+		button2 = new JButton(simulatorIcon);	
+		button2.setPreferredSize(buttonSize);
+		button2.setFocusPainted(false);
+		button2.setBorderPainted(false);
+		buttons1.add(button2);
+		button2.setContentAreaFilled(false);
+		button2.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				//s = new Simulator();
+			}
+
+		});
 
 		// test = new JComboBox();
 		// test.setEditable(true);
@@ -349,7 +347,7 @@ public class GUI1
 		// });
 		
 		pane.add(buttons1a, BorderLayout.WEST);
-		pane.add(buttons2a, BorderLayout.EAST);
+		pane.add(info, BorderLayout.EAST);
 		pane.add(tablea, BorderLayout.CENTER);
 		pane.add(bottom, BorderLayout.NORTH);
 		pane.add(top, BorderLayout.SOUTH);
