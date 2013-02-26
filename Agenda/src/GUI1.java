@@ -2,6 +2,7 @@ import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -10,6 +11,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class GUI1
 {
@@ -518,9 +528,8 @@ public class GUI1
 			if (fileName.endsWith(".csv"))
 				parseCSV(dataStream);
 			else if (fileName.endsWith(".xml"))
-				parseXML(dataStream);
-			//else
-				//TODO make exception for other filetypes
+				parseXML(new File(fileName));
+			//else				//TODO make exception for other filetypes
 			
 		}
 		else
@@ -583,14 +592,46 @@ public class GUI1
 	}
 	
 
-	public void parseXML(String buffer)
+	public void parseXML(File file)
 	{
-		//>not hardcoding parsers
-		//>losing performance by using libraries
-		//>2013
+		
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = null;
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+			try {
+				Document doc = dBuilder.parse(file);
+				doc.getDocumentElement().normalize();
+				NodeList stageList = doc.getElementsByTagName("stages");
+				NodeList actList = doc.getElementsByTagName("act");
+				
+				for (int temp = 0; temp < actList.getLength(); temp++) {
+					 
+					Node act = actList.item(temp);
+					Element actElement = (Element) act;
+					System.out.println("\nCurrent Element :" + act.getNodeName());
+					System.out.println("Staff id : " + actElement.getAttribute("*"));
+					
+				}
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (ParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
+		
+		
 		stages = new ArrayList<Stage>();
 		acts = new ArrayList<Act>();
-		String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0].split("</stages>");
+		/*String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0].split("</stages>");
 		for (String item : dataChunks[0].split("<stages>")[1].split("<stage>"))
 		{
 			if (item.contains("<name"))
@@ -607,7 +648,7 @@ public class GUI1
 				setIndex(getIndex() + 1);
 				addAct(item.split("<artist>")[1].split("</")[0], Integer.parseInt(item.split("<popularity>")[1].split("</")[0]), item.split("<stage>")[1].split("</")[0], item.split("<stime>")[1].split("</")[0], item.split("<etime>")[1].split("</")[0]);
 			}
-		}
+		}*/
 	}
 	
 	public String genXML()
