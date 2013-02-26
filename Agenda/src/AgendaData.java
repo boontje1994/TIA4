@@ -1,29 +1,28 @@
-
 import java.util.*;
 
-public class AgendaData 
+public class AgendaData
 {
-	private ArrayList<Gegevens> data;
+	private ArrayList<Act> data;
 	
 	public static void main(String[] args)
 	{
 		new AgendaData();
 	}
-	
+
 	public AgendaData()
 	{
-		data = new ArrayList<Gegevens>();
+		data = new ArrayList<Act>();
 	}
-	
+
 	public void getData()
 	{
-		
+
 	}
-	
-	public void setData(String artist,int pop, String stage , String sTijd, String eTijd)
+
+	public void setData(String artist, int pop, String stage, String sTijd,
+			String eTijd)
 	{
-		data.add(new Gegevens(artist,pop,stage,sTijd,eTijd));
+		data.add(new Act(artist,pop,stage,sTijd,eTijd));
 	}
-	
-	
+
 }
