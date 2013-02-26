@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Pattern;
+
 import javax.swing.*;
 
 public class inputFrame
@@ -121,11 +123,14 @@ public class inputFrame
 							JOptionPane.ERROR_MESSAGE);
 				} else
 				{
-					setArtist(artist3.getSelectedItem().toString());
-					setPopularity(popularity3.getSelectedItem().toString());
-					setPodium(podium3.getSelectedItem().toString());
-					setStartTime(startTime3.getSelectedItem().toString());
-					setEndTime(endTime3.getSelectedItem().toString());
+					if (!Pattern.matches("[a-zA-Z]+", popularity3.getSelectedItem().toString()))
+					{
+						setArtist(artist3.getSelectedItem().toString());
+						setPopularity(popularity3.getSelectedItem().toString());
+						setPodium(podium3.getSelectedItem().toString());
+						setStartTime(startTime3.getSelectedItem().toString());
+						setEndTime(endTime3.getSelectedItem().toString());
+					}
 					frame.setVisible(false);
 					gui.setInfo();
 					if (type == true)
@@ -251,97 +256,111 @@ public class inputFrame
 
 	public void clearFields2()
 	{
+		boolean numberOnly = false;
 		if (artist3.getItemCount() > 0)
 		{
-			int i = 0;
-			boolean check = true;
-			while (i < artist3.getItemCount())
+			if (!Pattern.matches("[a-zA-Z]+", popularity3.getSelectedItem().toString()))
 			{
-				if (artist3.getSelectedItem().equals(artist3.getItemAt(i)))
+				System.out.println(popularity3.getSelectedItem().toString());
+				int i = 0;
+				boolean check = true;
+				while (i < artist3.getItemCount())
 				{
-					check = false;
-					break;
+					if (artist3.getSelectedItem().equals(artist3.getItemAt(i)))
+					{
+						check = false;
+						break;
+					}
+					if (check)
+						artist3.addItem(artist3.getSelectedItem());
+					i++;
 				}
-				if (check)
-					artist3.addItem(artist3.getSelectedItem());
-				i++;
-			}
-
-			i = 0;
-			check = true;
-			while (i < popularity3.getItemCount())
-			{
-				if (popularity3.getSelectedItem().equals(
-						popularity3.getItemAt(i)))
+	
+				i = 0;
+				check = true;
+				while (i < popularity3.getItemCount())
 				{
-					check = false;
-					break;
+					if (popularity3.getSelectedItem().equals(
+							popularity3.getItemAt(i)))
+					{
+						check = false;
+						break;
+					}
+					if (check)
+						popularity3.addItem(popularity3.getSelectedItem());
+					i++;
 				}
-				if (check)
-					popularity3.addItem(popularity3.getSelectedItem());
-				i++;
-			}
-
-			i = 0;
-			check = true;
-			while (i < podium3.getItemCount())
-			{
-				if (podium3.getSelectedItem().equals(podium3.getItemAt(i)))
+	
+				i = 0;
+				check = true;
+				while (i < podium3.getItemCount())
 				{
-					check = false;
-					break;
+					if (podium3.getSelectedItem().equals(podium3.getItemAt(i)))
+					{
+						check = false;
+						break;
+					}
+					if (check)
+					{
+						podium3.addItem(podium3.getSelectedItem());
+						gui.newStage(podium3.getSelectedItem().toString());
+					}
+					i++;
 				}
-				if (check)
+	
+				i = 0;
+				check = true;
+				while (i < startTime3.getItemCount())
 				{
-					podium3.addItem(podium3.getSelectedItem());
-					gui.newStage(podium3.getSelectedItem().toString());
+					if (startTime3.getSelectedItem().equals(startTime3.getItemAt(i)))
+					{
+						check = false;
+						break;
+					}
+					if (check)
+						startTime3.addItem(startTime3.getSelectedItem());
+					i++;
 				}
-				i++;
-			}
-
-			i = 0;
-			check = true;
-			while (i < startTime3.getItemCount())
-			{
-				if (startTime3.getSelectedItem()
-						.equals(startTime3.getItemAt(i)))
+	
+				i = 0;
+				check = true;
+				while (i < endTime3.getItemCount())
 				{
-					check = false;
-					break;
+					if (endTime3.getSelectedItem().equals(endTime3.getItemAt(i)))
+					{
+						check = false;
+						break;
+					}
+					if (check)
+						endTime3.addItem(endTime3.getSelectedItem());
+					i++;
+					
+				numberOnly = true;
 				}
-				if (check)
-					startTime3.addItem(startTime3.getSelectedItem());
-				i++;
-			}
-
-			i = 0;
-			check = true;
-			while (i < endTime3.getItemCount())
-			{
-				if (endTime3.getSelectedItem().equals(endTime3.getItemAt(i)))
-				{
-					check = false;
-					break;
-				}
-				if (check)
-					endTime3.addItem(endTime3.getSelectedItem());
-				i++;
 			}
 		} else
 		{
-			popularity3.addItem(popularity3.getSelectedItem());
-			podium3.addItem(podium3.getSelectedItem());
-			startTime3.addItem(startTime3.getSelectedItem());
-			artist3.addItem(artist3.getSelectedItem());
-			endTime3.addItem(endTime3.getSelectedItem());
+			if (!Pattern.matches("[a-zA-Z]+", popularity3.getSelectedItem().toString()))
+			{
+				popularity3.addItem(popularity3.getSelectedItem());
+				podium3.addItem(podium3.getSelectedItem());
+				startTime3.addItem(startTime3.getSelectedItem());
+				artist3.addItem(artist3.getSelectedItem());
+				endTime3.addItem(endTime3.getSelectedItem());
+				numberOnly = true;
+			}
 		}
-		gui.addAct(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString());
-		//System.out.println(podium3.getSelectedItem().toString();
-		artist3.setSelectedItem(null);
-		popularity3.setSelectedItem(null);
-		podium3.setSelectedItem(null);
-		startTime3.setSelectedItem(null);
-		endTime3.setSelectedItem(null);
+		if (numberOnly)
+		{
+			gui.addAct(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString());
+			//System.out.println(podium3.getSelectedItem().toString();
+			artist3.setSelectedItem(null);
+			popularity3.setSelectedItem(null);
+			podium3.setSelectedItem(null);
+			startTime3.setSelectedItem(null);
+			endTime3.setSelectedItem(null);
+		}
+		//TODO add exception to notify user when NaN occurs
 	}
 
 	public void clearFields3()
