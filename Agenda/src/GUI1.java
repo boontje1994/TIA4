@@ -1,10 +1,29 @@
-import java.awt.*;
-import java.util.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -22,18 +41,7 @@ import org.xml.sax.SAXException;
 public class GUI1
 {
 	private JFrame frame;
-	private JPanel pane;
-	private JPanel buttons1;
-	private JPanel buttons2;
-	private JPanel top;
-	private JPanel bottom;
-	private JButton button2;
-	private JButton button3;
-	private JButton button4;
-	private JButton button5;
-	private JButton button6;
 	public JTable table;
-	private JOptionPane pop;
 	private String artist;
 	private String popu;
 	private String podium;
@@ -62,11 +70,15 @@ public class GUI1
 
 	public void makeFrame()
 	{
+		///INITIALIZE
 		frame = new JFrame("Agenda");
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		frame.setResizable(false);
+		//-----------------------------------------------------------------------------------//
 
+		
+		///LOOKANDFEEL
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -87,7 +99,10 @@ public class GUI1
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		//-----------------------------------------------------------------------------------//
 		
+		
+		///MENUBAR
 		JMenuBar menu = new JMenuBar();
 		JMenu m1 = new JMenu("Bestand");
 		JMenuItem mi1 = new JMenuItem("Open Bestand");
@@ -166,31 +181,48 @@ public class GUI1
 		m1.add(mi4);
 		menu.add(m1);
 		frame.setJMenuBar(menu);
-		pane = new JPanel();
+		//-----------------------------------------------------------------------------------//
+		
+		
+		///PANELS
+		
+		//mainPanel
+		JPanel pane = new JPanel(new BorderLayout(25, 25));
 		frame.add(pane);
-		pane.setLayout(new BorderLayout());
-		Dimension buttonSize = new Dimension(230, 50);
-
-		pane = new JPanel(new BorderLayout(25, 25));
-		frame.add(pane);	
 		
-		JPanel buttons1a = new JPanel(new BorderLayout(25, 25));
-		buttons1 = new JPanel(new GridLayout(3, 1, 25, 25));	
-		buttons1a.add(buttons1, BorderLayout.EAST);
+		//topPanel
+		JPanel topPanel = new JPanel(new BorderLayout());
+		JPanel top = new JPanel(new BorderLayout(25,25));
+		top.add(new JLabel(""), BorderLayout.NORTH);
+		topPanel.add(top, BorderLayout.SOUTH);	
 		
-		JPanel buttons2a = new JPanel(new BorderLayout(25, 25));
-		buttons2 = new JPanel(new GridLayout(3, 1, 25, 25));
-		buttons2a.add(buttons2, BorderLayout.WEST);
+		//leftPanel
+		JPanel leftPanel = new JPanel(new BorderLayout(25, 25));
+		JPanel buttons = new JPanel(new GridLayout(5, 1, 0, 0));	
+		leftPanel.add(buttons, BorderLayout.EAST);
 		
-		JPanel tablea = new JPanel(new BorderLayout());
-		table = new JTable(80, 5);
+		//rightPanel
+		JPanel rightPanel = new JPanel(new BorderLayout());
+		JPanel info = new JPanel(new BorderLayout(25, 25));
+		rightPanel.add(info, BorderLayout.CENTER);
+		
+		//centerPanel
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		
+		//bottomPanel
+		JPanel bottomPanel = new JPanel(new BorderLayout(25, 25));
+		
+		//scrollPanel
+		JScrollPane scrollpane = new JScrollPane(table);
+				
+		
+		///JTABLE
+		table = new JTable(20, 5);
 		Dimension tableDimension = new Dimension(800, 600);
 		table.setPreferredSize(tableDimension);
 		table.setRowHeight(table.getRowHeight(0)*2);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setFont(new Font("Consolas", Font.PLAIN, 11));
-		JScrollPane scrollpane = new JScrollPane(table);
-		
+		table.setFont(new Font("Consolas", Font.PLAIN, 11));		
 		JTableHeader th0 = table.getTableHeader();
 		TableColumnModel tcm0 = th0.getColumnModel();
 		TableColumn tc0 = tcm0.getColumn(0);
@@ -215,51 +247,76 @@ public class GUI1
 		TableColumnModel tcm4 = th4.getColumnModel();
 		TableColumn tc4 = tcm4.getColumn(4);
 		tc4.setHeaderValue("Eindtijd");
-		th4.repaint();
-		
+		th4.repaint();		
 		table.getTableHeader().setFont(new Font("Consolas", Font.BOLD, 11));
 		table.setGridColor(Color.LIGHT_GRAY);
-		tablea.add(scrollpane);
+		centerPanel.add(scrollpane);
+		//-----------------------------------------------------------------------------------//
 		
-		JPanel top = new JPanel(new BorderLayout(25, 25));
-		
-		JPanel bottom = new JPanel(new BorderLayout(25, 25));
 
-		// button1 = new JButton("Set Data");
-		// buttons1.add(button1);
-		// button1.addActionListener(new ActionListener()
-		// {
-		// public void actionPerformed(ActionEvent e)
-		// {
-		// setData();
-		// }
-		// });
+		///BUTTONS
 		
+		Dimension buttonSize = new Dimension(230, 50);
 		
-		Icon simulatorIcon = new ImageIcon("btn_simulator.png");
-		button2 = new JButton(simulatorIcon);	
-		button2.setPreferredSize(buttonSize);
-		button2.setFocusPainted(false);
-		button2.setBorderPainted(false);
-		buttons2.add(button2);
-		button2.setContentAreaFilled(false);
-		button2.addActionListener(new ActionListener()
+		//addAct
+		Icon addIcon = new ImageIcon("btn_add.png");
+		JButton addAct = new JButton(addIcon);
+		addAct.setPreferredSize(buttonSize);
+		addAct.setContentAreaFilled(false);
+		addAct.setFocusPainted(false);
+		addAct.setBorderPainted(false);
+		buttons.add(addAct);
+		addAct.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				//s = new Simulator();
+				frame2.setType(false);
+				frame2.Visible(true);
 			}
-
 		});
-
+		
+		//removeAct
+		Icon removeIcon = new ImageIcon("btn_remove.png");
+		JButton removeAct = new JButton(removeIcon);		
+		removeAct.setPreferredSize(buttonSize);
+		removeAct.setContentAreaFilled(false);
+		removeAct.setBorderPainted(false);
+		removeAct.setFocusPainted(false);
+		buttons.add(removeAct);
+		removeAct.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{	
+				removeRow(table.getSelectedRow());	
+			}
+		});
+		
+		//editAct
+		Icon editIcon = new ImageIcon("btn_edit.png");
+		JButton editAct = new JButton(editIcon);		
+		editAct.setPreferredSize(buttonSize);
+		editAct.setContentAreaFilled(false);
+		editAct.setBorderPainted(false);
+		editAct.setFocusPainted(false);
+		buttons.add(editAct);
+		editAct.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				frame2.setType(true);
+				frame2.Visible(true);
+			}
+		});
+		
+		//removeAct
 		Icon removeAllIcon = new ImageIcon("btn_removeall.png");
-		button3 = new JButton(removeAllIcon);		
-		button3.setPreferredSize(buttonSize);
-		button3.setContentAreaFilled(false);
-		button3.setBorderPainted(false);
-		button3.setFocusPainted(false);
-		buttons2.add(button3);
-		button3.addActionListener(new ActionListener()
+		JButton removeAll = new JButton(removeAllIcon);		
+		removeAll.setPreferredSize(buttonSize);
+		removeAll.setContentAreaFilled(false);
+		removeAll.setBorderPainted(false);
+		removeAll.setFocusPainted(false);
+		buttons.add(removeAll);
+		removeAll.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -268,104 +325,39 @@ public class GUI1
 			}
 		});
 		
-		Icon addIcon = new ImageIcon("btn_add.png");
-		button4 = new JButton(addIcon);
-		button4.setPreferredSize(buttonSize);
-		button4.setContentAreaFilled(false);
-		button4.setFocusPainted(false);
-		button4.setBorderPainted(false);
-		buttons1.add(button4);
-		button4.addActionListener(new ActionListener()
+		//simulator
+		Icon simulatorIcon = new ImageIcon("btn_simulator.png");
+		JButton simulator = new JButton(simulatorIcon);	
+		simulator.setPreferredSize(buttonSize);
+		simulator.setFocusPainted(false);
+		simulator.setBorderPainted(false);
+		buttons.add(simulator, BorderLayout.EAST);
+		simulator.setContentAreaFilled(false);
+		simulator.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				//artist = pop.showInputDialog(null, "Artiest");
-				//popu = pop.showInputDialog(null, "Populariteit");
-				//podium = pop.showInputDialog(null, "Podium");
-				//startTime = pop.showInputDialog(null, "Start Tijd:");
-				//endTime =pop.showInputDialog(null, "Eind Tijd: ");
-				//table.setValueAt(artist,index,0);
-				//table.setValueAt(popu,index,1);
-				//table.setValueAt(podium,index,2);
-				//table.setValueAt(startTime,index,3);
-				//table.setValueAt(endTime, index, 4);
-				frame2.setType(false);
-				frame2.Visible(true);
-				//index++;
-				// pop.showConfirmDialog(null,
-				// "123","Test",JOptionPane.YES_NO_CANCEL_OPTION );
+				//s = new Simulator();
 			}
+
 		});
+		//-----------------------------------------------------------------------------------//
 
-		Icon removeIcon = new ImageIcon("btn_remove.png");
-		button5 = new JButton(removeIcon);		
-		button5.setPreferredSize(buttonSize);
-		button5.setContentAreaFilled(false);
-		button5.setBorderPainted(false);
-		button5.setFocusPainted(false);
-		buttons1.add(button5);
-		button5.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				
-				
-					removeRow(table.getSelectedRow());
-				
-
-			}
-		});
-
-		Icon editIcon = new ImageIcon("btn_edit.png");
-		button6 = new JButton(editIcon);		
-		button6.setPreferredSize(buttonSize);
-		button6.setContentAreaFilled(false);
-		button6.setBorderPainted(false);
-		button6.setFocusPainted(false);
-		buttons1.add(button6);
-		button6.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				// artist = pop.showInputDialog(null, "Artiest");
-				// popu = pop.showInputDialog(null, "Populariteit");
-				// podium = pop.showInputDialog(null, "Podium");
-				// startTime = pop.showInputDialog(null, "Start Tijd:");
-				// endTime =pop.showInputDialog(null, "Eind Tijd: ");
-				frame2.setType(true);
-				frame2.Visible(true);
-				// artist = frame2.getArtist();
-				// popu = frame2.getPopularity();
-				// podium = frame2.getPodium();
-				// startTime = frame2.getStartTime();
-				// endTime = frame2.getEndTime();
-			}
-		});
-
-		// test = new JComboBox();
-		// test.setEditable(true);
-		// test.addItem("Paul");
-		// test.addItem("Iemand");
-		// test.setSelectedItem("");
-		// pane.add(test,BorderLayout.SOUTH);
-		// test.addActionListener(new ActionListener()
-		// {
-		// public void actionPerformed(ActionEvent e)
-		// {
-		// System.out.println(test.getSelectedItem());
-		// }
-		// });
 		
-		pane.add(buttons1a, BorderLayout.WEST);
-		pane.add(buttons2a, BorderLayout.EAST);
-		pane.add(tablea, BorderLayout.CENTER);
-		pane.add(bottom, BorderLayout.NORTH);
-		pane.add(top, BorderLayout.SOUTH);
+		//ADD CONTENT TO MAIN PANEL
+		pane.add(leftPanel, BorderLayout.WEST);
+		pane.add(rightPanel, BorderLayout.EAST);
+		pane.add(centerPanel, BorderLayout.CENTER);
+		pane.add(bottomPanel, BorderLayout.SOUTH);
+		pane.add(topPanel, BorderLayout.NORTH);
+		//-----------------------------------------------------------------------------------//
 
-		pop = new JOptionPane();
+		
+		new JOptionPane();
 		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
+		//-----------------------------------------------------------------------------------//
 	}
 
 	public void setInfo()
@@ -526,7 +518,7 @@ public class GUI1
 			if (fileName.endsWith(".csv"))
 				parseCSV(dataStream);
 			else if (fileName.endsWith(".xml"))
-				parseXML(new File(fileName));
+				parseXML(dataStream);
 			//else				//TODO make exception for other filetypes
 			
 		}
@@ -590,46 +582,11 @@ public class GUI1
 	}
 	
 
-	public void parseXML(File file)
+	public void parseXML(String buffer)
 	{
-		
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = null;
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-			try {
-				Document doc = dBuilder.parse(file);
-				doc.getDocumentElement().normalize();
-				NodeList stageList = doc.getElementsByTagName("stages");
-				NodeList actList = doc.getElementsByTagName("act");
-				
-				for (int temp = 0; temp < actList.getLength(); temp++) {
-					 
-					Node act = actList.item(temp);
-					Element actElement = (Element) act;
-					System.out.println("\nCurrent Element :" + act.getNodeName());
-					System.out.println("Staff id : " + actElement.getAttribute("*"));
-					
-				}
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-		
-		
-		
 		stages = new ArrayList<Stage>();
 		acts = new ArrayList<Act>();
-		/*String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0].split("</stages>");
+		String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0].split("</stages>");
 		for (String item : dataChunks[0].split("<stages>")[1].split("<stage>"))
 		{
 			if (item.contains("<name"))
@@ -646,7 +603,7 @@ public class GUI1
 				setIndex(getIndex() + 1);
 				addAct(item.split("<artist>")[1].split("</")[0], Integer.parseInt(item.split("<popularity>")[1].split("</")[0]), item.split("<stage>")[1].split("</")[0], item.split("<stime>")[1].split("</")[0], item.split("<etime>")[1].split("</")[0]);
 			}
-		}*/
+		}
 	}
 	
 	public String genXML()
