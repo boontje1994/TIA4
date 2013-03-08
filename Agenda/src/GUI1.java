@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -28,18 +31,8 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-public class GUI1
-{
+public class GUI1 {
 	private JFrame frame;
 	public JTable table;
 	private String artist;
@@ -49,18 +42,16 @@ public class GUI1
 	private String endTime;
 	private int index = 0;
 	private inputFrame frame2;
-	private JComboBox test;
+	private JComboBox<?> test;
 	private ArrayList<Stage> stages;
 	private String fileName;
 	private ArrayList<Act> acts;
-	
-	public static void main(String args[])
-	{
+
+	public static void main(String args[]) {
 		new GUI1();
 	}
 
-	public GUI1()
-	{
+	public GUI1() {
 		makeFrame();
 		frame2 = new inputFrame();
 		frame2.getGui(this);
@@ -68,111 +59,111 @@ public class GUI1
 		acts = new ArrayList<Act>();
 	}
 
-	public void makeFrame()
-	{
-		///INITIALIZE
+	
+
+	public boolean isNowBetweenDateTime(final Date s, final Date e) {
+		final Date now = new Date();
+		return now.after(s) && now.before(e);
+	}
+
+	private Date dateFromHourMinSec(final String hhmmss) {
+			final String[] hms = hhmmss.split(":");
+			final GregorianCalendar gc = new GregorianCalendar();
+			gc.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hms[0]));
+			gc.set(Calendar.MINUTE, Integer.parseInt(hms[1]));
+			gc.set(Calendar.SECOND, Integer.parseInt(hms[2]));
+			gc.set(Calendar.MILLISECOND, 0);
+			return gc.getTime();
+
+	}
+	
+
+	public void makeFrame() {
+		// /INITIALIZE
 		frame = new JFrame("Agenda");
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		frame.setResizable(false);
-		//-----------------------------------------------------------------------------------//
-
 		
-		///LOOKANDFEEL
-		try
-		{
+		// -----------------------------------------------------------------------------------//
+
+		// /LOOKANDFEEL
+		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e1)
-		{
+		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (InstantiationException e1)
-		{
+		} catch (InstantiationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (IllegalAccessException e1)
-		{
+		} catch (IllegalAccessException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e1)
-		{
+		} catch (UnsupportedLookAndFeelException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		//-----------------------------------------------------------------------------------//
-		
-		
-		///MENUBAR
+		// -----------------------------------------------------------------------------------//
+
+		// /MENUBAR
 		JMenuBar menu = new JMenuBar();
 		JMenu m1 = new JMenu("Bestand");
 		JMenuItem mi1 = new JMenuItem("Open Bestand");
 		JMenuItem mi2 = new JMenuItem("Opslaan");
 		JMenuItem mi3 = new JMenuItem("Opslaan Als");
 		JMenuItem mi4 = new JMenuItem("Close");
-		mi1.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
+		mi1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileFilter(new CSVFilter());
 				chooser.setFileFilter(new XMLFilter());
-			    int returnVal = chooser.showOpenDialog(frame);
-			    if(returnVal == JFileChooser.APPROVE_OPTION)
-			    {
-			    	try
-			    	{
-			    		fileName = chooser.getSelectedFile().getAbsolutePath();
-			    	} catch (Exception e1)
-			    	{
-			    		System.err.println("File does not exist!");
-			    	}
-			       readFile();
-			    }
-//			    if(returnVal == JFileChooser.CANCEL_OPTION)
-//			    {
-//			    	
-//			    }
+				int returnVal = chooser.showOpenDialog(frame);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					try {
+						fileName = chooser.getSelectedFile().getAbsolutePath();
+					} catch (Exception e1) {
+						System.err.println("File does not exist!");
+					}
+					readFile();
+				}
+				// if(returnVal == JFileChooser.CANCEL_OPTION)
+				// {
+				//
+				// }
 			}
 		});
-		mi2.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				if (fileName == null)
-				{
+		mi2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (fileName == null) {
 					JFileChooser chooser = new JFileChooser();
 					chooser.setFileFilter(new CSVFilter());
 					chooser.setFileFilter(new XMLFilter());
-				    int returnVal = chooser.showSaveDialog(frame);
-				    if(returnVal == JFileChooser.APPROVE_OPTION)
-				    {
-				       fileName = chooser.getSelectedFile().getAbsolutePath();
-				    }
-//				    if(returnVal == JFileChooser.CANCEL_OPTION)
-//				    {
-//				    	
-//				    }
+					int returnVal = chooser.showSaveDialog(frame);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						fileName = chooser.getSelectedFile().getAbsolutePath();
+					}
+					// if(returnVal == JFileChooser.CANCEL_OPTION)
+					// {
+					//
+					// }
 				}
 				writeFile();
 			}
 		});
-		mi3.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
+		mi3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setFileFilter(new CSVFilter());
 				chooser.setFileFilter(new XMLFilter());
-			    int returnVal = chooser.showSaveDialog(frame);
-			    if(returnVal == JFileChooser.APPROVE_OPTION)
-			    {
-			       fileName = chooser.getSelectedFile().getAbsolutePath();
-			    }
-//				    if(returnVal == JFileChooser.CANCEL_OPTION)
-//				    {
-//				    	
-//				    }
-			writeFile();
+				int returnVal = chooser.showSaveDialog(frame);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					fileName = chooser.getSelectedFile().getAbsolutePath();
+				}
+				// if(returnVal == JFileChooser.CANCEL_OPTION)
+				// {
+				//
+				// }
+				writeFile();
 			}
 		});
 		m1.add(mi1);
@@ -181,48 +172,45 @@ public class GUI1
 		m1.add(mi4);
 		menu.add(m1);
 		frame.setJMenuBar(menu);
-		//-----------------------------------------------------------------------------------//
-		
-		
-		///PANELS
-		
-		//mainPanel
+		// -----------------------------------------------------------------------------------//
+
+		// /PANELS
+
+		// mainPanel
 		JPanel pane = new JPanel(new BorderLayout(25, 25));
 		frame.add(pane);
-		
-		//topPanel
+
+		// topPanel
 		JPanel topPanel = new JPanel(new BorderLayout());
-		JPanel top = new JPanel(new BorderLayout(25,25));
+		JPanel top = new JPanel(new BorderLayout(25, 25));
 		top.add(new JLabel(""), BorderLayout.NORTH);
-		topPanel.add(top, BorderLayout.SOUTH);	
-		
-		//leftPanel
+		topPanel.add(top, BorderLayout.SOUTH);
+
+		// leftPanel
 		JPanel leftPanel = new JPanel(new BorderLayout(25, 25));
-		JPanel buttons = new JPanel(new GridLayout(5, 1, 0, 0));	
+		JPanel buttons = new JPanel(new GridLayout(5, 1, 0, 0));
 		leftPanel.add(buttons, BorderLayout.EAST);
-		
-		//rightPanel
+
+		// rightPanel
 		JPanel rightPanel = new JPanel(new BorderLayout());
 		JPanel info = new JPanel(new BorderLayout(25, 25));
 		rightPanel.add(info, BorderLayout.CENTER);
-		
-		//centerPanel
+
+		// centerPanel
 		JPanel centerPanel = new JPanel(new BorderLayout());
-		
-		//bottomPanel
+
+		// bottomPanel
 		JPanel bottomPanel = new JPanel(new BorderLayout(25, 25));
+
 		
-		//scrollPanel
-		JScrollPane scrollpane = new JScrollPane(table);
-				
-		
-		///JTABLE
+
+		// /JTABLE
 		table = new JTable(20, 5);
 		Dimension tableDimension = new Dimension(800, 600);
 		table.setPreferredSize(tableDimension);
-		table.setRowHeight(table.getRowHeight(0)*2);
+		table.setRowHeight(table.getRowHeight(0) * 2);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setFont(new Font("Consolas", Font.PLAIN, 11));		
+		table.setFont(new Font("Consolas", Font.PLAIN, 11));
 		JTableHeader th0 = table.getTableHeader();
 		TableColumnModel tcm0 = th0.getColumnModel();
 		TableColumn tc0 = tcm0.getColumn(0);
@@ -247,18 +235,23 @@ public class GUI1
 		TableColumnModel tcm4 = th4.getColumnModel();
 		TableColumn tc4 = tcm4.getColumn(4);
 		tc4.setHeaderValue("Eindtijd");
-		th4.repaint();		
+		th4.repaint();
 		table.getTableHeader().setFont(new Font("Consolas", Font.BOLD, 11));
 		table.setGridColor(Color.LIGHT_GRAY);
-		centerPanel.add(scrollpane);
-		//-----------------------------------------------------------------------------------//
+		
+		// scrollPanel
+				JScrollPane scrollpane = new JScrollPane(table);
+				
+		// Add scrollpane(containing 'table') to the centerpanel
+				centerPanel.add(scrollpane);
+		// -----------------------------------------------------------------------------------//
 		
 
-		///BUTTONS
-		
+		// /BUTTONS
+
 		Dimension buttonSize = new Dimension(230, 50);
-		
-		//addAct
+
+		// addAct
 		Icon addIcon = new ImageIcon("btn_add.png");
 		JButton addAct = new JButton(addIcon);
 		addAct.setPreferredSize(buttonSize);
@@ -266,145 +259,124 @@ public class GUI1
 		addAct.setFocusPainted(false);
 		addAct.setBorderPainted(false);
 		buttons.add(addAct);
-		addAct.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
+		addAct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				frame2.setType(false);
 				frame2.Visible(true);
 			}
 		});
-		
-		//removeAct
+
+		// removeAct
 		Icon removeIcon = new ImageIcon("btn_remove.png");
-		JButton removeAct = new JButton(removeIcon);		
+		JButton removeAct = new JButton(removeIcon);
 		removeAct.setPreferredSize(buttonSize);
 		removeAct.setContentAreaFilled(false);
 		removeAct.setBorderPainted(false);
 		removeAct.setFocusPainted(false);
 		buttons.add(removeAct);
-		removeAct.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{	
-				removeRow(table.getSelectedRow());	
+		removeAct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeRow(table.getSelectedRow());
 			}
 		});
-		
-		//editAct
+
+		// editAct
 		Icon editIcon = new ImageIcon("btn_edit.png");
-		JButton editAct = new JButton(editIcon);		
+		JButton editAct = new JButton(editIcon);
 		editAct.setPreferredSize(buttonSize);
 		editAct.setContentAreaFilled(false);
 		editAct.setBorderPainted(false);
 		editAct.setFocusPainted(false);
 		buttons.add(editAct);
-		editAct.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
+		editAct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				frame2.setType(true);
 				frame2.Visible(true);
 			}
 		});
-		
-		//removeAct
+
+		// removeAct
 		Icon removeAllIcon = new ImageIcon("btn_removeall.png");
-		JButton removeAll = new JButton(removeAllIcon);		
+		JButton removeAll = new JButton(removeAllIcon);
 		removeAll.setPreferredSize(buttonSize);
 		removeAll.setContentAreaFilled(false);
 		removeAll.setBorderPainted(false);
 		removeAll.setFocusPainted(false);
 		buttons.add(removeAll);
-		removeAll.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
+		removeAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				removeData();
 				index = 0;
 			}
 		});
-		
-		//simulator
+
+		// simulator
 		Icon simulatorIcon = new ImageIcon("btn_simulator.png");
-		JButton simulator = new JButton(simulatorIcon);	
+		JButton simulator = new JButton(simulatorIcon);
 		simulator.setPreferredSize(buttonSize);
 		simulator.setFocusPainted(false);
 		simulator.setBorderPainted(false);
 		buttons.add(simulator, BorderLayout.EAST);
 		simulator.setContentAreaFilled(false);
-		simulator.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				//s = new Simulator();
+		simulator.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// s = new Simulator();
 			}
 
 		});
-		//-----------------------------------------------------------------------------------//
+		// -----------------------------------------------------------------------------------//
 
-		
-		//ADD CONTENT TO MAIN PANEL
+		// ADD CONTENT TO MAIN PANEL
 		pane.add(leftPanel, BorderLayout.WEST);
 		pane.add(rightPanel, BorderLayout.EAST);
 		pane.add(centerPanel, BorderLayout.CENTER);
 		pane.add(bottomPanel, BorderLayout.SOUTH);
 		pane.add(topPanel, BorderLayout.NORTH);
-		//-----------------------------------------------------------------------------------//
+		// -----------------------------------------------------------------------------------//
 
-		
 		new JOptionPane();
 		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
-		//-----------------------------------------------------------------------------------//
+		// -----------------------------------------------------------------------------------//
 	}
 
-	public void setInfo()
-	{
+	public void setInfo() {
 		artist = frame2.getArtist();
 		popu = frame2.getPopularity();
 		podium = frame2.getPodium();
 		startTime = frame2.getStartTime();
 		endTime = frame2.getEndTime();
 	}
-	
-	public void newStage(String name)
-	{
+
+	public void newStage(String name) {
 		stages.add(new Stage(name));
 	}
-	
-	public void addAct(String artist,int pop,String stage,String startTime,String endTime)
-	{
+
+	public void addAct(String artist, int pop, String stage, String startTime,
+			String endTime) {
 		acts.add(new Act(artist, pop, stage, startTime, endTime));
 	}
-	
-	public ArrayList<Stage> getStages()
-	{
+
+	public ArrayList<Stage> getStages() {
 		return stages;
 	}
-	
-	public int getStageNumberOfActs(int index)
-	{
+
+	public int getStageNumberOfActs(int index) {
 		return index;
-		//return Stages.get(index).getActSize();
+		// return Stages.get(index).getActSize();
 	}
-	
-	public int getSRow()
-	{
+
+	public int getSRow() {
 		return table.getSelectedRow();
 	}
 
-	public void getData()
-	{
+	public void getData() {
 		int index1 = 0;
 		int index2 = 1;
-		while (index1 < 5)
-		{
-			while (index2 < 10)
-			{
-				if (table.getValueAt(index2, index1) != null)
-				{
+		while (index1 < 5) {
+			while (index2 < 10) {
+				if (table.getValueAt(index2, index1) != null) {
 					System.out.println(table.getValueAt(index2, index1)
 							+ " Row: " + index2 + " Column: " + index1);
 				}
@@ -415,24 +387,19 @@ public class GUI1
 		}
 	}
 
-	public int getIndex()
-	{
+	public int getIndex() {
 		return index;
 	}
 
-	public void setIndex(int index)
-	{
+	public void setIndex(int index) {
 		this.index = index;
 	}
 
-	public void setData()
-	{
+	public void setData() {
 		int index1 = 0;
 		int index2 = 0;
-		while (index1 < 5)
-		{
-			while (index2 < 10)
-			{
+		while (index1 < 5) {
+			while (index2 < 10) {
 				table.setValueAt("Hello", index2, index1);
 				index2++;
 			}
@@ -442,14 +409,11 @@ public class GUI1
 		}
 	}
 
-	public void removeData()
-	{
+	public void removeData() {
 		int index1 = 0;
 		int index2 = 0;
-		while (index1 < 5)
-		{
-			while (index2 < 10)
-			{
+		while (index1 < 5) {
+			while (index2 < 10) {
 				table.setValueAt(null, index2, index1);
 				index2++;
 			}
@@ -458,18 +422,15 @@ public class GUI1
 		}
 	}
 
-	public void removeRow(int index2)
-	{
+	public void removeRow(int index2) {
 		int index1 = 0;
-		while (index1 < 5)
-		{
+		while (index1 < 5) {
 			table.setValueAt(null, index2, index1);
 			index1++;
 		}
 	}
 
-	public void setRow(int index2)
-	{
+	public void setRow(int index2) {
 		table.setValueAt(artist, index2, 0);
 		table.setValueAt(popu, index2, 1);
 		table.setValueAt(podium, index2, 2);
@@ -477,184 +438,168 @@ public class GUI1
 		table.setValueAt(endTime, index2, 4);
 	}
 
-	public void setRow2()
-	{
+	public void setRow2() {
 		table.setValueAt(artist, index, 0);
 		table.setValueAt(popu, index, 1);
 		table.setValueAt(podium, index, 2);
 		table.setValueAt(startTime, index, 3);
 		table.setValueAt(endTime, index, 4);
 	}
-	
-	public void setRowSane(int index2, String artist, String popu, String podium, String start, String end)
-	{
-		table.setValueAt(artist,index2,0);
+
+	public void setRowSane(int index2, String artist, String popu,
+			String podium, String start, String end) {
+		table.setValueAt(artist, index2, 0);
 		table.setValueAt(popu, index2, 1);
-		table.setValueAt(podium,index2,2);
-		table.setValueAt(start,index2,3);
-		table.setValueAt(end,index2,4);
+		table.setValueAt(podium, index2, 2);
+		table.setValueAt(start, index2, 3);
+		table.setValueAt(end, index2, 4);
 	}
-	
-	public void writeFile()
-	{
+
+	public void writeFile() {
 		String dataStream = "";
 		if (fileName.endsWith(".csv"))
 			dataStream = genCSV();
 		else if (fileName.endsWith(".xml"))
 			dataStream = genXML();
-		//TODO make exception for unsupported extensions
+		// TODO make exception for unsupported extensions
 		IOWrite writer = new IOWrite();
 		writer.write(dataStream, fileName);
 		System.out.println(dataStream);
 	}
-	
-	public void readFile()
-	{
+
+	public void readFile() {
 		IOWrite reader = new IOWrite();
 		String dataStream = reader.read(fileName);
-		if (!dataStream.equals(""))
-		{
+		if (!dataStream.equals("")) {
 			removeData();
 			if (fileName.endsWith(".csv"))
 				parseCSV(dataStream);
 			else if (fileName.endsWith(".xml"))
 				parseXML(dataStream);
-			//else				//TODO make exception for other filetypes
-			
-		}
-		else
-		{
+			// else //TODO make exception for other filetypes
+
+		} else {
 			System.out.println("File doesn't match expectations, aborting");
 			fileName = null;
 		}
 	}
-	
-	public void parseCSV(String buffer)
-	{
+
+	public void parseCSV(String buffer) {
 		stages = new ArrayList<Stage>();
 		acts = new ArrayList<Act>();
 		String[] dataChunks = buffer.split("Acts;");
 		String actData = dataChunks[0].split("Stages;")[1];
 		System.out.println(actData);
-		for (String item : actData.split("\n"))
-		{
+		for (String item : actData.split("\n")) {
 			System.out.println("adding stage " + item);
 			newStage(item);
 		}
 		System.out.println(dataChunks[1]);
-		for (String item : dataChunks[1].split("\n"))
-		{
-			if (item.contains(";"))
-			{
+		for (String item : dataChunks[1].split("\n")) {
+			if (item.contains(";")) {
 				String[] actdata = item.split(";");
-				System.out.println("adding an act with artist " + actdata[0] + ", an endtime of " + actdata[1] + ", an popularity of " + actdata[2] + ", on the " + actdata[3] + " stage, ending on " + actdata[4]);
-				setRowSane(getIndex(), actdata[0], actdata[2], actdata[3], actdata[4], actdata[1]);
+				System.out.println("adding an act with artist " + actdata[0]
+						+ ", an endtime of " + actdata[1]
+						+ ", an popularity of " + actdata[2] + ", on the "
+						+ actdata[3] + " stage, ending on " + actdata[4]);
+				setRowSane(getIndex(), actdata[0], actdata[2], actdata[3],
+						actdata[4], actdata[1]);
 				setIndex(getIndex() + 1);
-				addAct(actdata[0], Integer.parseInt(actdata[2]), actdata[3], actdata[4], actdata[1]);
+				addAct(actdata[0], Integer.parseInt(actdata[2]), actdata[3],
+						actdata[4], actdata[1]);
 			}
 		}
 	}
-	
-	public String genCSV()
-	{
-		//this generates the CSV file used in the saving process
+
+	public String genCSV() {
+		// this generates the CSV file used in the saving process
 		String dataStream = "AGENDAFILE\nStages;\n";
-		for (Stage item : stages)
-		{
+		for (Stage item : stages) {
 			dataStream += item.getName() + ";\n";
 		}
 		dataStream += "Acts;\n";
-		for (Act item : acts)
-		{
-			dataStream += item.getArtist()
-						+ ";"
-						+ item.getEndTime()
-						+ ";"
-						+ item.getPopularity()
-						+ ";"
-						+ item.getStage()
-						+ ";"
-						+ item.getStartTime()
-						+ ";"
-						+ "\n";
+		for (Act item : acts) {
+			dataStream += item.getArtist() + ";" + item.getEndTime() + ";"
+					+ item.getPopularity() + ";" + item.getStage() + ";"
+					+ item.getStartTime() + ";" + "\n";
 		}
 		return dataStream;
 	}
-	
 
-	public void parseXML(String buffer)
-	{
+	public void parseXML(String buffer) {
 		stages = new ArrayList<Stage>();
 		acts = new ArrayList<Act>();
-		String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0].split("</stages>");
-		for (String item : dataChunks[0].split("<stages>")[1].split("<stage>"))
-		{
+		String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0]
+				.split("</stages>");
+		for (String item : dataChunks[0].split("<stages>")[1].split("<stage>")) {
 			if (item.contains("<name"))
 				newStage(item.split("<name>")[1].split("</")[0]);
 		}
-		for (String item : dataChunks[1].split("<acts>")[1].split("</acts>")[0].split("<act>"))
-		{
+		for (String item : dataChunks[1].split("<acts>")[1].split("</acts>")[0]
+				.split("<act>")) {
 			item = item.split("</act>")[0];
 			//
 			String[] lel = item.split("<artist>");
-			if (lel.length >= 2)
-			{
-				setRowSane(getIndex(), item.split("<artist>")[1].split("</")[0], item.split("<popularity>")[1].split("</")[0], item.split("<stage>")[1].split("</")[0], item.split("<stime>")[1].split("</")[0], item.split("<etime>")[1].split("</")[0]);
+			if (lel.length >= 2) {
+				setRowSane(getIndex(),
+						item.split("<artist>")[1].split("</")[0],
+						item.split("<popularity>")[1].split("</")[0],
+						item.split("<stage>")[1].split("</")[0],
+						item.split("<stime>")[1].split("</")[0],
+						item.split("<etime>")[1].split("</")[0]);
 				setIndex(getIndex() + 1);
-				addAct(item.split("<artist>")[1].split("</")[0], Integer.parseInt(item.split("<popularity>")[1].split("</")[0]), item.split("<stage>")[1].split("</")[0], item.split("<stime>")[1].split("</")[0], item.split("<etime>")[1].split("</")[0]);
+				addAct(item.split("<artist>")[1].split("</")[0],
+						Integer.parseInt(item.split("<popularity>")[1]
+								.split("</")[0]),
+						item.split("<stage>")[1].split("</")[0],
+						item.split("<stime>")[1].split("</")[0],
+						item.split("<etime>")[1].split("</")[0]);
 			}
 		}
 	}
-	
-	public String genXML()
-	{
+
+	public String genXML() {
 		String dataStream = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<xml>";
 		dataStream += "\n\t<stages>";
-		for (Stage item : stages)
-		{
-			dataStream += "\n\t\t<stage>\n\t\t\t<name>" + item.getName() + "</name>\n\t\t</stage>";
+		for (Stage item : stages) {
+			dataStream += "\n\t\t<stage>\n\t\t\t<name>" + item.getName()
+					+ "</name>\n\t\t</stage>";
 		}
 		dataStream += "\n\t</stages>";
 		dataStream += "\n\t<acts>";
-		for (Act item : acts)
-		{
-			dataStream += "\n\t\t<act>"
-						+ "\n\t\t\t<artist>" + item.getArtist() + "</artist>"
-						+ "\n\t\t\t<etime>" + item.getEndTime() + "</etime>"
-						+ "\n\t\t\t<popularity>" + item.getPopularity() + "</popularity>"
-						+ "\n\t\t\t<stage>" + item.getStage() + "</stage>"
-						+ "\n\t\t\t<stime>" + item.getStartTime() + "</stime>"
-						+ "\n\t\t</act>";
+		for (Act item : acts) {
+			dataStream += "\n\t\t<act>" + "\n\t\t\t<artist>" + item.getArtist()
+					+ "</artist>" + "\n\t\t\t<etime>" + item.getEndTime()
+					+ "</etime>" + "\n\t\t\t<popularity>"
+					+ item.getPopularity() + "</popularity>"
+					+ "\n\t\t\t<stage>" + item.getStage() + "</stage>"
+					+ "\n\t\t\t<stime>" + item.getStartTime() + "</stime>"
+					+ "\n\t\t</act>";
 		}
 		dataStream += "\n\t</acts>\n</xml>";
 		return dataStream;
 	}
+
 }
 
-class CSVFilter extends FileFilter  
-{  
-	public boolean accept(File f)  
-	{
-		return f.isDirectory()||f.getName().toLowerCase().endsWith(".csv");
-	}  
-	 
-	public String getDescription()  
-	{  
-		return ".csv files";  
+class CSVFilter extends FileFilter {
+	public boolean accept(File f) {
+		return f.isDirectory() || f.getName().toLowerCase().endsWith(".csv");
+	}
+
+	public String getDescription() {
+		return ".csv files";
 	}
 
 }
 
-class XMLFilter extends FileFilter  
-{  
-	public boolean accept(File f)  
-	{
-		return f.isDirectory()||f.getName().toLowerCase().endsWith(".xml");
-	}  
-	 
-	public String getDescription()  
-	{  
-		return ".xml files";  
+class XMLFilter extends FileFilter {
+	public boolean accept(File f) {
+		return f.isDirectory() || f.getName().toLowerCase().endsWith(".xml");
+	}
+
+	public String getDescription() {
+		return ".xml files";
 	}
 
 }
