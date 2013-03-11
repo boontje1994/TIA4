@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+C:\Users\Robbert\Documents\GitHub\TIA4\.metadata\.plugins\org.eclipse.jdt.core
+2817473426.index
+3818532959.index
