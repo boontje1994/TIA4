@@ -1,6 +1,4 @@
 TIA4
 ====
 
-ik test een push
-yeehaw you git
-hjtrs
+TIA4 the best!
