@@ -40,7 +40,7 @@ public class GUI1 {
 	private String endTime;
 	private int index = 0;
 	private inputFrame frame2;
-	private JComboBox<?> test;
+	private JComboBox test;
 	private ArrayList<Stage> stages;
 	private String fileName;
 	private ArrayList<Act> acts;
