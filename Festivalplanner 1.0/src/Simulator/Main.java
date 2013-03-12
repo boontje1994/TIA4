@@ -1,4 +1,6 @@
 package Simulator;
+import Agenda.AgendaData;
+import Agenda.GUI1;
 
 /**
  * Write a description of class Main here.
@@ -10,13 +12,39 @@ public class Main
 {
 
     public static boolean shutdownrequest = false;
+    
+    public static AgendaData data = new AgendaData();
 
     public static void main(String[] args) {
-
+    	
+    	
+    	GUI1 agenda = new GUI1(data);
         Application app = Application.create();
-        app.init();
+        app.init(data);
+                	
         while(!shutdownrequest) {
                 app.tick();
+                if (!app.isShowing())
+                {
+                	if (data.isSimVisible())
+                	{
+                		app.setVisible(true);
+                	}
+                }
+                else
+                {
+                	if (!data.isSimVisible())
+                	{
+                		app.setVisible(false);
+                	}
+                }
+                if (!GUI1.isShowing())
+                {
+                	if (data.isAgendaVisible())
+                	{
+                		GUI1.setVisible(true);
+                	}
+                }
         }
         app.shutDown();
             

@@ -1,4 +1,5 @@
 package Simulator;
+import Agenda.AgendaData;;
 
 /**
  * Write a description of class MainWindow here.
@@ -9,6 +10,8 @@ package Simulator;
 public class Application
 {
 
+private MainWindow MW;
+
 protected Application() {
 
 }
@@ -17,8 +20,8 @@ public static Application create() {
     return new Application();
 }
 
-public void init() {
-    new MainWindow();
+public void init(AgendaData data) {
+    MW = new MainWindow(data);
 }
 
 public void tick() {
@@ -27,6 +30,15 @@ public void tick() {
 
 public void shutDown() {
 
+}
+
+public boolean isShowing() {
+	return MW.isShowing();
+}
+
+public void setVisible(boolean b) {
+	MW.setVisible(b);
+	
 }
 
 }
