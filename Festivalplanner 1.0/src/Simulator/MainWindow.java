@@ -2,6 +2,9 @@ package Simulator;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import Agenda.AgendaData;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -20,6 +23,7 @@ public class MainWindow extends JFrame
     private Map map;
     private User user;   
     private AI ai;
+    private AgendaData data;
        
     private static double zoom = 0.9;
     private static int t;
@@ -37,14 +41,15 @@ public class MainWindow extends JFrame
     private static JTextField xLength;
     private static JTextField yLength;
     
-    public MainWindow() {
-        
+    public MainWindow(AgendaData data) {
+    	
         super("Simulatie");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         map = new Map();
         user = new User();
         ai = new AI();
+        this.data = data;
         
         //Container
         JPanel container = new JPanel(new BorderLayout());
@@ -142,8 +147,6 @@ public class MainWindow extends JFrame
         Dimension size = toolkit.getScreenSize();
             
         setSize(size);
-        setVisible(true);
-        
     }
     
     class Handlerclass implements MouseListener, MouseMotionListener {
@@ -213,6 +216,13 @@ public class MainWindow extends JFrame
             diary.setContentAreaFilled(false);
             diary.setBorder(null);
             rightMenuPanel.add(diary);
+            diary.addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				data.setSimVisible(false);
+    				data.setAgendaVisible(true);
+    			}
+
+    		});
             
             Color c = new Color(111,111,111);
             leftMenuPanel.setBackground(c);
