@@ -7,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -59,24 +56,7 @@ public class GUI1 {
 		acts = new ArrayList<Act>();
 	}
 
-	
 
-	public boolean isNowBetweenDateTime(final Date s, final Date e) {
-		final Date now = new Date();
-		return now.after(s) && now.before(e);
-	}
-
-	private Date dateFromHourMinSec(final String hhmmss) {
-			final String[] hms = hhmmss.split(":");
-			final GregorianCalendar gc = new GregorianCalendar();
-			gc.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hms[0]));
-			gc.set(Calendar.MINUTE, Integer.parseInt(hms[1]));
-			gc.set(Calendar.SECOND, Integer.parseInt(hms[2]));
-			gc.set(Calendar.MILLISECOND, 0);
-			return gc.getTime();
-
-	}
-	
 
 	public void makeFrame() {
 		// /INITIALIZE
