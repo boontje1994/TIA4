@@ -91,7 +91,7 @@ public class Visitor {
     {
     	String vis = location.getX() + ":" + location.getY();
     	//vis += "*" + targetLocation.getX() + ":" + targetLocation.getY();
-    	vis += "*" + direction;
+    	vis += "=+=" + direction;
     	//vis += "*" + image.
     	//vis += "*" + speed;
     	return vis;

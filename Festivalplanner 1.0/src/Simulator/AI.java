@@ -23,7 +23,6 @@ public class AI {
             
             visitor.add(new Visitor(location,direction,imageType));
         }
-        System.out.println(getData());
     }
     
     public AI(int x, int y) {
@@ -60,18 +59,23 @@ public class AI {
     	String snap = "";
     	for (Visitor item: visitor)
     	{
-    		snap += "||" + item.getAllData();
+    		snap += "-+-" + item.getAllData();
     	}
     	return snap;
     }
     
     public void setFromData(String data)
     {
-    	for (String stream : data.split("||"))
+    	for (String stream : data.split("-+-"))
     	{
-    		String[] items = stream.split("*");
+    		String[] items = stream.split("=+=");
     		visitor.clear();
-    		visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[0].split("*")[0]), Double.parseDouble(items[0].split("*")[1])),Double.parseDouble(items[1]),1));
+    		if (items.length > 0)
+    		{
+    			System.out.println(items.length);
+    			System.out.println("adding visitor from string " + stream);
+    			//visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[1].split(":")[0]), Double.parseDouble(items[1].split(":")[1])),Double.parseDouble(items[2]),1));
+    		}
     	}
     }
     
