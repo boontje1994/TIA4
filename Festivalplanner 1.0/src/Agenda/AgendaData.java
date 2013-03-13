@@ -24,9 +24,36 @@ public class AgendaData
 		return dataA;
 	}
 	
+	public ArrayList<Act> getActsFromStage(String stage)
+	{
+		ArrayList<Act> datas = new ArrayList<Act>();
+		for (Act item : dataA)
+		{
+			if (item.getStage().equals(stage))
+			{
+				datas.add(item);
+			}
+		}
+		return datas;
+	}
+	
 	public ArrayList<Stage> getStages()
 	{
 		return dataS;
+	}
+	
+	public boolean doesStageExist(String stage)
+	{
+		boolean yes = false;
+		for (Stage item : dataS)
+		{
+			if (item.equals(stage))
+			{
+				yes = true;
+				break;
+			}
+		}
+		return yes;
 	}
 	
 	public void importData(ArrayList<Act> data1, ArrayList<Stage> data2)
@@ -40,7 +67,8 @@ public class AgendaData
 		dataA.add(act);
 	}
 
-	public void addStage(Stage stage) {
+	public void addStage(Stage stage)
+	{
 		dataS.add(stage);
 	}
 	
