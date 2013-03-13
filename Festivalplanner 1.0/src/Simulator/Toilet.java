@@ -8,6 +8,11 @@ public class Toilet extends DrawableObject
 {
 	private boolean vacant;
 	
+	public Toilet()
+	{
+		
+	}
+	
 	public Toilet(String name, double x, double y, double w, double h, ImageIcon image)
 	{
 		super(name, x, y, w, h, image);

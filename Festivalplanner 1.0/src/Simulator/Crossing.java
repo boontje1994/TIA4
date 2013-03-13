@@ -7,6 +7,10 @@ import javax.swing.ImageIcon;
 public class Crossing extends DrawableObject
 {
 
+	public Crossing()
+	{
+	}
+	
 	public Crossing(String name, double x, double y, double w, double h,
 			ImageIcon image)
 	{

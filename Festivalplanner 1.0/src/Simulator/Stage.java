@@ -6,6 +6,10 @@ public class Stage extends DrawableObject
 {
 	private int stageNumber;
 	
+	public Stage()
+	{
+	}
+	
 	public Stage(String name, double x, double y, double w, double h, ImageIcon image, int stageNumber)
 	{
 		super(name, x, y, w, h, image);

@@ -12,6 +12,10 @@ public abstract class DrawableObject extends Rectangle2D
 	private double height;
 	private ImageIcon image;
 	
+	public DrawableObject()
+	{
+	}
+	
 	public DrawableObject(String name, double x, double y, double w, double h, ImageIcon image)
 	{
 		this.setName(name);
