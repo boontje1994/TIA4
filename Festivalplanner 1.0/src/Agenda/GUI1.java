@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,29 +39,35 @@ public class GUI1 {
 	private String endTime;
 	private int index = 0;
 	private inputFrame frame2;
-	private JComboBox<?> test;
 	private ArrayList<Stage> stages;
 	private String fileName;
-	private ArrayList<Act> acts;
+	public static ArrayList<Act> acts;
 
 	public static void main(String args[]) {
 		new GUI1();
 	}
-
+	
 	public GUI1() {
 		makeFrame();
 		frame2 = new inputFrame();
 		frame2.getGui(this);
 		stages = new ArrayList<Stage>();
 		acts = new ArrayList<Act>();
+		new NowPlaying();
+		// TestCode voor nowplaying 
+		acts.add(new Act("Robin Boon and the dead babyseals", 100, "hiero", "11:00", "18:00"));
+		acts.add(new Act("Igor", 50, "hiero", "15:00", "18:00"));
+		acts.add(new Act("Robin", 100, "hiero", "14:00", "19:00"));
+		acts.add(new Act("Rob Boon", 100, "Huiskamer", "15:10", "15:18"));
+		// ----------
+		
 	}
-
 
 
 	public void makeFrame() {
 		// /INITIALIZE
 		frame = new JFrame("Agenda");
-		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		frame.setResizable(false);
 		

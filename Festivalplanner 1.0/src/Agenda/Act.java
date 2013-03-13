@@ -74,12 +74,12 @@ public class Act {
 
 	}
 
-	private Date dateFromHourMinSec(final String hhmmss) {
-		final String[] hms = hhmmss.split(":");
+	private Date dateFromHourMinSec(final String hhmm) {
+		final String[] hm = hhmm.split(":");
 		final GregorianCalendar gc = new GregorianCalendar();
-		gc.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hms[0]));
-		gc.set(Calendar.MINUTE, Integer.parseInt(hms[1]));
-		gc.set(Calendar.SECOND, Integer.parseInt(hms[2]));
+		gc.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hm[0]));
+		gc.set(Calendar.MINUTE, Integer.parseInt(hm[1]));
+		gc.set(Calendar.SECOND, 0);
 		gc.set(Calendar.MILLISECOND, 0);
 		return gc.getTime();
 
@@ -87,13 +87,22 @@ public class Act {
 
 	public boolean isNowPlaying() {
 		final Date now = new Date();
-		return now.after(getStartTimeDate()) && now.before(getStartTimeDate());
+		//return now.after(getStartTimeDate()) && now.before(getStartTimeDate());
+		return now.after(startTimeDate) && now.before(endTimeDate);
 	}
 	
 	public String toString(){
-		return artist + "\t" + stage + "\t" + startTime + " - " + endTime;
+		return artist + " | " + stage + " | " + startTimeDate + " - " + endTimeDate;
 	}
 	
+	public String toStringArtistStage()
+	{
+		return getArtist() + "" + getStage();
+	}
+	
+	public String toStringTime(){
+		return startTimeDate + "-" + endTimeDate;
+	}
 	
 
 }
