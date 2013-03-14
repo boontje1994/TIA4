@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -25,17 +26,25 @@ public class MainWindow extends JFrame
     private AI ai;
     private AgendaData data;
        
-    private static double zoom = 0.3;
+    private static double zoom = 1;
     private static int t;
     private static int posX = 1800;
     private static int posY = 1000;
     
     //Muis
-    boolean isSelected = false;
+    private int isSelected = 0;
     private static int x = 100;
     private static int y = 100;
     private int offsetX = 0;
     private int offsetY = 0;
+    private Point lastMousePosition;
+    
+    //Stage objecten
+    private Stage stageA;
+    private Stage stageB;
+    private Stage stageC;
+    private Stage stageD;
+    private Stage stageE;
     
     //Velden
     private static JTextField xLength;
@@ -77,6 +86,7 @@ public class MainWindow extends JFrame
         Handlerclass handler = new Handlerclass();
         maincontent.addMouseListener(handler);
         maincontent.addMouseMotionListener(handler);
+        maincontent.addMouseWheelListener(handler);
         
         //Keyboard
         ActionMap actionMap = maincontent.getActionMap();
@@ -147,7 +157,7 @@ public class MainWindow extends JFrame
         setSize(size);
     }
     
-    class Handlerclass implements MouseListener, MouseMotionListener {
+    class Handlerclass implements MouseListener, MouseMotionListener,MouseWheelListener {
         //Mouse events
         public void mouseClicked(MouseEvent event) {}
         public void mouseReleased(MouseEvent event) 
@@ -206,13 +216,17 @@ public class MainWindow extends JFrame
         	}
         	if(stageB != null)
         	{
-        		System.out.println("X: " + stageB.getRect().getBounds().x + " Y: " +  stageB.getRect().getBounds().y);
+        		/*System.out.println("X: " + stageB.getRect().getBounds().x + " Y: " +  stageB.getRect().getBounds().y);
             	if(stageB.getRect().contains(event.getPoint()))
             	{
             		
             		if(stageB.isSelected() == false)
             		{
-            			System.out.println("Selected B");
+            			System.out.println("Selected B");*/
+            	if(stageB.getRect().contains(event.getPoint()))
+            	{
+            		if(stageB.isSelected() == false)
+            		{
             			stageB.setSelected(true);
             			lastMousePosition = event.getPoint();
             		}
@@ -231,12 +245,11 @@ public class MainWindow extends JFrame
         	}
         	if(stageD != null)
         	{
-        		System.out.println("X: " + stageD.getRect().getBounds().x + " Y: " +  stageD.getRect().getBounds().y);
+        		//System.out.println("X: " + stageD.getRect().getBounds().x + " Y: " +  stageD.getRect().getBounds().y);
             	if(stageD.getRect().contains(event.getPoint()));
             	{
             		if(stageD.isSelected() == false)
             		{
-            			System.out.println("Selected D");
             			stageD.setSelected(true);
             			lastMousePosition = event.getPoint();
             		}
@@ -277,7 +290,6 @@ public class MainWindow extends JFrame
             					 event.getPoint().y - lastMousePosition.y);
             		stageA.setRect2(tx.createTransformedShape(stageA.getRect()));
             		lastMousePosition = event.getPoint();
-//            		stageA.setTransform(tx);
             		stageA.updateCo();
             		repaint();
             	}
@@ -291,8 +303,8 @@ public class MainWindow extends JFrame
             					 event.getPoint().y - lastMousePosition.y);
             		stageB.setRect2(tx.createTransformedShape(stageB.getRect()));
             		lastMousePosition = event.getPoint();
-            		stageB.updateCo();
             		repaint();
+            		stageB.updateCo();
             	}
         	}
         	if(stageC != null)
@@ -484,7 +496,8 @@ public class MainWindow extends JFrame
             super.paintComponent(g2);
             
             g2.scale(zoom,zoom);
-            g2.translate(posX,posY);
+//            g2.translate(posX,posY);
+            g2.translate(0, 0);
             g2.rotate(Math.toRadians(t)); 
 
             threadOne((Graphics2D)g2);
@@ -519,8 +532,6 @@ public class MainWindow extends JFrame
             //AI
             ai.drawVisitor((Graphics2D)g2);
             
-<<<<<<< HEAD
-=======
             Graphics2D a = (Graphics2D)g2.create();
             Graphics2D b = (Graphics2D)g2.create();
             Graphics2D c = (Graphics2D)g2.create();
@@ -549,7 +560,28 @@ public class MainWindow extends JFrame
             	stageE.drawStage(e);
             }
             
->>>>>>> e11e4a6... Rotate and drag werkt, alleen Podium d is vervloekt
+            //Draw Stages
+            if(stageA != null)
+            {
+            	stageA.drawStage(g2);
+            }
+            if(stageB != null)
+            {
+            	stageB.drawStage(g2);
+            }
+            if(stageC != null)
+            {
+            	stageC.drawStage(g2);
+            }
+            if(stageD != null)
+            {
+            	stageD.drawStage(g2);
+            }
+            if(stageE != null)
+            {
+            	stageE.drawStage(g2);
+            }
+            
             thread1 = new Thread(run1);
             thread1.start();
             
@@ -837,54 +869,50 @@ public class MainWindow extends JFrame
             
             JButton podiumA = new JButton("Podium A");
             podiumA.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-              
+                public void actionPerformed(ActionEvent e) 
+                {
+                	ImageIcon im  = new ImageIcon("images/play.png");
+                	stageA = new Stage("StageA",0,0,im.getIconWidth(),im.getIconHeight(),im,1);
                 }
             });
             constructionMenu.add(podiumA);
             
             JButton podiumB = new JButton("Podium B");
             podiumB.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-           
+                public void actionPerformed(ActionEvent e) 
+                {
+                	ImageIcon im = new ImageIcon("images/left.png");
+                	stageB = new Stage("StageB",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,2);
                 }
             }); 
             constructionMenu.add(podiumB);
             
             JButton podiumC = new JButton("Podium C");
             podiumC.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) { 
-         
+                public void actionPerformed(ActionEvent e) 
+                { 
+                	ImageIcon im = new ImageIcon("images/up.png");
+                	stageC = new Stage("StageC",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,3);
                 }
             });
             constructionMenu.add(podiumC);
             
             JButton podiumD = new JButton("Podium D");
             podiumD.addActionListener(new ActionListener() {
-<<<<<<< HEAD
-                public void actionPerformed(ActionEvent e) {
-           
-=======
                 public void actionPerformed(ActionEvent e) 
                 {
                 	ImageIcon im = new ImageIcon("images/play.png");
                 	stageD = new Stage("StageD",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,4);
->>>>>>> e11e4a6... Rotate and drag werkt, alleen Podium d is vervloekt
                 }
             }); 
             constructionMenu.add(podiumD);
             
             JButton podiumE = new JButton("Podium E");
             podiumE.addActionListener(new ActionListener() {
-<<<<<<< HEAD
-                public void actionPerformed(ActionEvent e) { 
-         
-=======
                 public void actionPerformed(ActionEvent e) 
                 { 
                 	ImageIcon im = new ImageIcon("images/stop.png");
                 	stageE = new Stage("StageE",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,5);
->>>>>>> e11e4a6... Rotate and drag werkt, alleen Podium d is vervloekt
                 }
             });
             constructionMenu.add(podiumE);

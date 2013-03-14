@@ -66,15 +66,23 @@ public class Stage extends DrawableObject
 	public AffineTransform setTransformOnce()
 	{
 		AffineTransform tx = new AffineTransform();
+<<<<<<< HEAD
 //		tx.translate(super.getX(),super.getY());
+=======
+		tx.translate(super.getX(),super.getY());
+>>>>>>> b6adf7c... Podiums met drag and drop, begin podium rotate
 		this.tx = tx;
 		return tx;
 	}
 	
 	public void updateCo()
 	{
+<<<<<<< HEAD
 //		tx.((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
 		tx.rotate(0,(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
+=======
+		tx.translate(0,0);
+>>>>>>> b6adf7c... Podiums met drag and drop, begin podium rotate
 	}
 	
 	public void setTransform(AffineTransform form)
@@ -90,6 +98,7 @@ public class Stage extends DrawableObject
 	
 	public void drawStage(Graphics2D g2)
 	{
+<<<<<<< HEAD
 //		if(rotate == 0)
 //		{
 //			g2.drawImage(super.getImage().getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY(),null);
@@ -101,10 +110,19 @@ public class Stage extends DrawableObject
 			{
 				tx.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
 //				g2.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
+=======
+		if(rotate != 0)
+		{
+			AffineTransform tx = new AffineTransform();
+			if(rotate < 0)
+			{
+				tx.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
+>>>>>>> b6adf7c... Podiums met drag and drop, begin podium rotate
 			}
 			if(rotate > 0)
 			{
 				tx.rotate(5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
+<<<<<<< HEAD
 //				g2.rotate(5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
 			}
 //			Rect = tx.createTransformedShape(Rect);
@@ -130,6 +148,17 @@ public class Stage extends DrawableObject
 		g2.drawImage(super.getImage().getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY() ,null);
 		
 //		g2.drawImage(super.getImage().getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY(),null);
+=======
+			}
+			rotate = 0;
+
+			g2.transform(tx);
+			
+		}
+//		tx.translate((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
+		
+		g2.drawImage(super.getImage().getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY(),null);
+>>>>>>> b6adf7c... Podiums met drag and drop, begin podium rotate
 		
 //		g2.drawImage(super.getImage().getImage(),tx,null);
 //		if(rotate != 0)
