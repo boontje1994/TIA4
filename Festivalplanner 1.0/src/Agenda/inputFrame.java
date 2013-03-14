@@ -126,8 +126,9 @@ public class inputFrame
 						|| startTime3.getSelectedItem() == null
 						|| endTime3.getSelectedItem() == null)
 				{
-					JOptionPane error = new JOptionPane();
-					error.showConfirmDialog(null, "Een of meer velden is niet ingevuld", "Error", JOptionPane.ERROR_MESSAGE);
+					//JOptionPane error = new JOptionPane();
+					//error.showConfirmDialog(null, "Een of meer velden is niet ingevuld", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "Een of meer velden is niet ingevuld", "Error", JOptionPane.ERROR_MESSAGE);
 				} else
 				{
 					if (!Pattern.matches("[a-zA-Z]+", popularity3.getSelectedItem().toString()))

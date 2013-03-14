@@ -55,10 +55,10 @@ public class GUI1 {
 		acts = new ArrayList<Act>();
 		new NowPlaying();
 		// TestCode voor nowplaying 
-		acts.add(new Act("Robin Boon and the dead babyseals", 100, "hiero", "11:00", "18:00"));
-		acts.add(new Act("Igor", 50, "hiero", "15:00", "18:00"));
-		acts.add(new Act("Robin", 100, "hiero", "14:00", "19:00"));
-		acts.add(new Act("Rob Boon", 100, "Huiskamer", "15:10", "15:18"));
+		acts.add(new Act("Robin Boon and the dead babyseals", 100, "hiero", "11:35", "18:00"));
+		acts.add(new Act("Igor", 50, "hiero", "11:00", "11:36"));
+		acts.add(new Act("Robin", 100, "hiero", "11:00", "19:00"));
+		acts.add(new Act("Rob Boon", 100, "Huiskamer", "11:10", "11:40"));
 		// ----------
 		
 	}
