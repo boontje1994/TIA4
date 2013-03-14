@@ -13,7 +13,7 @@ public class AI {
     
     //Maakt 100 visitors aan met een random locatie, richting en afbeelding.
     public AI() {  
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 1000; i++) {
  
             Point2D location = new Point2D.Double(Math.random() * 500, Math.random() * 500);
             double direction = Math.random() * 2 * Math.PI;
@@ -59,21 +59,21 @@ public class AI {
     	String snap = "";
     	for (Visitor item: visitor)
     	{
-    		snap += "-+-" + item.getAllData();
+    		snap += "/" + item.getAllData();
     	}
     	return snap;
     }
     
     public void setFromData(String data)
     {
+    	visitor.clear();
     	for (String stream : data.split("/"))
     	{
     		String[] items = stream.split("@");
-    		visitor.clear();
     		if (items.length > 1)
     		{
     			System.out.println(items.length);
-    			System.out.println("adding visitor on co-ords " + items[0].split(":")[0] + "x" + items[0].split(":")[1] + " and with a speed of " + items[1]);
+    			System.out.println("adding visitor on co-ords " + items[0].split(":")[0] + "x" + items[0].split(":")[1] + " and with a direction of " + items[1]);
     			visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[0].split(":")[0]), Double.parseDouble(items[0].split(":")[1])),Double.parseDouble(items[1]),1));
     		}
     	}
