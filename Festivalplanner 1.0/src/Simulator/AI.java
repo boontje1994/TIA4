@@ -66,15 +66,15 @@ public class AI {
     
     public void setFromData(String data)
     {
-    	for (String stream : data.split("-+-"))
+    	for (String stream : data.split("/"))
     	{
-    		String[] items = stream.split("=+=");
+    		String[] items = stream.split("@");
     		visitor.clear();
-    		if (items.length > 0)
+    		if (items.length > 1)
     		{
     			System.out.println(items.length);
-    			System.out.println("adding visitor from string " + stream);
-    			//visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[1].split(":")[0]), Double.parseDouble(items[1].split(":")[1])),Double.parseDouble(items[2]),1));
+    			System.out.println("adding visitor on co-ords " + items[0].split(":")[0] + "x" + items[0].split(":")[1] + " and with a speed of " + items[1]);
+    			visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[0].split(":")[0]), Double.parseDouble(items[0].split(":")[1])),Double.parseDouble(items[1]),1));
     		}
     	}
     }
