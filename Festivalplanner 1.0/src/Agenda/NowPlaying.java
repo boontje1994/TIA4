@@ -18,8 +18,8 @@ public class NowPlaying implements Runnable {
 
 	public NowPlaying(AgendaData data)
 	{
-		makeFrame();
 		this.data = data;
+		makeFrame();
 		new Thread(this).start();
 		
 	}
