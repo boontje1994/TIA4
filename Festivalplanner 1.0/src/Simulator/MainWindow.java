@@ -150,15 +150,245 @@ public class MainWindow extends JFrame
     class Handlerclass implements MouseListener, MouseMotionListener {
         //Mouse events
         public void mouseClicked(MouseEvent event) {}
-        public void mouseReleased(MouseEvent event) {}
-        public void mousePressed(MouseEvent event) {
-            //AI ai = new AI(200,200);
+        public void mouseReleased(MouseEvent event) 
+        {
+        	if(stageA != null)
+        	{
+            	if(stageA.isSelected() == true)
+            	{
+            		stageA.setSelected(false);
+            	}
+        	}
+        	if(stageB != null)
+        	{
+            	if(stageB.isSelected() == true && stageB != null)
+            	{
+            		stageB.setSelected(false);
+            	}
+        	}
+        	if(stageC != null)
+        	{
+            	if(stageC.isSelected() == true && stageC != null)
+            	{
+            		stageC.setSelected(false);
+            	}
+        	}
+        	if(stageD != null)
+        	{
+            	if(stageD.isSelected() == true && stageD != null)
+            	{
+            		stageD.setSelected(false);
+            	}
+        	}
+        	if(stageE != null)
+        	{
+            	if(stageE.isSelected() == true && stageE != null)
+            	{
+            		stageE.setSelected(false);
+            	}
+        	}
+        }
+        public void mousePressed(MouseEvent event) 
+        {
+        	System.out.println(event.getPoint());
+        	if(stageA != null)
+        	{
+        		System.out.println("X: " + stageA.getRect().getBounds().x + " Y: " +  stageA.getRect().getBounds().y);
+            	if(stageA.getRect().contains(event.getPoint()))
+            	{
+            		if(stageA.isSelected() == false)
+            		{
+            			System.out.println("Selected A");
+            			stageA.setSelected(true);
+            			lastMousePosition = event.getPoint();
+            		}
+            	}
+        	}
+        	if(stageB != null)
+        	{
+        		System.out.println("X: " + stageB.getRect().getBounds().x + " Y: " +  stageB.getRect().getBounds().y);
+            	if(stageB.getRect().contains(event.getPoint()))
+            	{
+            		
+            		if(stageB.isSelected() == false)
+            		{
+            			System.out.println("Selected B");
+            			stageB.setSelected(true);
+            			lastMousePosition = event.getPoint();
+            		}
+            	}
+        	}
+        	if(stageC != null)
+        	{
+            	if(stageC.getRect().contains(event.getPoint()) )
+            	{
+            		if(stageC.isSelected() == false)
+            		{
+            			stageC.setSelected(true);
+            			lastMousePosition = event.getPoint();
+            		}
+            	}
+        	}
+        	if(stageD != null)
+        	{
+        		System.out.println("X: " + stageD.getRect().getBounds().x + " Y: " +  stageD.getRect().getBounds().y);
+            	if(stageD.getRect().contains(event.getPoint()));
+            	{
+            		if(stageD.isSelected() == false)
+            		{
+            			System.out.println("Selected D");
+            			stageD.setSelected(true);
+            			lastMousePosition = event.getPoint();
+            		}
+            	}
+        	}
+        	if(stageE != null)
+        	{
+            	if(stageE.getRect().contains(event.getPoint()))
+            	{
+            		if(stageE.isSelected() == false)
+            		{
+            			stageE.setSelected(true);
+            			lastMousePosition = event.getPoint();
+            		}
+            	}
+        	}
         }
         public void mouseEntered(MouseEvent event) {}
         public void mouseExited(MouseEvent event) {}
         //Mouse motion events
-        public void mouseDragged(MouseEvent event) {}
-        public void mouseMoved(MouseEvent event) {}
+        public void mouseDragged(MouseEvent event) 
+        {
+//    		if(selected == true)
+//    		{
+//    			AffineTransform tx = new AffineTransform();
+//    			tx.translate(event.getPoint().x - lastMousePosition.x, 
+//    					 	 event.getPoint().y - lastMousePosition.y);
+//    			s1 = tx.createTransformedShape(s1);
+//    			lastMousePosition = event.getPoint();
+//    			repaint();
+//    		}
+        	if(stageA != null)
+        	{
+            	if(stageA.isSelected() == true )
+            	{
+            		AffineTransform tx = new AffineTransform();
+            		tx.translate(event.getPoint().x - lastMousePosition.x,
+            					 event.getPoint().y - lastMousePosition.y);
+            		stageA.setRect2(tx.createTransformedShape(stageA.getRect()));
+            		lastMousePosition = event.getPoint();
+//            		stageA.setTransform(tx);
+            		stageA.updateCo();
+            		repaint();
+            	}
+        	}
+        	if(stageB != null)
+        	{
+            	if(stageB.isSelected() == true)
+            	{
+            		AffineTransform tx = new AffineTransform();
+            		tx.translate(event.getPoint().x - lastMousePosition.x,
+            					 event.getPoint().y - lastMousePosition.y);
+            		stageB.setRect2(tx.createTransformedShape(stageB.getRect()));
+            		lastMousePosition = event.getPoint();
+            		stageB.updateCo();
+            		repaint();
+            	}
+        	}
+        	if(stageC != null)
+        	{
+               	if(stageC.isSelected() == true)
+            	{
+            		AffineTransform tx = new AffineTransform();
+            		tx.translate(event.getPoint().x - lastMousePosition.x,
+            					 event.getPoint().y - lastMousePosition.y);
+            		stageC.setRect2(tx.createTransformedShape(stageC.getRect()));
+            		lastMousePosition = event.getPoint();
+            		repaint();
+            		stageC.updateCo();
+            	}
+        	}
+        	if(stageD != null)
+        	{
+            	if(stageD.isSelected() == true)
+            	{
+            		AffineTransform tx = new AffineTransform();
+            		tx.translate(event.getPoint().x - lastMousePosition.x,
+            					 event.getPoint().y - lastMousePosition.y);
+            		stageD.setRect2(tx.createTransformedShape(stageD.getRect()));
+            		lastMousePosition = event.getPoint();
+            		repaint();
+            		stageD.updateCo();
+            	}
+        	}
+        	if(stageE != null)
+        	{
+            	if(stageE.isSelected() == true)
+            	{
+            		AffineTransform tx = new AffineTransform();
+            		tx.translate(event.getPoint().x - lastMousePosition.x,
+            					 event.getPoint().y - lastMousePosition.y);
+            		stageE.setRect2(tx.createTransformedShape(stageE.getRect()));
+            		lastMousePosition = event.getPoint();
+            		repaint();
+            		stageE.updateCo();
+            	}
+        	}
+        }
+        public void mouseMoved(MouseEvent event) {
+        	
+        }
+		@Override
+		public void mouseWheelMoved(MouseWheelEvent event) 
+		{
+			if(stageA != null)
+			{
+				if(stageA.isSelected() == true)
+				{
+//					AffineTransform tx = new AffineTransform();
+//					if(event.getPreciseWheelRotation() < 0)
+//					{
+//						tx.rotate(-5*(Math.PI/180),stageA.getRect().getBounds().getCenterX(),stageA.getRect().getBounds().getCenterY());
+//					}
+//					if(event.getPreciseWheelRotation() > 0)
+//					{
+//						tx.rotate(5*(Math.PI/180),stageA.getRect().getBounds().getCenterX(),stageA.getRect().getBounds().getCenterY());
+//					}
+//					stageA.setRect2(tx.createTransformedShape(stageA.getRect()));
+					stageA.setRotate((int)event.getPreciseWheelRotation());
+//					stageA.updateCo();
+				}
+			}
+	
+			if(stageB != null)
+			{
+				if(stageB.isSelected() == true)
+				{
+					stageB.setRotate((int)event.getPreciseWheelRotation());
+				}
+			}
+			if(stageC != null)
+			{
+				if(stageC.isSelected() == true)
+				{
+					stageC.setRotate((int)event.getPreciseWheelRotation());
+				}
+			}
+			if(stageD != null)
+			{
+				if(stageD.isSelected() == true)
+				{
+					stageD.setRotate((int)event.getPreciseWheelRotation());
+				}
+			}
+			if(stageE != null)
+			{
+				if(stageE.isSelected() == true)
+				{
+					stageE.setRotate((int)event.getPreciseWheelRotation());
+				}
+			}
+		}
         
     }
     
@@ -289,6 +519,37 @@ public class MainWindow extends JFrame
             //AI
             ai.drawVisitor((Graphics2D)g2);
             
+<<<<<<< HEAD
+=======
+            Graphics2D a = (Graphics2D)g2.create();
+            Graphics2D b = (Graphics2D)g2.create();
+            Graphics2D c = (Graphics2D)g2.create();
+            Graphics2D d = (Graphics2D)g2.create();
+            Graphics2D e = (Graphics2D)g2.create();
+            
+            //Draw Stages
+            if(stageA != null)
+            {
+            	stageA.drawStage(a);
+            }
+            if(stageB != null)
+            {
+            	stageB.drawStage(b);
+            }
+            if(stageC != null)
+            {
+            	stageC.drawStage(c);
+            }
+            if(stageD != null)
+            {
+            	stageD.drawStage(d);
+            }
+            if(stageE != null)
+            {
+            	stageE.drawStage(e);
+            }
+            
+>>>>>>> e11e4a6... Rotate and drag werkt, alleen Podium d is vervloekt
             thread1 = new Thread(run1);
             thread1.start();
             
@@ -600,16 +861,30 @@ public class MainWindow extends JFrame
             
             JButton podiumD = new JButton("Podium D");
             podiumD.addActionListener(new ActionListener() {
+<<<<<<< HEAD
                 public void actionPerformed(ActionEvent e) {
            
+=======
+                public void actionPerformed(ActionEvent e) 
+                {
+                	ImageIcon im = new ImageIcon("images/play.png");
+                	stageD = new Stage("StageD",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,4);
+>>>>>>> e11e4a6... Rotate and drag werkt, alleen Podium d is vervloekt
                 }
             }); 
             constructionMenu.add(podiumD);
             
             JButton podiumE = new JButton("Podium E");
             podiumE.addActionListener(new ActionListener() {
+<<<<<<< HEAD
                 public void actionPerformed(ActionEvent e) { 
          
+=======
+                public void actionPerformed(ActionEvent e) 
+                { 
+                	ImageIcon im = new ImageIcon("images/stop.png");
+                	stageE = new Stage("StageE",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,5);
+>>>>>>> e11e4a6... Rotate and drag werkt, alleen Podium d is vervloekt
                 }
             });
             constructionMenu.add(podiumE);
