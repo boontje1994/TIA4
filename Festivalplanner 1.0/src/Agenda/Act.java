@@ -104,5 +104,21 @@ public class Act {
 		return startTimeDate + "-" + endTimeDate;
 	}
 	
+	public boolean equals(Act act)
+	{
+		boolean val = true;
+		if (!act.artist.equals(this.artist))
+			val = false;
+		else if (!act.endTime.equals(this.endTime))
+			val = false;
+		else if (act.popularity != this.popularity)
+			val = false;
+		else if (!act.stage.equals(this.stage))
+			val = false;
+		else if (!act.startTime.equals(this.startTime))
+			val = false;
+		return val;
+	}
+	
 
 }
