@@ -74,7 +74,7 @@ public class AI {
     		{
     			System.out.println(items.length);
     			System.out.println("adding visitor on co-ords " + items[0].split(":")[0] + "x" + items[0].split(":")[1] + " and with a direction of " + items[1]);
-    			visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[0].split(":")[0]), Double.parseDouble(items[0].split(":")[1])),Double.parseDouble(items[1]),1));
+    			visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[0].split(":")[0]), Double.parseDouble(items[0].split(":")[1])),Double.parseDouble(items[1]),Integer.parseInt(items[2])));
     		}
     	}
     }

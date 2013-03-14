@@ -12,6 +12,7 @@ public class Visitor {
     private double direction;
     private Image image;
     private double speed;
+    private int imageType;
     
     public Visitor() {
         this.speed = Math.random() * 4;
@@ -20,6 +21,7 @@ public class Visitor {
     public Visitor(Point2D location, double direction, int imageType) {
         this.location = location;
         this.direction = direction;  
+        this.imageType = imageType;
         //Afbeeldingen
         switch(imageType) {
             case 0:
@@ -89,11 +91,13 @@ public class Visitor {
     
     public String getAllData()
     {
-    	String vis = location.getX() + ":" + location.getY();
+    	String vis = location.getX() + ":" + location.getY()
     	//vis += "*" + targetLocation.getX() + ":" + targetLocation.getY();
-    	vis += "@" + direction;
+    	+ "@" + direction
+    	+ "@" + imageType
     	//vis += "*" + image.
     	//vis += "*" + speed;
+    	;
     	return vis;
     }
     
