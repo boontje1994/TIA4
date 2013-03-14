@@ -49,7 +49,7 @@ public class GUI1 {
 		this.data = data;
 		frame2 = new inputFrame(data);
 		frame2.getGui(this);
-		new NowPlaying();
+		new NowPlaying(data);
 		// TestCode voor nowplaying 
 		
 		//deze is kapot :: data.addAct(new Act("Robin Boon and the dead babyseals", 100, "hiero", "11:35", "18:00"));

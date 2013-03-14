@@ -11,28 +11,30 @@ public class NowPlaying implements Runnable {
 	final static int WIDTH = 500;
 	
 	private JFrame frame;
-	private JList<String> list;
+	private JList list;
 	private String[] nowPlaying = "intit list ".split(" ");
+	private AgendaData data;
 
 
-	public NowPlaying()
+	public NowPlaying(AgendaData data)
 	{
 		makeFrame();
+		this.data = data;
 		new Thread(this).start();
 		
 	}
 	
 	public void updateNP(){
 		nowPlaying = null;
-		nowPlaying = new String[GUI1.acts.size() * 5];
+		nowPlaying = new String[data.getActs().size() * 5];
 		int idx = 0;
 		try{
-		for(int i=0; i < GUI1.acts.size(); i++){
-			if((GUI1.acts.get(i).isNowPlaying()))
+		for(int i=0; i < data.getActs().size(); i++){
+			if((data.getActs().get(i).isNowPlaying()))
 			{
-				nowPlaying[idx] = GUI1.acts.get(i).getArtist();
-				nowPlaying[idx += 1] = GUI1.acts.get(i).getStage();
-				nowPlaying[idx += 1] = GUI1.acts.get(i).toStringTime();
+				nowPlaying[idx] = data.getActs().get(i).getArtist();
+				nowPlaying[idx += 1] = data.getActs().get(i).getStage();
+				nowPlaying[idx += 1] = data.getActs().get(i).toStringTime();
 				nowPlaying[idx += 1] = "***************************".trim();
 				idx++;
 			}
@@ -49,9 +51,9 @@ public class NowPlaying implements Runnable {
 	private void newJlist(String[] obj){
 		frame.remove(list);
 		list = null;
-		list = new JList<String>(obj);
+		list = new JList(obj);
 		frame.add(list);
-		frame.revalidate();
+		//frame.revalidate();
 		frame.validate();
 		frame.repaint();	
 	}
@@ -72,7 +74,7 @@ public class NowPlaying implements Runnable {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
-		list = new JList<String>(nowPlaying);
+		list = new JList(nowPlaying);
 		list.setSize(new Dimension(WIDTH, HEIGHT));
 		frame.add(list);
 		updateNP();
