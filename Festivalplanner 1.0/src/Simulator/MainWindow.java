@@ -203,7 +203,6 @@ public class MainWindow extends JFrame
         	System.out.println(event.getPoint());
         	if(stageA != null)
         	{
-        		System.out.println("X: " + stageA.getRect().getBounds().x + " Y: " +  stageA.getRect().getBounds().y);
             	if(stageA.getRect().contains(event.getPoint()))
             	{
             		if(stageA.isSelected() == false)
@@ -498,7 +497,7 @@ public class MainWindow extends JFrame
             g2.scale(zoom,zoom);
 //            g2.translate(posX,posY);
             g2.translate(0, 0);
-            g2.rotate(Math.toRadians(t)); 
+            g2.rotate(Math.toRadians(t),400,400); 
 
             threadOne((Graphics2D)g2);
             
