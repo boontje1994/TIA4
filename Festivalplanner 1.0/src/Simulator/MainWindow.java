@@ -901,7 +901,7 @@ public class MainWindow extends JFrame
             podiumD.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) 
                 {
-                	ImageIcon im = new ImageIcon("images/play.png");
+                	ImageIcon im = new ImageIcon("images/troll.png");
                 	stageD = new Stage("StageD",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,4);
                 }
             }); 
