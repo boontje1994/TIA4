@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,7 +31,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 public class GUI1 {
-	private JFrame frame;
+	private static JFrame frame;
 	public JTable table;
 	private String artist;
 	private String popu;
@@ -39,26 +40,22 @@ public class GUI1 {
 	private String endTime;
 	private int index = 0;
 	private inputFrame frame2;
-	private ArrayList<Stage> stages;
+	private JComboBox test;
 	private String fileName;
-	public static ArrayList<Act> acts;
+	private AgendaData data;
 
-	public static void main(String args[]) {
-		new GUI1();
-	}
-	
-	public GUI1() {
+	public GUI1(AgendaData data) {
 		makeFrame();
-		frame2 = new inputFrame();
+		this.data = data;
+		frame2 = new inputFrame(data);
 		frame2.getGui(this);
-		stages = new ArrayList<Stage>();
-		acts = new ArrayList<Act>();
 		new NowPlaying();
 		// TestCode voor nowplaying 
-		acts.add(new Act("Robin Boon and the dead babyseals", 100, "hiero", "11:35", "18:00"));
-		acts.add(new Act("Igor", 50, "hiero", "11:00", "11:36"));
-		acts.add(new Act("Robin", 100, "hiero", "11:00", "19:00"));
-		acts.add(new Act("Rob Boon", 100, "Huiskamer", "11:10", "11:40"));
+		
+		//deze is kapot :: data.addAct(new Act("Robin Boon and the dead babyseals", 100, "hiero", "11:35", "18:00"));
+		data.addAct(new Act("Igor", 50, "hiero", "11:00", "11:36"));
+		data.addAct(new Act("Robin", 100, "hiero", "11:00", "19:00"));
+		data.addAct(new Act("Rob Boon", 100, "Huiskamer", "11:10", "11:40"));
 		// ----------
 		
 	}
@@ -306,7 +303,9 @@ public class GUI1 {
 		simulator.setContentAreaFilled(false);
 		simulator.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// s = new Simulator();
+				data.setSimVisible(true);
+				data.setAgendaVisible(false);
+				frame.setVisible(false);
 			}
 
 		});
@@ -333,19 +332,6 @@ public class GUI1 {
 		podium = frame2.getPodium();
 		startTime = frame2.getStartTime();
 		endTime = frame2.getEndTime();
-	}
-
-	public void newStage(String name) {
-		stages.add(new Stage(name));
-	}
-
-	public void addAct(String artist, int pop, String stage, String startTime,
-			String endTime) {
-		acts.add(new Act(artist, pop, stage, startTime, endTime));
-	}
-
-	public ArrayList<Stage> getStages() {
-		return stages;
 	}
 
 	public int getStageNumberOfActs(int index) {
@@ -471,14 +457,13 @@ public class GUI1 {
 	}
 
 	public void parseCSV(String buffer) {
-		stages = new ArrayList<Stage>();
-		acts = new ArrayList<Act>();
+		data.clear();
 		String[] dataChunks = buffer.split("Acts;");
 		String actData = dataChunks[0].split("Stages;")[1];
 		System.out.println(actData);
 		for (String item : actData.split("\n")) {
 			System.out.println("adding stage " + item);
-			newStage(item);
+			data.addStage(new Stage(item));
 		}
 		System.out.println(dataChunks[1]);
 		for (String item : dataChunks[1].split("\n")) {
@@ -491,8 +476,8 @@ public class GUI1 {
 				setRowSane(getIndex(), actdata[0], actdata[2], actdata[3],
 						actdata[4], actdata[1]);
 				setIndex(getIndex() + 1);
-				addAct(actdata[0], Integer.parseInt(actdata[2]), actdata[3],
-						actdata[4], actdata[1]);
+				data.addAct(new Act(actdata[0], Integer.parseInt(actdata[2]), actdata[3],
+						actdata[4], actdata[1]));
 			}
 		}
 	}
@@ -500,11 +485,11 @@ public class GUI1 {
 	public String genCSV() {
 		// this generates the CSV file used in the saving process
 		String dataStream = "AGENDAFILE\nStages;\n";
-		for (Stage item : stages) {
+		for (Stage item : data.getStages()) {
 			dataStream += item.getName() + ";\n";
 		}
 		dataStream += "Acts;\n";
-		for (Act item : acts) {
+		for (Act item : data.getActs()) {
 			dataStream += item.getArtist() + ";" + item.getEndTime() + ";"
 					+ item.getPopularity() + ";" + item.getStage() + ";"
 					+ item.getStartTime() + ";" + "\n";
@@ -513,18 +498,17 @@ public class GUI1 {
 	}
 
 	public void parseXML(String buffer) {
-		stages = new ArrayList<Stage>();
-		acts = new ArrayList<Act>();
+		data.clear();
 		String[] dataChunks = buffer.split("<xml>")[1].split("</xml>")[0]
 				.split("</stages>");
 		for (String item : dataChunks[0].split("<stages>")[1].split("<stage>")) {
 			if (item.contains("<name"))
-				newStage(item.split("<name>")[1].split("</")[0]);
+				data.addStage(new Stage(item.split("<name>")[1].split("</")[0]));
 		}
 		for (String item : dataChunks[1].split("<acts>")[1].split("</acts>")[0]
 				.split("<act>")) {
 			item = item.split("</act>")[0];
-			//
+			//excuseer de lelijke code
 			String[] lel = item.split("<artist>");
 			if (lel.length >= 2) {
 				setRowSane(getIndex(),
@@ -534,12 +518,12 @@ public class GUI1 {
 						item.split("<stime>")[1].split("</")[0],
 						item.split("<etime>")[1].split("</")[0]);
 				setIndex(getIndex() + 1);
-				addAct(item.split("<artist>")[1].split("</")[0],
+				data.addAct(new Act(item.split("<artist>")[1].split("</")[0],
 						Integer.parseInt(item.split("<popularity>")[1]
 								.split("</")[0]),
 						item.split("<stage>")[1].split("</")[0],
 						item.split("<stime>")[1].split("</")[0],
-						item.split("<etime>")[1].split("</")[0]);
+						item.split("<etime>")[1].split("</")[0]));
 			}
 		}
 	}
@@ -547,13 +531,13 @@ public class GUI1 {
 	public String genXML() {
 		String dataStream = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<xml>";
 		dataStream += "\n\t<stages>";
-		for (Stage item : stages) {
+		for (Stage item : data.getStages()) {
 			dataStream += "\n\t\t<stage>\n\t\t\t<name>" + item.getName()
 					+ "</name>\n\t\t</stage>";
 		}
 		dataStream += "\n\t</stages>";
 		dataStream += "\n\t<acts>";
-		for (Act item : acts) {
+		for (Act item : data.getActs()) {
 			dataStream += "\n\t\t<act>" + "\n\t\t\t<artist>" + item.getArtist()
 					+ "</artist>" + "\n\t\t\t<etime>" + item.getEndTime()
 					+ "</etime>" + "\n\t\t\t<popularity>"
@@ -564,6 +548,20 @@ public class GUI1 {
 		}
 		dataStream += "\n\t</acts>\n</xml>";
 		return dataStream;
+	}
+
+
+
+	public static boolean isShowing() {
+		// TODO Auto-generated method stub
+		return frame.isShowing();
+	}
+
+
+
+	public static void setVisible(boolean b) {
+		frame.setVisible(b);
+		
 	}
 
 }

@@ -7,6 +7,10 @@ import javax.swing.ImageIcon;
 public class Food extends DrawableObject
 {
 
+	public Food()
+	{
+	}
+	
 	public Food(String name, double x, double y, double w, double h,
 			ImageIcon image)
 	{

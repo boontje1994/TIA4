@@ -22,7 +22,7 @@ public class AI {
             int imageType = r.nextInt(2);
             
             visitor.add(new Visitor(location,direction,imageType));
-        }     
+        }
     }
     
     public AI(int x, int y) {
@@ -53,5 +53,32 @@ public class AI {
             v.setTarget(x,y);   
         }
     }
+    
+    public String getData()
+    {
+    	String snap = "";
+    	for (Visitor item: visitor)
+    	{
+    		snap += "-+-" + item.getAllData();
+    	}
+    	return snap;
+    }
+    
+    public void setFromData(String data)
+    {
+    	for (String stream : data.split("-+-"))
+    	{
+    		String[] items = stream.split("=+=");
+    		visitor.clear();
+    		if (items.length > 0)
+    		{
+    			System.out.println(items.length);
+    			System.out.println("adding visitor from string " + stream);
+    			//visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[1].split(":")[0]), Double.parseDouble(items[1].split(":")[1])),Double.parseDouble(items[2]),1));
+    		}
+    	}
+    }
+    
+    
     
 }
