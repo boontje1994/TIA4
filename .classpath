@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="Agenda/src"/>
-<<<<<<< HEAD
+	<classpathentry kind="src" path="Festivalplanner 1.0/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
-=======
-	<classpathentry kind="src" path="Agendaatje/src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="Agenda/bin"/>
->>>>>>> layout
 </classpath>
