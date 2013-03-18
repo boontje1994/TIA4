@@ -3,11 +3,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -43,19 +43,29 @@ public class GUI1 {
 	private JComboBox test;
 	private String fileName;
 	private AgendaData data;
+	private NowPlaying nowPlaying;
+	private JPanel info;
+	private JScrollPane npScroller;
 
 	public GUI1(AgendaData data) {
+		nowPlaying = new NowPlaying(data, this);
 		makeFrame();
 		this.data = data;
 		frame2 = new inputFrame(data);
 		frame2.getGui(this);
-		new NowPlaying(data);
 		// TestCode voor nowplaying 
 		
 		//deze is kapot :: data.addAct(new Act("Robin Boon and the dead babyseals", 100, "hiero", "11:35", "18:00"));
-		data.addAct(new Act("Igor", 50, "hiero", "11:00", "11:36"));
-		data.addAct(new Act("Robin", 100, "hiero", "11:00", "19:00"));
+		data.addAct(new Act("Igor", 50, "hiero", "11:00", "12:24"));
+		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
 		data.addAct(new Act("Rob Boon", 100, "Huiskamer", "11:10", "11:40"));
+		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
+		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
+		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
+		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
+		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
+		
+		
 		// ----------
 		
 	}
@@ -175,9 +185,17 @@ public class GUI1 {
 		leftPanel.add(buttons, BorderLayout.EAST);
 
 		// rightPanel
+		Icon nowPlayingIcon = new ImageIcon("images/btn_nowplaying.png");
+		JLabel iconLabel = new JLabel("", nowPlayingIcon, JLabel.CENTER); 
 		JPanel rightPanel = new JPanel(new BorderLayout());
-		JPanel info = new JPanel(new BorderLayout(25, 25));
+		npScroller = new JScrollPane(NowPlaying.panel);
+		npScroller.setPreferredSize(new Dimension(100, 400));
+		npScroller.setMaximumSize(new Dimension(100,400));
+		npScroller.getVerticalScrollBar().setUnitIncrement(16);
+		info = new JPanel(new BorderLayout(25, 10));
 		rightPanel.add(info, BorderLayout.CENTER);
+		info.add(iconLabel, BorderLayout.NORTH);
+		info.add(npScroller, BorderLayout.CENTER);
 
 		// centerPanel
 		JPanel centerPanel = new JPanel(new BorderLayout());
@@ -325,6 +343,15 @@ public class GUI1 {
 		frame.setVisible(true);
 		// -----------------------------------------------------------------------------------//
 	}
+	
+	public void updateNP(){
+		npScroller.removeAll();
+		npScroller.add(NowPlaying.panel);
+		
+	}
+	
+	
+	
 
 	public void setInfo() {
 		artist = frame2.getArtist();
