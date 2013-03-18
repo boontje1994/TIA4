@@ -1,6 +1,10 @@
 package Simulator;
 import java.util.*;
 import javax.swing.*;
+
+import Agenda.AgendaData;
+import Agenda.Stage;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -11,9 +15,12 @@ public class AI {
     private static int x;
     private static int y;
     private static ArrayList<ArrayList<Point2D>> paths;
+    private AgendaData data;
     
     //Maakt 100 visitors aan met een random locatie, richting en afbeelding.
-    public AI() {  
+    public AI(AgendaData data) {  
+    	this.data = data;
+    	
         for(int i = 0; i < 100; i++) {
  
             Point2D location = new Point2D.Double(Math.random() * 500, Math.random() * 500);
@@ -27,7 +34,8 @@ public class AI {
         }
     }
     
-    public AI(int x, int y) {
+    public AI(AgendaData data, int x, int y) {
+    	this.data = data;
         this.x = x;
         this.y = y;
         updateVisitor();
@@ -37,8 +45,9 @@ public class AI {
     public void calculatePaths()
     {
     	int amountOfStages = 5; //TODO maak dit werkend
-    	for (int i=0; amountOfStages > i; i++)
+    	for (Stage stage : data.getStages())
     	{
+    		ArrayList<Point2D> path;
     		
     	}
     }
