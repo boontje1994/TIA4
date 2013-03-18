@@ -13,8 +13,8 @@ public class NowPlaying implements Runnable {
 	
 	public static JPanel panel;
 	public JFrame frame;
-	private JList list;
 	private String[] nowPlaying = "intit list ".split(" ");
+	private JList list;
 	private AgendaData data;
 	private GUI1 gui;
 
@@ -31,6 +31,7 @@ public class NowPlaying implements Runnable {
 	public void updateNP(){
 		nowPlaying = null;
 		nowPlaying = new String[data.getActs().size() * 5];
+		
 		int idx = 0;
 		try{
 			
@@ -72,14 +73,15 @@ public class NowPlaying implements Runnable {
 	
 	public void makeFrame()
 	{
-		panel = new JPanel();
 		list = new JList(nowPlaying);
+		panel = new JPanel();
+		updateNP();
 		panel.setMinimumSize(new Dimension(WIDTH, HEIGHT));
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		panel.setVisible(true);	
 		list.setVisibleRowCount(0);
 		panel.add(list);
-		updateNP();
+		
 	}
 	
 	

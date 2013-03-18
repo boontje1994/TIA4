@@ -54,20 +54,6 @@ public class GUI1 {
 		this.data = data;
 		frame2 = new inputFrame(data);
 		frame2.getGui(this);
-		// TestCode voor nowplaying 
-		
-		//deze is kapot :: data.addAct(new Act("Robin Boon and the dead babyseals", 100, "hiero", "11:35", "18:00"));
-		data.addAct(new Act("Igor", 50, "hiero", "11:00", "12:24"));
-		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
-		data.addAct(new Act("Rob Boon", 100, "Huiskamer", "11:10", "11:40"));
-		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
-		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
-		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
-		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
-		data.addAct(new Act("Robin", 100, "hiero", "11:05", "19:00"));
-		
-		
-		// ----------
 		
 	}
 
