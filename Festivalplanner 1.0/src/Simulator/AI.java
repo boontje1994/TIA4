@@ -36,7 +36,11 @@ public class AI {
     
     public void calculatePaths()
     {
-    	
+    	int amountOfStages = 5; //TODO maak dit werkend
+    	for (int i=0; amountOfStages > i; i++)
+    	{
+    		
+    	}
     }
     
     public void givePath()
