@@ -1,6 +1,7 @@
 package Agenda;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
@@ -14,7 +15,10 @@ public class Stage
 	private boolean selected = false;
 	private AffineTransform tx;
 	private int rotate = 0;
+	private int scale = 0;
 	private ImageIcon image;
+	private Point pos;
+	private int Button = 0;
 		
 	public Stage()
 	{
@@ -103,63 +107,55 @@ public class Stage
 	
 	public void drawStage(Graphics2D g2)
 	{
-//		if(rotate == 0)
-//		{
-//			g2.drawImage(super.getImage().getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY(),null);
-//		}
+
 		if(rotate != 0)
 		{
-//			tx = new AffineTransform();
+
 			if(rotate < 0)
 			{
 				tx.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
-//				g2.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
+
 			}
 			if(rotate > 0)
 			{
 				tx.rotate(5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
-//				g2.rotate(5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
-			}
-//			Rect = tx.createTransformedShape(Rect);
 
-//			g2.rotate(tx);
-//			tx.translate((int)Rect.getBounds().getCenterX(),(int)Rect.getBounds().getCenterY());
-//			tx.translate((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
-			
-//			tx.translate((int)Rect.getBounds().getCenterX(),(int)Rect.getBounds().getCenterY());
-			
+			}
+
 			rotate = 0;
-//			this.tx.setTransform(tx);
+
 			this.tx = tx;
 		}
-//		tx.translate((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
+		if(scale != 0)
+		{
+			if(scale > 0)
+			{
+//				tx.translate((800/2) - ((Rect.getBounds().getMaxX()-Rect.getBounds().getMinX())*(0.9))/2,
+//					    (800/2) - ((Rect.getBounds().getMaxY()-Rect.getBounds().getMinY()))*(0.9)/2);
+//				pos = new Point((int)Rect.getBounds().getMinX(), (int)Rect.getBounds().getMinY());
+//				tx.translate(-Rect.getBounds().getMinX(), -Rect.getBounds().getMinY());
+				tx.scale(0.9, 0.9);
+//				tx.translate(pos.x,pos.y);
+			}
+			if(scale < 0)
+			{
+//				tx.translate((800/2) - ((Rect.getBounds().getMaxX()-Rect.getBounds().getMinX())*(1.1))/2,
+//					    (800/2) - ((Rect.getBounds().getMaxY()-Rect.getBounds().getMinY()))*(1.1)/2);
+//				pos = new Point((int)Rect.getBounds().getMinX(), (int)Rect.getBounds().getMinY());
+//				tx.translate(-Rect.getBounds().getMinX(), -Rect.getBounds().getMinY());
+				tx.scale(1.1,1.1);
+//				tx.translate(pos.x,pos.y);
+			}
+			scale = 0;
+			this.tx = tx;
+		}
+
 		
 		g2.transform(tx);
 		
-//		g2.drawImage(super.getImage().getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY(),null);
-//		tx.translate((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
-		
-//		tx.translate((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
+
 		g2.drawImage(image.getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY() ,null);
-		
-//		g2.drawImage(super.getImage().getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY(),null);
-		
-//		g2.drawImage(super.getImage().getImage(),tx,null);
-//		if(rotate != 0)
-//		{
-//			AffineTransform tx = new AffineTransform();
-//			if(rotate < 0)
-//			{
-//				tx.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
-//			}
-//			if(rotate > 0)
-//			{
-//				tx.rotate(5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
-//			}
-//			rotate = 0;
-//			Rect = tx.createTransformedShape(Rect);
-//			g2.transform(tx);
-//		}
+
 		if(selected == true)
 		{
 			g2.draw(Rect);
@@ -208,6 +204,32 @@ public class Stage
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Point getPos() 
+	{
+		pos = new Point((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
+		return pos;
+	}
+
+	public void setPos(Point pos) {
+		this.pos = pos;
+	}
+
+	public int getScale() {
+		return scale;
+	}
+
+	public void setScale(int scale) {
+		this.scale = scale;
+	}
+
+	public int getButton() {
+		return Button;
+	}
+
+	public void setButton(int button) {
+		Button = button;
 	}
 	
 	
