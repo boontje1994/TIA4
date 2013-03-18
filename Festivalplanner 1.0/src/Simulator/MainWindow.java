@@ -172,6 +172,7 @@ public class MainWindow extends JFrame
             	if(stageA.isSelected() == true)
             	{
             		stageA.setSelected(false);
+            		stageA.setButton(0);
             	}
         	}
         	if(stageB != null)
@@ -179,6 +180,7 @@ public class MainWindow extends JFrame
             	if(stageB.isSelected() == true && stageB != null)
             	{
             		stageB.setSelected(false);
+            		stageB.setButton(0);
             	}
         	}
         	if(stageC != null)
@@ -186,6 +188,7 @@ public class MainWindow extends JFrame
             	if(stageC.isSelected() == true && stageC != null)
             	{
             		stageC.setSelected(false);
+            		stageC.setButton(0);
             	}
         	}
         	if(stageD != null)
@@ -193,13 +196,16 @@ public class MainWindow extends JFrame
             	if(stageD.isSelected() == true && stageD != null)
             	{
             		stageD.setSelected(false);
+            		stageD.setButton(0);
             	}
+            	
         	}
         	if(stageE != null)
         	{
             	if(stageE.isSelected() == true && stageE != null)
             	{
             		stageE.setSelected(false);
+            		stageE.setButton(0);
             	}
         	}
         }
@@ -215,6 +221,14 @@ public class MainWindow extends JFrame
             			System.out.println("Selected A");
             			stageA.setSelected(true);
             			lastMousePosition = event.getPoint();
+            			if(event.getButton() == event.BUTTON1)
+            			{
+            				stageA.setButton(1);
+            			}
+            			if(event.getButton() == event.BUTTON3)
+            			{
+            				stageA.setButton(3);
+            			}
             		}
             	}
         	}
@@ -228,6 +242,14 @@ public class MainWindow extends JFrame
             			System.out.println("Selected B");
             			stageB.setSelected(true);
             			lastMousePosition = event.getPoint();
+            			if(event.getButton() == event.BUTTON1)
+            			{
+            				stageB.setButton(1);
+            			}
+            			if(event.getButton() == event.BUTTON3)
+            			{
+            				stageB.setButton(3);
+            			}
             		}
             	}
         	}
@@ -239,6 +261,14 @@ public class MainWindow extends JFrame
             		{
             			stageC.setSelected(true);
             			lastMousePosition = event.getPoint();
+            			if(event.getButton() == event.BUTTON1)
+            			{
+            				stageC.setButton(1);
+            			}
+            			if(event.getButton() == event.BUTTON3)
+            			{
+            				stageC.setButton(3);
+            			}
             		}
             	}
         	}
@@ -252,6 +282,14 @@ public class MainWindow extends JFrame
             			System.out.println("Selected D");
             			stageD.setSelected(true);
             			lastMousePosition = event.getPoint();
+            			if(event.getButton() == event.BUTTON1)
+            			{
+            				stageD.setButton(1);
+            			}
+            			if(event.getButton() == event.BUTTON3)
+            			{
+            				stageD.setButton(3);
+            			}
             		}
             	}
         	}
@@ -263,6 +301,14 @@ public class MainWindow extends JFrame
             		{
             			stageE.setSelected(true);
             			lastMousePosition = event.getPoint();
+            			if(event.getButton() == event.BUTTON1)
+            			{
+            				stageE.setButton(1);
+            			}
+            			if(event.getButton() == event.BUTTON3)
+            			{
+            				stageE.setButton(3);
+            			}
             		}
             	}
         	}
@@ -356,7 +402,7 @@ public class MainWindow extends JFrame
 		{
 			if(stageA != null)
 			{
-				if(stageA.isSelected() == true)
+				if(stageA.isSelected() == true && stageA.getButton() == 1 )
 				{
 //					AffineTransform tx = new AffineTransform();
 //					if(event.getPreciseWheelRotation() < 0)
@@ -371,34 +417,54 @@ public class MainWindow extends JFrame
 					stageA.setRotate((int)event.getPreciseWheelRotation());
 //					stageA.updateCo();
 				}
+				if(stageA.isSelected() == true && stageA.getButton() == 3)
+				{
+					stageA.setScale((int)event.getPreciseWheelRotation());
+				}
 			}
 	
 			if(stageB != null)
 			{
-				if(stageB.isSelected() == true)
+				if(stageB.isSelected() == true && stageB.getButton() == 1)
 				{
 					stageB.setRotate((int)event.getPreciseWheelRotation());
+				}
+				if(stageB.isSelected() == true && stageB.getButton() == 3)
+				{
+					stageB.setScale((int)event.getPreciseWheelRotation());
 				}
 			}
 			if(stageC != null)
 			{
-				if(stageC.isSelected() == true)
+				if(stageC.isSelected() == true && stageC.getButton() == 1)
 				{
 					stageC.setRotate((int)event.getPreciseWheelRotation());
+				}
+				if(stageC.isSelected() == true && stageC.getButton() == 3)
+				{
+					stageC.setScale((int)event.getPreciseWheelRotation());
 				}
 			}
 			if(stageD != null)
 			{
-				if(stageD.isSelected() == true)
+				if(stageD.isSelected() == true && stageD.getButton() == 1)
 				{
 					stageD.setRotate((int)event.getPreciseWheelRotation());
+				}
+				if(stageD.isSelected() == true && stageD.getButton() == 3)
+				{
+					stageD.setScale((int)event.getPreciseWheelRotation());
 				}
 			}
 			if(stageE != null)
 			{
-				if(stageE.isSelected() == true)
+				if(stageE.isSelected() == true && stageE.getButton() == 1)
 				{
 					stageE.setRotate((int)event.getPreciseWheelRotation());
+				}
+				if(stageE.isSelected() == true && stageE.getButton() == 3)
+				{
+					stageE.setScale((int)event.getPreciseWheelRotation());
 				}
 			}
 		}
