@@ -4,6 +4,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Agenda.AgendaData;
+import Agenda.Stage;
 
 import java.awt.*;
 import java.awt.event.*;
