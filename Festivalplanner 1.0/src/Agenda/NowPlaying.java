@@ -73,7 +73,7 @@ public class NowPlaying implements Runnable {
 	public void makeFrame()
 	{
 		panel = new JPanel();
-		list = new JList<Object>(nowPlaying);
+		list = new JList(nowPlaying);
 		panel.setMinimumSize(new Dimension(WIDTH, HEIGHT));
 		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		panel.setVisible(true);	
@@ -99,7 +99,7 @@ public class NowPlaying implements Runnable {
 		// TODO Auto-generated method stub
 		while(true){
 			updateNP();
-			wait(1000);
+			wait(10000);
 		}
 		
 	}
