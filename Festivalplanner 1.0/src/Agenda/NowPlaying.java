@@ -4,20 +4,24 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
 
 public class NowPlaying implements Runnable {
 
-	final static int HEIGHT = 300;
-	final static int WIDTH = 500;
+	public static int HEIGHT = 1200;
+	public static int WIDTH = 100;
 	
-	private JFrame frame;
-	private JList list;
+	public static JPanel panel;
+	public JFrame frame;
 	private String[] nowPlaying = "intit list ".split(" ");
+	private JList list;
 	private AgendaData data;
+	private GUI1 gui;
 
 
-	public NowPlaying(AgendaData data)
+	public NowPlaying(AgendaData data, GUI1 gui)
 	{
+		this.gui = gui;
 		this.data = data;
 		makeFrame();
 		new Thread(this).start();
@@ -27,17 +31,21 @@ public class NowPlaying implements Runnable {
 	public void updateNP(){
 		nowPlaying = null;
 		nowPlaying = new String[data.getActs().size() * 5];
+		
 		int idx = 0;
 		try{
+			
 		for(int i=0; i < data.getActs().size(); i++){
 			if((data.getActs().get(i).isNowPlaying()))
 			{
 				nowPlaying[idx] = data.getActs().get(i).getArtist();
 				nowPlaying[idx += 1] = data.getActs().get(i).getStage();
 				nowPlaying[idx += 1] = data.getActs().get(i).toStringTime();
-				nowPlaying[idx += 1] = "***************************".trim();
+				nowPlaying[idx += 1] = "*****************************".trim();
 				idx++;
 			}
+		
+			
 		}
 		newJlist(nowPlaying);
 		}catch(NullPointerException e){
@@ -49,35 +57,31 @@ public class NowPlaying implements Runnable {
 
 	
 	private void newJlist(String[] obj){
-		frame.remove(list);
+		panel.remove(list);
 		list = null;
 		list = new JList(obj);
-		frame.add(list);
-		//frame.revalidate();
-		frame.validate();
-		frame.repaint();	
+		panel.setMinimumSize(list.getSize());
+		panel.setPreferredSize(list.getSize());
+		panel.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		panel.add(list);
+		panel.validate();
+		panel.repaint();
+		
 	}
-	
-	
-	
-	
-
-	
+		
 	
 	public void makeFrame()
 	{
-		frame = new JFrame("Now Playing");
-		
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-		frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		frame.setVisible(true);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
 		list = new JList(nowPlaying);
-		list.setSize(new Dimension(WIDTH, HEIGHT));
-		frame.add(list);
+		panel = new JPanel();
 		updateNP();
+		panel.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		panel.setVisible(true);	
+		list.setVisibleRowCount(0);
+		panel.add(list);
+		
 	}
 	
 	
@@ -97,10 +101,12 @@ public class NowPlaying implements Runnable {
 		// TODO Auto-generated method stub
 		while(true){
 			updateNP();
-			wait(1000/5);
+			wait(10000);
 		}
 		
 	}
+	
+
 	
 	}
 

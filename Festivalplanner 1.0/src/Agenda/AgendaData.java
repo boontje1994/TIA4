@@ -1,5 +1,5 @@
 package Agenda;
-import java.util.*;
+import java.util.ArrayList;
 
 public class AgendaData
 {

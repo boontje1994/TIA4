@@ -91,6 +91,30 @@ public class Act {
 		return now.after(startTimeDate) && now.before(endTimeDate);
 	}
 	
+	private String formatTime(Date time){
+		String retVal;
+		String minute;
+		String hour;
+		
+		if( time.getMinutes() < 10 ){
+			minute = "0" + time.getMinutes();
+		}
+		else{
+			minute = "" + time.getMinutes();
+		}
+		
+		if ( time.getHours() < 10 ){
+			hour = "0" + time.getHours();
+		}
+		else{
+			hour = "" + time.getHours();
+		}
+		
+		retVal = hour + ":" + minute;
+		
+		return retVal;
+	}
+	
 	public String toString(){
 		return artist + " | " + stage + " | " + startTimeDate + " - " + endTimeDate;
 	}
@@ -101,7 +125,7 @@ public class Act {
 	}
 	
 	public String toStringTime(){
-		return startTimeDate + "-" + endTimeDate;
+		return formatTime(startTimeDate) + "-" + formatTime(endTimeDate);
 	}
 	
 	public boolean equals(Act act)
