@@ -14,7 +14,7 @@ public class AI {
     
     private static int x;
     private static int y;
-    private static ArrayList<ArrayList<Point2D>> paths;
+    private static ArrayList<ArrayList<Point>> paths;
     private AgendaData data;
     
     //Maakt 100 visitors aan met een random locatie, richting en afbeelding.
@@ -23,7 +23,8 @@ public class AI {
     	
         for(int i = 0; i < 100; i++) {
  
-            Point2D location = new Point2D.Double(Math.random() * 500, Math.random() * 500);
+            //Point2D location = new Point2D.Double(Math.random() * 500, Math.random() * 500);
+        	Point2D location = new Point2D.Double(581, 3);
             //TODO laat visitors spawnen bij ingang
             double direction = Math.random() * 2 * Math.PI;
             
@@ -32,6 +33,7 @@ public class AI {
             
             visitor.add(new Visitor(location,direction,imageType));
         }
+        waitForChange();
     }
     
     public AI(AgendaData data, int x, int y) {
@@ -44,12 +46,32 @@ public class AI {
     
     public void calculatePaths()
     {
-    	int amountOfStages = 5; //TODO maak dit werkend
-    	for (Stage stage : data.getStages())
+    	if (!data.getStages().isEmpty())
     	{
-    		ArrayList<Point2D> path;
-    		
+	    	int amountOfStages = 5; //TODO maak dit werkend
+	    	for (Stage stage : data.getStages())
+	    	{
+	    		System.out.println("path made!");
+	    		ArrayList<Point> path = new ArrayList<Point>();
+	    		Point stageloc = stage.getPos();
+	    		Point entrance = new Point(0,0);
+	    		Point point = entrance;
+	    		while (!point.equals(stageloc))
+	    		{
+	    			if (point.getX() != stageloc.getX())
+	    			{
+	    				point.setLocation(stageloc.getX(), point.getY());
+	    			}
+	    			else if (point.getY() != stageloc.getY());
+	    			{
+	    				point.setLocation(point.getX(), stageloc.getY());
+	    			}
+	    			path.add(point);
+	    		}
+	    		paths.add(path);
+	    	}
     	}
+    	
     }
     
     public void givePath()
@@ -57,7 +79,9 @@ public class AI {
     	for(Visitor v : visitor) {
     		if (v.locationReached())
     		{
+    			System.out.println("do");
     			v.setPath(paths.get(0));
+    			v.followPath();
     		}
         }
     }
@@ -134,6 +158,30 @@ public class AI {
     			//visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[1].split(":")[0]), Double.parseDouble(items[1].split(":")[1])),Double.parseDouble(items[2]),1));
     		}
     	}
+    }
+    
+    public void waitForChange()
+    {
+    	System.out.println("wait loop started!");
+    	Runnable run1 = new Runnable() {
+            public void run() {
+            	while (true)
+            	{
+	                try {
+	                    Thread.sleep(100);
+	                    System.out.println("check!");
+	                    calculatePaths();
+                    	givePath();
+	                    //System.out.println(ai.getData());
+	                } catch(Exception e) {
+	                    System.out.println(e);
+	                }
+            	}
+            }
+            
+        };
+        Thread thread1 = new Thread(run1);
+        thread1.start();
     }
     
     

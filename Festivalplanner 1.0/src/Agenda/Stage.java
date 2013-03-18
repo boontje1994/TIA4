@@ -27,6 +27,7 @@ public class Stage
 	public Stage(String name)
 	{
 		this.name = name;
+		pos = new Point(10,10);
 	}
 	
 	public Stage(String name, double x, double y, double w, double h, ImageIcon image, int stageNumber)

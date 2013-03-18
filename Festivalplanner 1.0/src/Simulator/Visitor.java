@@ -12,7 +12,7 @@ public class Visitor {
     private double direction;
     private Image image;
     private double speed;
-    private ArrayList<Point2D> path;
+    private ArrayList<Point> path;
 	private boolean atLocation;
     
     public Visitor() {
@@ -21,6 +21,7 @@ public class Visitor {
     
     public void followPath()
     {
+    	System.out.println("path following initialized");
     	if (!atLocation)
     	{
     		for (Point2D point : path)
@@ -32,12 +33,24 @@ public class Visitor {
     }
     
     private void navigateToTarget(Point2D point) {
-    	//TODO code om naar punt te lopen
+    	while (!point.equals(location))
+    	{
+    		if (point.getX() > location.getX())
+    			point.setLocation(point.getX()-1, point.getY());
+    		else if (point.getX() < location.getX())
+    			point.setLocation(point.getX()+1, point.getY());
+    		if (point.getY() > location.getY())
+    			point.setLocation(point.getX(), point.getY()-1);
+    		else if (point.getY() < location.getY())
+    			point.setLocation(point.getX(), point.getY()+1);
+    		
+    		System.out.println("a visitor's location changed to " + point.getX() + "x" + point.getY());
+    	}
 	}
 
-	public void setPath(ArrayList<Point2D> path)
+	public void setPath(ArrayList<Point> arrayList)
     {
-    	this.path = path;
+    	this.path = arrayList;
     }
     
     public Visitor(Point2D location, double direction, int imageType) {
