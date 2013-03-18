@@ -29,6 +29,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.TableView.TableRow;
 
 public class GUI1 {
 	private static JFrame frame;
@@ -259,7 +260,11 @@ public class GUI1 {
 		buttons.add(removeAct);
 		removeAct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				removeRow(table.getSelectedRow());
+				if (table.getValueAt(table.getSelectedRow(), 0) != null)
+				{
+					data.removeAct(table.getValueAt(table.getSelectedRow(), 0).toString(), Integer.parseInt(table.getValueAt(table.getSelectedRow(), 1).toString()), table.getValueAt(table.getSelectedRow(), 2).toString(), table.getValueAt(table.getSelectedRow(), 3).toString(), table.getValueAt(table.getSelectedRow(), 4).toString());
+					removeRow(table.getSelectedRow());
+				}
 			}
 		});
 

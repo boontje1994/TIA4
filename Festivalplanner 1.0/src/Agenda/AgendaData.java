@@ -19,6 +19,28 @@ public class AgendaData
 
 	}
 	
+	public void removeAct(String object, int object2, String object3, String object4, String object5)
+	{
+		int coin = 0;
+		boolean succ = false;
+		for (Act item : dataA)
+		{
+			if (item.equals(new Act(object, object2, object3, object4, object5)))
+			{
+				succ = true;
+				break;
+			}
+			coin++;
+		}
+		if (succ)
+		{
+			dataA.remove(coin);
+			System.out.println("succes");
+		}
+		else
+			System.out.println("geen succes, de objecten waren:\n" + object + "\n" + object2 + "\n" + object3 + "\n" + object4 + "\n" + object5 + "\n");
+	}
+	
 	public ArrayList<Act> getActs()
 	{
 		return dataA;
