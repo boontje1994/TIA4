@@ -12,9 +12,32 @@ public class Visitor {
     private double direction;
     private Image image;
     private double speed;
+    private ArrayList<Point2D> path;
+	private boolean atLocation;
     
     public Visitor() {
         this.speed = Math.random() * 4;
+    }
+    
+    public void followPath()
+    {
+    	if (!atLocation)
+    	{
+    		for (Point2D point : path)
+    		{
+    			navigateToTarget(point);
+    		}
+    		atLocation = true;
+    	}
+    }
+    
+    private void navigateToTarget(Point2D point) {
+    	//TODO code om naar punt te lopen
+	}
+
+	public void setPath(ArrayList<Point2D> path)
+    {
+    	this.path = path;
     }
     
     public Visitor(Point2D location, double direction, int imageType) {
@@ -87,6 +110,10 @@ public class Visitor {
 		targetLocation = new Point2D.Double(x,y);		
 	}
     
+    public void setTarget(Point2D point) {
+		targetLocation = point;		
+	}
+    
     public String getAllData()
     {
     	String vis = location.getX() + ":" + location.getY();
@@ -96,5 +123,10 @@ public class Visitor {
     	//vis += "*" + speed;
     	return vis;
     }
+
+	public boolean locationReached()
+	{
+		return atLocation;
+	}
     
 }

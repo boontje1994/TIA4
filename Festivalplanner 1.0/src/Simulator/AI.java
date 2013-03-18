@@ -10,12 +10,14 @@ public class AI {
     
     private static int x;
     private static int y;
+    private static ArrayList<ArrayList<Point2D>> paths;
     
     //Maakt 100 visitors aan met een random locatie, richting en afbeelding.
     public AI() {  
         for(int i = 0; i < 100; i++) {
  
             Point2D location = new Point2D.Double(Math.random() * 500, Math.random() * 500);
+            //TODO laat visitors spawnen bij ingang
             double direction = Math.random() * 2 * Math.PI;
             
             Random r = new Random();
@@ -32,12 +34,54 @@ public class AI {
         setTarget();
     }
     
+    public void calculatePaths()
+    {
+    	
+    }
+    
+    public void givePath()
+    {
+    	for(Visitor v : visitor) {
+    		if (v.locationReached())
+    		{
+    			v.setPath(paths.get(0));
+    		}
+        }
+    }
+    
     //Tekent de visitors op de map.
     public void drawVisitor(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         for(Visitor v : visitor) {
             v.drawImage(g2);
         }          
+    }
+    
+    public void addRemoveVisitors()
+    {
+    	int totalPopularity = 25; //maak manier om populariteit te meten
+    	if (totalPopularity > 20)
+    	{
+    		if (visitor.size() > 100) //make sane values
+    		{
+    			//kill visitors here
+    		}
+    		else if (visitor.size() <= 100) //make sane values
+    		{
+    			//add visitors here
+    		}
+    	}
+    	else if (totalPopularity <= 20)
+    	{
+    		if (visitor.size() > 100) //make sane values
+    		{
+    			//kill visitors here
+    		}
+    		else if (visitor.size() <= 100) //make sane values
+    		{
+    			//add visitors here
+    		}
+    	}
     }
     
     public void updateVisitor() {
