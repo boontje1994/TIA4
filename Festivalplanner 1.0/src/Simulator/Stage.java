@@ -14,6 +14,10 @@ public class Stage extends DrawableObject
 	private AffineTransform tx;
 	private int rotate = 0;
 		
+	public Stage()
+	{
+	}
+	
 	public Stage(String name, double x, double y, double w, double h, ImageIcon image, int stageNumber)
 	{
 		super(name, x, y, w, h, image);

@@ -87,4 +87,14 @@ public class Visitor {
 		targetLocation = new Point2D.Double(x,y);		
 	}
     
+    public String getAllData()
+    {
+    	String vis = location.getX() + ":" + location.getY();
+    	//vis += "*" + targetLocation.getX() + ":" + targetLocation.getY();
+    	vis += "=+=" + direction;
+    	//vis += "*" + image.
+    	//vis += "*" + speed;
+    	return vis;
+    }
+    
 }

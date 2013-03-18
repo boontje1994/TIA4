@@ -38,18 +38,15 @@ public class inputFrame
 	private JComboBox podium3;
 	private JComboBox startTime3;
 	private JComboBox endTime3;
+	private AgendaData data;
 
 	private boolean type;
 
 	private GUI1 gui;
 
-	public static void main(String args[])
+	public inputFrame(AgendaData data)
 	{
-		new inputFrame();
-	}
-
-	public inputFrame()
-	{
+		this.data = data;
 		makeFrame();
 	}
 
@@ -126,8 +123,9 @@ public class inputFrame
 						|| startTime3.getSelectedItem() == null
 						|| endTime3.getSelectedItem() == null)
 				{
-					JOptionPane error = new JOptionPane();
-					error.showConfirmDialog(null, "Een of meer velden is niet ingevuld", "Error", JOptionPane.ERROR_MESSAGE);
+					//JOptionPane error = new JOptionPane();
+					//error.showConfirmDialog(null, "Een of meer velden is niet ingevuld", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "Een of meer velden is niet ingevuld", "Error", JOptionPane.ERROR_MESSAGE);
 				} else
 				{
 					if (!Pattern.matches("[a-zA-Z]+", popularity3.getSelectedItem().toString()))
@@ -255,7 +253,7 @@ public class inputFrame
 					if (check)
 					{
 						podium3.addItem(podium3.getSelectedItem());
-						gui.newStage(podium3.getSelectedItem().toString());
+						data.addStage(new Stage(podium3.getSelectedItem().toString()));
 					}
 					i++;
 				}
@@ -304,7 +302,7 @@ public class inputFrame
 		}
 		if (numberOnly)
 		{
-			gui.addAct(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString());
+			data.addAct(new Act(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString()));
 			//System.out.println(podium3.getSelectedItem().toString();
 			artist3.setSelectedItem(null);
 			popularity3.setSelectedItem(null);
@@ -312,13 +310,28 @@ public class inputFrame
 			startTime3.setSelectedItem(null);
 			endTime3.setSelectedItem(null);
 		}
-		//TODO add exception to notify user when NaN occurs
-		gui.addAct(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString());
-		artist3.setSelectedItem(null);
-		popularity3.setSelectedItem(null);
-		podium3.setSelectedItem(null);
-		startTime3.setSelectedItem(null);
-		endTime3.setSelectedItem(null);
+		else
+		{
+			//TODO add exception to notify user when NaN occurs
+			if (artist3.getSelectedItem() != null && popularity3.getSelectedItem() != null && podium3.getSelectedItem() != null && startTime3.getSelectedItem() != null && endTime3.getSelectedItem() != null)
+			{
+				data.addAct(new Act(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString()));
+				artist3.setSelectedItem(null);
+				popularity3.setSelectedItem(null);
+				podium3.setSelectedItem(null);
+				startTime3.setSelectedItem(null);
+				endTime3.setSelectedItem(null);
+			}
+			else
+			{
+				System.out.println(artist3.getSelectedItem());
+				System.out.println(popularity3.getSelectedItem());
+				System.out.println(podium3.getSelectedItem());
+				System.out.println(startTime3.getSelectedItem());
+				System.out.println(endTime3.getSelectedItem());
+			}
+		}
+			
 	}
 
 	public void clearFields3()

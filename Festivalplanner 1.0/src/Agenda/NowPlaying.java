@@ -1,40 +1,111 @@
 package Agenda;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
+import java.awt.Dimension;
 
-public class NowPlaying {
+import javax.swing.JFrame;
+import javax.swing.JList;
+
+public class NowPlaying implements Runnable {
+
+	final static int HEIGHT = 300;
+	final static int WIDTH = 500;
 	
-	public NowPlaying()
+	private JFrame frame;
+	private JList list;
+	private String[] nowPlaying = "intit list ".split(" ");
+	private AgendaData data;
+
+
+	public NowPlaying(AgendaData data)
 	{
+		this.data = data;
+		makeFrame();
+		new Thread(this).start();
 		
 	}
 	
-	public boolean isNowBetweenDateTime(final Date s, final Date e)
-	{
-	    final Date now = new Date();
-	    return now.after(s) && now.before(e);
+	public void updateNP(){
+		nowPlaying = null;
+		nowPlaying = new String[data.getActs().size() * 5];
+		int idx = 0;
+		try{
+		for(int i=0; i < data.getActs().size(); i++){
+			if((data.getActs().get(i).isNowPlaying()))
+			{
+				nowPlaying[idx] = data.getActs().get(i).getArtist();
+				nowPlaying[idx += 1] = data.getActs().get(i).getStage();
+				nowPlaying[idx += 1] = data.getActs().get(i).toStringTime();
+				nowPlaying[idx += 1] = "***************************".trim();
+				idx++;
+			}
+		}
+		newJlist(nowPlaying);
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			newJlist(nowPlaying);			
+		}
+		
+	}
+
+	
+	private void newJlist(String[] obj){
+		frame.remove(list);
+		list = null;
+		list = new JList(obj);
+		frame.add(list);
+		//frame.revalidate();
+		frame.validate();
+		frame.repaint();	
 	}
 	
-	private Date dateFromHourMinSec(final String hhmmss)
-	{
-	    if (hhmmss.matches("^[0-2][0-3]:[0-5][0-9]:[0-5][0-9]$"))
-	    {
-	        final String[] hms = hhmmss.split(":");
-	        final GregorianCalendar gc = new GregorianCalendar();
-	        gc.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hms[0]));
-	        gc.set(Calendar.MINUTE, Integer.parseInt(hms[1]));
-	        gc.set(Calendar.SECOND, Integer.parseInt(hms[2]));
-	        gc.set(Calendar.MILLISECOND, 0);
-	        return gc.getTime();
-	    }
-	    else
-	    {
-	        throw new IllegalArgumentException(hhmmss + " is not a valid time, expecting HH:MM:SS format");
-	    }
-	}
+	
 	
 	
 
-}
+	
+	
+	public void makeFrame()
+	{
+		frame = new JFrame("Now Playing");
+		
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+		frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		list = new JList(nowPlaying);
+		list.setSize(new Dimension(WIDTH, HEIGHT));
+		frame.add(list);
+		updateNP();
+	}
+	
+	
+	
+	
+	private void wait(int time){
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while(true){
+			updateNP();
+			wait(1000/5);
+		}
+		
+	}
+	
+	}
+
+	
+
+
+
+

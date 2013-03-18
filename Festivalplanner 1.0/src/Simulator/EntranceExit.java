@@ -8,6 +8,10 @@ public class EntranceExit extends DrawableObject
 {
 	private boolean isOpen;
 	
+	public EntranceExit()
+	{
+	}
+	
 	public EntranceExit(String name, double x, double y, double w, double h, ImageIcon image)
 	{
 		super(name, x, y, w, h, image);
