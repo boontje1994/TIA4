@@ -19,6 +19,7 @@ public class Stage
 	private ImageIcon image;
 	private Point pos;
 	private int Button = 0;
+	private int rotateOld = 0;
 		
 	public Stage()
 	{
@@ -107,19 +108,20 @@ public class Stage
 	
 	public void drawStage(Graphics2D g2)
 	{
-
+		g2.translate(-600,-350);
 		if(rotate != 0)
 		{
 
 			if(rotate < 0)
 			{
 				tx.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
-
+//				Rect = tx.createTransformedShape(Rect);
+				
 			}
 			if(rotate > 0)
 			{
 				tx.rotate(5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
-
+//				Rect = tx.createTransformedShape(Rect);
 			}
 
 			rotate = 0;
@@ -152,7 +154,7 @@ public class Stage
 
 		
 		g2.transform(tx);
-		
+//		rotaterRect();
 
 		g2.drawImage(image.getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY() ,null);
 
@@ -230,6 +232,29 @@ public class Stage
 
 	public void setButton(int button) {
 		Button = button;
+	}
+
+	public int getRotateOld() {
+		return rotateOld;
+	}
+
+	public void setRotateOld(int rotateOld) {
+		this.rotateOld = rotateOld;
+	}
+	
+	public void rotaterRect()
+	{
+		AffineTransform tx = new AffineTransform();
+		if(rotateOld > 0)
+		{
+			tx.rotate(5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
+		}
+		if(rotateOld < 0)
+		{
+			tx.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
+		}
+		rotateOld = 0;
+		Rect = tx.createTransformedShape(Rect);
 	}
 	
 	
