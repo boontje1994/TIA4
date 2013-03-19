@@ -563,8 +563,8 @@ public class MainWindow extends JFrame
             super.paintComponent(g2);
             
             g2.scale(zoom,zoom);
-//            g2.translate(posX,posY);
-            g2.translate(0, 0);
+            g2.translate(posX,posY);
+//            g2.translate(0, 0);
             g2.rotate(Math.toRadians(t),400,400); 
 
             threadOne((Graphics2D)g2);
