@@ -44,7 +44,7 @@ public class AI {
             
             visitor.add(henk);
         }
-        waitForChange();
+        //waitForChange();
     }
     
     public AI(AgendaData data, int x, int y) {

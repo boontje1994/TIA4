@@ -574,19 +574,6 @@ public class MainWindow extends JFrame
         public void threadOne(Graphics g) {
             Graphics2D g2 = (Graphics2D)g;
             
-            Runnable run1 = new Runnable() {
-                public void run() {
-                    try {
-                        Thread.sleep(50);
-                        repaint();
-                        //System.out.println(ai.getData());
-                    } catch(Exception e) {
-                        System.out.println(e);
-                    }
-                }
-                
-            };   
-
             map.drawMountain((Graphics2D)g2);
             map.drawTree((Graphics2D)g2);
             map.drawField((Graphics2D)g2);
@@ -597,7 +584,7 @@ public class MainWindow extends JFrame
             user.drawUser((Graphics2D)g2);
             
             //AI
-            ai.drawVisitor((Graphics2D)g2);
+            //ai.drawVisitor((Graphics2D)g2);
             
             Graphics2D a = (Graphics2D)g2.create();
             Graphics2D b = (Graphics2D)g2.create();
@@ -627,8 +614,7 @@ public class MainWindow extends JFrame
             	stageE.drawStage(e);
             }
             
-            thread1 = new Thread(run1);
-            thread1.start();
+            repaint();
             
         }
 
