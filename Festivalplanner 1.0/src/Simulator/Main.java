@@ -23,12 +23,6 @@ public class Main
         app.init(data);
                 	
         while(!shutdownrequest) {
-        		try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
                 app.tick();
                 if (!app.isShowing())
                 {

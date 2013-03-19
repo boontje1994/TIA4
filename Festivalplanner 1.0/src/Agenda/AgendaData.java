@@ -1,12 +1,10 @@
 package Agenda;
-import java.awt.Point;
 import java.util.ArrayList;
 
 public class AgendaData
 {
 	private ArrayList<Act> dataA;
 	private ArrayList<Stage> dataS;
-	private ArrayList<Point> crossroads;
 	private boolean agendaVisible = true;
 	private boolean simVisible = false;
 
@@ -118,16 +116,6 @@ public class AgendaData
 	public void setAgendaVisible(boolean b) {
 		agendaVisible = b;
 		
-	}
-	
-	public void addPoint(Point point)
-	{
-		crossroads.add(point);
-	}
-	
-	public ArrayList<Point> getCrossroads()
-	{
-		return crossroads;
 	}
 
 }

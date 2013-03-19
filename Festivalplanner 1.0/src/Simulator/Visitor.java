@@ -12,59 +12,9 @@ public class Visitor {
     private double direction;
     private Image image;
     private double speed;
-    private ArrayList<Point> path;
-	private boolean atLocation;
     
     public Visitor() {
         this.speed = Math.random() * 4;
-        atLocation = true;
-    }
-    
-    public void followPath()
-    {
-    	System.out.println("path following initialized");
-    	
-    	if (!atLocation)
-    	{
-    		for (Point2D point : path)
-    		{
-    			navigateToTarget(point);
-    		}
-    		atLocation = true;
-    	}
-    }
-    
-    private void navigateToTarget(final Point2D point) {
-    	while (!point.equals(location))
-    	{
-     	   if (point.getX() > location.getX())
-     		   location.setLocation(location.getX()+0.01, location.getY());
-    		else if (point.getX() < location.getX())
-    			location.setLocation(location.getX()-0.01, location.getY());
-    		if (point.getY() > location.getY())
-    			location.setLocation(location.getX(), location.getY()-0.01);
-    		else if (point.getY() < location.getY())
-    			location.setLocation(location.getX(), location.getY()+0.01); 
-    		else
-    			System.out.println("jump");
-    		
-    		double x = point.getX() - location.getX();
-    		double y = point.getY() - location.getY();
-    		double angle = Math.atan2(y, x);
-    		direction = angle;
-    		//Thread.sleep(1);
-    		if ((int)point.getX() == (int)location.getX() && (int)point.getX() == (int)location.getX())
-    		{
-    			location.setLocation(point);
-    			break;
-    		}
-    		//System.out.println("a visitor's location changed to " + location.getX() + "x" + location.getY());
-    	}
-	}
-
-	public void setPath(ArrayList<Point> arrayList)
-    {
-    	this.path = arrayList;
     }
     
     public Visitor(Point2D location, double direction, int imageType) {
@@ -137,10 +87,6 @@ public class Visitor {
 		targetLocation = new Point2D.Double(x,y);		
 	}
     
-    public void setTarget(Point2D point) {
-		targetLocation = point;		
-	}
-    
     public String getAllData()
     {
     	String vis = location.getX() + ":" + location.getY();
@@ -150,10 +96,5 @@ public class Visitor {
     	//vis += "*" + speed;
     	return vis;
     }
-
-	public boolean locationReached()
-	{
-		return atLocation;
-	}
     
 }
