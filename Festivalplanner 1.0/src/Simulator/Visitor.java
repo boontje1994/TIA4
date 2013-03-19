@@ -37,48 +37,28 @@ public class Visitor {
     private void navigateToTarget(final Point2D point) {
     	while (!point.equals(location))
     	{
+     	   if (point.getX() > location.getX())
+     		   location.setLocation(location.getX()+0.01, location.getY());
+    		else if (point.getX() < location.getX())
+    			location.setLocation(location.getX()-0.01, location.getY());
+    		if (point.getY() > location.getY())
+    			location.setLocation(location.getX(), location.getY()-0.01);
+    		else if (point.getY() < location.getY())
+    			location.setLocation(location.getX(), location.getY()+0.01); 
+    		else
+    			System.out.println("jump");
     		
-    		
-    		
-    		
-    		
-    		Runnable run1 = new Runnable() {
-                public void run() {
-    	               try {
-    	            	 //Point2D point2 = new Point2D.Double();
-    	            	   if (point.getX() > location.getX())
-    	           			//point.setLocation(point.getX()-0.001, point.getY());
-    	            	   location.setLocation(location.getX()+1, location.getY());
-    	           		else if (point.getX() < location.getX())
-    	           			location.setLocation(location.getX()-1, location.getY());
-    	           		if (point.getY() > location.getY())
-    	           			location.setLocation(location.getX(), location.getY()+1);
-    	           		else if (point.getY() < location.getY())
-    	           			location.setLocation(location.getX(), location.getY()-1);  
-    	           		
-    	           		double x = point.getX() - location.getX();
-    	        		double y = point.getY() - location.getY();
-    	        		double angle = Math.atan2(y, x);
-    	        		direction = angle;
-    	                 Thread.sleep(1);
-    	                 
-    	                 //location = point;
-    	                 //System.out.println("check!");
-    	                //calculatePaths();
-                       	//givePath();
-    	                   //System.out.println(ai.getData());
-    	               } catch(Exception e) {
-    	                   System.out.println(e);
-    	               }
-                }
-                
-            };
-            Thread thread1 = new Thread(run1);
-            thread1.start();
-    		
-    		
-    		
-    		System.out.println("a visitor's location changed to " + location.getX() + "x" + location.getY());
+    		double x = point.getX() - location.getX();
+    		double y = point.getY() - location.getY();
+    		double angle = Math.atan2(y, x);
+    		direction = angle;
+    		//Thread.sleep(1);
+    		if ((int)point.getX() == (int)location.getX() && (int)point.getX() == (int)location.getX())
+    		{
+    			location.setLocation(point);
+    			break;
+    		}
+    		//System.out.println("a visitor's location changed to " + location.getX() + "x" + location.getY());
     	}
 	}
 
