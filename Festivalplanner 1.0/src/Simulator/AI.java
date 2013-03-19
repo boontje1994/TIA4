@@ -29,9 +29,20 @@ public class AI {
             double direction = Math.random() * 2 * Math.PI;
             
             Random r = new Random();
-            int imageType = r.nextInt(2);
+            int imageType = r.nextInt(2); 
             
-            visitor.add(new Visitor(location,direction,imageType));
+            Visitor henk = new Visitor(location,direction,imageType);
+            
+            ArrayList<Point> path = new ArrayList<Point>();
+            path.add(new Point(581, 3));
+            path.add(new Point(200, 3));
+            path.add(new Point(200, 250));
+            path.add(new Point(300, 250));
+            
+            henk.setPath(path);
+            //henk.followPath();
+            
+            visitor.add(henk);
         }
         waitForChange();
     }
@@ -168,10 +179,16 @@ public class AI {
             	while (true)
             	{
 	                try {
-	                    Thread.sleep(100);
+	                    Thread.sleep(1000);
+	                    
+	                    for(Visitor henk : visitor)
+	                    {
+	                    	//if (henk.locationReached())
+	                    		henk.followPath();
+	                    }
 	                    System.out.println("check!");
-	                    calculatePaths();
-                    	givePath();
+	                    //calculatePaths();
+                    	//givePath();
 	                    //System.out.println(ai.getData());
 	                } catch(Exception e) {
 	                    System.out.println(e);

@@ -17,11 +17,13 @@ public class Visitor {
     
     public Visitor() {
         this.speed = Math.random() * 4;
+        atLocation = true;
     }
     
     public void followPath()
     {
     	System.out.println("path following initialized");
+    	
     	if (!atLocation)
     	{
     		for (Point2D point : path)
@@ -32,19 +34,51 @@ public class Visitor {
     	}
     }
     
-    private void navigateToTarget(Point2D point) {
+    private void navigateToTarget(final Point2D point) {
     	while (!point.equals(location))
     	{
-    		if (point.getX() > location.getX())
-    			point.setLocation(point.getX()-1, point.getY());
-    		else if (point.getX() < location.getX())
-    			point.setLocation(point.getX()+1, point.getY());
-    		if (point.getY() > location.getY())
-    			point.setLocation(point.getX(), point.getY()-1);
-    		else if (point.getY() < location.getY())
-    			point.setLocation(point.getX(), point.getY()+1);
     		
-    		System.out.println("a visitor's location changed to " + point.getX() + "x" + point.getY());
+    		
+    		
+    		
+    		
+    		Runnable run1 = new Runnable() {
+                public void run() {
+    	               try {
+    	            	 //Point2D point2 = new Point2D.Double();
+    	            	   if (point.getX() > location.getX())
+    	           			//point.setLocation(point.getX()-0.001, point.getY());
+    	            	   location.setLocation(location.getX()+1, location.getY());
+    	           		else if (point.getX() < location.getX())
+    	           			location.setLocation(location.getX()-1, location.getY());
+    	           		if (point.getY() > location.getY())
+    	           			location.setLocation(location.getX(), location.getY()+1);
+    	           		else if (point.getY() < location.getY())
+    	           			location.setLocation(location.getX(), location.getY()-1);  
+    	           		
+    	           		double x = point.getX() - location.getX();
+    	        		double y = point.getY() - location.getY();
+    	        		double angle = Math.atan2(y, x);
+    	        		direction = angle;
+    	                 Thread.sleep(1);
+    	                 
+    	                 //location = point;
+    	                 //System.out.println("check!");
+    	                //calculatePaths();
+                       	//givePath();
+    	                   //System.out.println(ai.getData());
+    	               } catch(Exception e) {
+    	                   System.out.println(e);
+    	               }
+                }
+                
+            };
+            Thread thread1 = new Thread(run1);
+            thread1.start();
+    		
+    		
+    		
+    		System.out.println("a visitor's location changed to " + location.getX() + "x" + location.getY());
     	}
 	}
 
