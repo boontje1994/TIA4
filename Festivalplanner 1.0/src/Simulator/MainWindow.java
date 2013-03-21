@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
@@ -40,13 +41,6 @@ public class MainWindow extends JFrame
     private int offsetY = 0;
     private Point lastMousePosition;
     
-    //Stage objecten
-    private Stage stageA;
-    private Stage stageB;
-    private Stage stageC;
-    private Stage stageD;
-    private Stage stageE;
-    
     //Velden
     private static JTextField xLength;
     private static JTextField yLength;
@@ -68,11 +62,11 @@ public class MainWindow extends JFrame
         setContentPane(container);
         
         //Menucontent - Menu
-        JPanel menucontent = new menucontent();
+        JPanel menucontent = new Menucontent();
         container.add(menucontent, BorderLayout.NORTH);
         
         //Rightcontent - Shape
-        JPanel rightcontent = new rightcontent();
+        JPanel rightcontent = new Rightcontent();
         container.add(rightcontent, BorderLayout.EAST);
         
         //Maincontent - Paint
@@ -163,7 +157,7 @@ public class MainWindow extends JFrame
         public void mouseClicked(MouseEvent event) {}
         public void mouseReleased(MouseEvent event) 
         {
-        	if(stageA != null)
+        	/*if(stageA != null)
         	{
             	if(stageA.isSelected() == true)
             	{
@@ -197,12 +191,12 @@ public class MainWindow extends JFrame
             	{
             		stageE.setSelected(false);
             	}
-        	}
+        	}*/
         }
         public void mousePressed(MouseEvent event) 
         {
         	System.out.println(event.getPoint());
-        	if(stageA != null)
+        	/*if(stageA != null)
         	{
             	if(stageA.getRect().contains(event.getPoint()))
             	{
@@ -223,7 +217,7 @@ public class MainWindow extends JFrame
             		if(stageB.isSelected() == false)
             		{
             			System.out.println("Selected B");*/
-            	if(stageB.getRect().contains(event.getPoint()))
+            	/*if(stageB.getRect().contains(event.getPoint()))
             	{
             		if(stageB.isSelected() == false)
             		{
@@ -265,87 +259,14 @@ public class MainWindow extends JFrame
             			lastMousePosition = event.getPoint();
             		}
             	}
-        	}
+        	}*/
         }
         public void mouseEntered(MouseEvent event) {}
         public void mouseExited(MouseEvent event) {}
         //Mouse motion events
         public void mouseDragged(MouseEvent event) 
         {
-//    		if(selected == true)
-//    		{
-//    			AffineTransform tx = new AffineTransform();
-//    			tx.translate(event.getPoint().x - lastMousePosition.x, 
-//    					 	 event.getPoint().y - lastMousePosition.y);
-//    			s1 = tx.createTransformedShape(s1);
-//    			lastMousePosition = event.getPoint();
-//    			repaint();
-//    		}
-        	if(stageA != null)
-        	{
-            	if(stageA.isSelected() == true )
-            	{
-            		AffineTransform tx = new AffineTransform();
-            		tx.translate(event.getPoint().x - lastMousePosition.x,
-            					 event.getPoint().y - lastMousePosition.y);
-            		stageA.setRect2(tx.createTransformedShape(stageA.getRect()));
-            		lastMousePosition = event.getPoint();
-            		stageA.updateCo();
-            		repaint();
-            	}
-        	}
-        	if(stageB != null)
-        	{
-            	if(stageB.isSelected() == true)
-            	{
-            		AffineTransform tx = new AffineTransform();
-            		tx.translate(event.getPoint().x - lastMousePosition.x,
-            					 event.getPoint().y - lastMousePosition.y);
-            		stageB.setRect2(tx.createTransformedShape(stageB.getRect()));
-            		lastMousePosition = event.getPoint();
-            		repaint();
-            		stageB.updateCo();
-            	}
-        	}
-        	if(stageC != null)
-        	{
-               	if(stageC.isSelected() == true)
-            	{
-            		AffineTransform tx = new AffineTransform();
-            		tx.translate(event.getPoint().x - lastMousePosition.x,
-            					 event.getPoint().y - lastMousePosition.y);
-            		stageC.setRect2(tx.createTransformedShape(stageC.getRect()));
-            		lastMousePosition = event.getPoint();
-            		repaint();
-            		stageC.updateCo();
-            	}
-        	}
-        	if(stageD != null)
-        	{
-            	if(stageD.isSelected() == true)
-            	{
-            		AffineTransform tx = new AffineTransform();
-            		tx.translate(event.getPoint().x - lastMousePosition.x,
-            					 event.getPoint().y - lastMousePosition.y);
-            		stageD.setRect2(tx.createTransformedShape(stageD.getRect()));
-            		lastMousePosition = event.getPoint();
-            		repaint();
-            		stageD.updateCo();
-            	}
-        	}
-        	if(stageE != null)
-        	{
-            	if(stageE.isSelected() == true)
-            	{
-            		AffineTransform tx = new AffineTransform();
-            		tx.translate(event.getPoint().x - lastMousePosition.x,
-            					 event.getPoint().y - lastMousePosition.y);
-            		stageE.setRect2(tx.createTransformedShape(stageE.getRect()));
-            		lastMousePosition = event.getPoint();
-            		repaint();
-            		stageE.updateCo();
-            	}
-        	}
+        	
         }
         public void mouseMoved(MouseEvent event) {
         	
@@ -353,60 +274,14 @@ public class MainWindow extends JFrame
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent event) 
 		{
-			if(stageA != null)
-			{
-				if(stageA.isSelected() == true)
-				{
-//					AffineTransform tx = new AffineTransform();
-//					if(event.getPreciseWheelRotation() < 0)
-//					{
-//						tx.rotate(-5*(Math.PI/180),stageA.getRect().getBounds().getCenterX(),stageA.getRect().getBounds().getCenterY());
-//					}
-//					if(event.getPreciseWheelRotation() > 0)
-//					{
-//						tx.rotate(5*(Math.PI/180),stageA.getRect().getBounds().getCenterX(),stageA.getRect().getBounds().getCenterY());
-//					}
-//					stageA.setRect2(tx.createTransformedShape(stageA.getRect()));
-					stageA.setRotate((int)event.getPreciseWheelRotation());
-//					stageA.updateCo();
-				}
-			}
-	
-			if(stageB != null)
-			{
-				if(stageB.isSelected() == true)
-				{
-					stageB.setRotate((int)event.getPreciseWheelRotation());
-				}
-			}
-			if(stageC != null)
-			{
-				if(stageC.isSelected() == true)
-				{
-					stageC.setRotate((int)event.getPreciseWheelRotation());
-				}
-			}
-			if(stageD != null)
-			{
-				if(stageD.isSelected() == true)
-				{
-					stageD.setRotate((int)event.getPreciseWheelRotation());
-				}
-			}
-			if(stageE != null)
-			{
-				if(stageE.isSelected() == true)
-				{
-					stageE.setRotate((int)event.getPreciseWheelRotation());
-				}
-			}
+			
 		}
         
     }
     
-    class menucontent extends JPanel {
+    class Menucontent extends JPanel {
         
-        public menucontent() {
+        public Menucontent() {
             
             setLayout(new GridLayout(1,2));
             setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -499,27 +374,9 @@ public class MainWindow extends JFrame
             g2.translate(posX,posY);
 //            g2.translate(0, 0);
             g2.rotate(Math.toRadians(t),400,400); 
-
-            threadOne((Graphics2D)g2);
             
-        }
-        
-        public void threadOne(Graphics g) {
-            Graphics2D g2 = (Graphics2D)g;
+            //uit ThreadOne
             
-            Runnable run1 = new Runnable() {
-                public void run() {
-                    try {
-                        Thread.sleep(50);
-                        repaint();
-                        //System.out.println(ai.getData());
-                    } catch(Exception e) {
-                        System.out.println(e);
-                    }
-                }
-                
-            };   
-
             map.drawMountain((Graphics2D)g2);
             map.drawTree((Graphics2D)g2);
             map.drawField((Graphics2D)g2);
@@ -537,61 +394,19 @@ public class MainWindow extends JFrame
             Graphics2D c = (Graphics2D)g2.create();
             Graphics2D d = (Graphics2D)g2.create();
             Graphics2D e = (Graphics2D)g2.create();
-            
-            //Draw Stages
-            if(stageA != null)
-            {
-            	stageA.drawStage(a);
-            }
-            if(stageB != null)
-            {
-            	stageB.drawStage(b);
-            }
-            if(stageC != null)
-            {
-            	stageC.drawStage(c);
-            }
-            if(stageD != null)
-            {
-            	stageD.drawStage(d);
-            }
-            if(stageE != null)
-            {
-            	stageE.drawStage(e);
-            }
-            
-            //Draw Stages
-            if(stageA != null)
-            {
-            	stageA.drawStage(g2);
-            }
-            if(stageB != null)
-            {
-            	stageB.drawStage(g2);
-            }
-            if(stageC != null)
-            {
-            	stageC.drawStage(g2);
-            }
-            if(stageD != null)
-            {
-            	stageD.drawStage(g2);
-            }
-            if(stageE != null)
-            {
-            	stageE.drawStage(g2);
-            }
-            
-            thread1 = new Thread(run1);
-            thread1.start();
+
+            //threadOne((Graphics2D)g2);
             
         }
+        
 
     }
     
-    class rightcontent extends JPanel {
+    class Rightcontent extends JPanel {
         
-        public rightcontent() {
+        private JComboBox stageBox;
+
+		public Rightcontent() {
             
             setBackground(Color.WHITE);
             
@@ -864,70 +679,31 @@ public class MainWindow extends JFrame
             //Construction menu
             JPanel constructionMenu = new JPanel(new GridLayout(3,2));
             constructionMenu.setBounds(0,360,250,250);
-            constructionMenu.setBackground(Color.BLACK);
+            constructionMenu.setBackground(Color.WHITE);
+            stageBox = new JComboBox();
+            //dynamic stages
+            //stageBox.addItem("lel");
+            
+            constructionMenu.add(stageBox);
             controlMenu.add(constructionMenu);
             
-            JButton podiumA = new JButton("Podium A");
-            podiumA.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) 
-                {
-                	ImageIcon im  = new ImageIcon("images/play.png");
-                	stageA = new Stage("StageA",0,0,im.getIconWidth(),im.getIconHeight(),im,1);
-                }
-            });
-            constructionMenu.add(podiumA);
-            
-            JButton podiumB = new JButton("Podium B");
-            podiumB.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) 
-                {
-                	ImageIcon im = new ImageIcon("images/left.png");
-                	stageB = new Stage("StageB",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,2);
-                }
-            }); 
-            constructionMenu.add(podiumB);
-            
-            JButton podiumC = new JButton("Podium C");
-            podiumC.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) 
-                { 
-                	ImageIcon im = new ImageIcon("images/up.png");
-                	stageC = new Stage("StageC",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,3);
-                }
-            });
-            constructionMenu.add(podiumC);
-            
-            JButton podiumD = new JButton("Podium D");
-            podiumD.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) 
-                {
-                	ImageIcon im = new ImageIcon("images/troll.png");
-                	stageD = new Stage("StageD",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,4);
-                }
-            }); 
-            constructionMenu.add(podiumD);
-            
-            JButton podiumE = new JButton("Podium E");
-            podiumE.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) 
-                { 
-                	ImageIcon im = new ImageIcon("images/stop.png");
-                	stageE = new Stage("StageE",(Math.random()*800),(Math.random()*800),im.getIconWidth(),im.getIconHeight(),im,5);
-                }
-            });
-            constructionMenu.add(podiumE);
-            
-            JButton toiletAndInfo = new JButton("ToiletInfo");
-            toiletAndInfo.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-       
-                }
-            });
-            constructionMenu.add(toiletAndInfo);
             
         }
+		
+		 public void updateStageBox()
+		    {
+		    	if (data.getStages().size() > 0)
+		        {
+		            for (Stage stage : data.getStages())
+		            {
+		            	stageBox.addItem(stage.getName());
+		            }
+		        }
+		    }
 
     }
+    
+   
     
     class bottomcontent extends JPanel {
         
@@ -949,6 +725,14 @@ public class MainWindow extends JFrame
 
 	public void tick() {
 		ai.update();
+		repaint();
+		
+		//1/(float)time/1000)
+		// s/f=spf
+		// dus f = (1/spf)
+		// fps is f
+
+		//System.out.println(time + " fps");
 		
 		
 	}
