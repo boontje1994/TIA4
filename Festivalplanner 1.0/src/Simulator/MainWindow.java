@@ -947,4 +947,10 @@ public class MainWindow extends JFrame
        
     }
 
+	public void tick() {
+		ai.update();
+		
+		
+	}
+
 }

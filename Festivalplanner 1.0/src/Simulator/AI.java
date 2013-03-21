@@ -44,7 +44,17 @@ public class AI {
             
             visitor.add(henk);
         }
-        waitForChange();
+        //waitForChange();
+    }
+    
+    public void update()
+    {
+    	
+    	for(Visitor henk : visitor)
+        {
+        	//if (henk.locationReached())
+        		henk.step();
+        }
     }
     
     public AI(AgendaData data, int x, int y) {
