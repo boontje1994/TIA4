@@ -43,6 +43,7 @@ public class MainWindow extends JFrame
 	private Rightcontent rightcontent;
 	private boolean leltest;
 	private Point lelpos;
+	public boolean moving;
     
     //Velden
     private static JTextField xLength;
@@ -57,7 +58,7 @@ public class MainWindow extends JFrame
         user = new User();
         ai = new AI(data);
         this.data = data;
-        
+        moving = false;
         lelpos = new Point();
         
         //System.out.println(ai.getData());
@@ -161,7 +162,30 @@ public class MainWindow extends JFrame
         
 		//Mouse events
         public void mouseClicked(MouseEvent event) {
-        	
+        	if (!moving)
+        	{
+	        	for (Stage stage : data.getStages())
+	        	{
+	        		System.out.println("this stage loc is " + stage.getPos().x + "x" + stage.getPos().y);
+	        		if (stage.isClicked((int)lelpos.getX(), (int)lelpos.getY()))
+	        		{
+	        			moving = true;
+	        			stage.setSelected(true);
+	        		}
+	        	}
+        	}
+        	else
+        	{
+        		for (Stage stage : data.getStages())
+	        	{
+	        		
+	        		if (stage.isSelected())
+	        		{
+	        			stage.setSelected(false);
+	        			moving = false;
+	        		}
+	        	}
+        	}
         }
         public void mouseReleased(MouseEvent event) 
         {
@@ -203,14 +227,7 @@ public class MainWindow extends JFrame
         }
         public void mousePressed(MouseEvent event) 
         {
-        	System.out.println(event.getPoint());
-        	System.out.println("the camera is now at " + posX + "x" + posY);
-        	System.out.println("the zoom is now " + zoom);
-        	System.out.println("meaning the virtual cursor position is " + ((event.getPoint().x*zoom)+posX) + "x" + ((event.getPoint().y*zoom)+posY));
-        	leltest = true;
-        	// attempt 1:lelpos.setLocation(((int)(event.getPoint().x*zoom)+posX), (int) ((event.getPoint().y*zoom)+posY));
-        	// attempt 2:lelpos.setLocation(((int)(event.getPoint().x+posX)/zoom), (int) ((event.getPoint().y+posY)/zoom));
-        	lelpos.setLocation(((int)(event.getPoint().x/zoom)-posX), (int) ((event.getPoint().y/zoom)-posY));
+        	
         	/*if(stageA != null)
         	
             	if(stageA.getRect().contains(event.getPoint()))
@@ -284,7 +301,25 @@ public class MainWindow extends JFrame
         	
         }
         public void mouseMoved(MouseEvent event) {
-        	
+        	System.out.println(event.getPoint());
+        	System.out.println("the camera is now at " + posX + "x" + posY);
+        	System.out.println("the zoom is now " + zoom);
+        	System.out.println("the rotation is " + Math.toRadians(t)); //TODO there are still issues when rotated
+        	System.out.println("meaning the virtual cursor position is " + ((event.getPoint().x/zoom)-posX) + "x" + ((event.getPoint().y/zoom)-posY));
+        	leltest = true;
+        	lelpos.setLocation(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t));
+        	if (moving)
+        	{
+	        	for (Stage stage : data.getStages())
+	        	{
+	        		
+	        		if (stage.isSelected())
+	        		{
+	        			System.out.println("stage " + stage.getName() + " is being moved!");
+	        			stage.setPos(new Point(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t)));
+	        		}
+	        	}
+        	}
         }
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent event) 
@@ -713,7 +748,14 @@ public class MainWindow extends JFrame
             place.setFocusPainted(false);
             place.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                
+                	for (Stage stage : data.getStages())
+                	{
+                		if (stage.getName().equals(stageBox.getSelectedItem()))
+                		{
+                			stage.initVisual(0, 0, 50, 50, new ImageIcon("images/rotateRight.png"));
+                			stage.setPos(new Point(0,0));
+                		}
+                	}
                 }
             });
             

@@ -10,8 +10,7 @@ import javax.swing.ImageIcon;
 public class Stage 
 {
 	private String name;
-	private int stageNumber;
-	private Shape Rect;
+	private Shape rect;
 	private boolean selected = false;
 	private AffineTransform tx;
 	private int rotate = 0;
@@ -28,16 +27,23 @@ public class Stage
 	public Stage(String name)
 	{
 		this.name = name;
+		rect = (new Rectangle2D.Double(0,0,0,0));
 		//pos = new Point(10,10);
 	}
 	
-	public Stage(String name, double x, double y, double w, double h, ImageIcon image, int stageNumber)
+	public Stage(String name, double x, double y, double w, double h, ImageIcon image)
 	{
 //		super(name, x, y, w, h, image);
 		this.setName(name);
 		this.image = image;
-		this.setStageNumber(stageNumber);
-		Rect = (new Rectangle2D.Double(x,y,w,h));
+		rect = (new Rectangle2D.Double(x,y,w,h));
+		setTransformOnce();
+	}
+	
+	public void initVisual(double x, double y, double w, double h, ImageIcon image)
+	{
+		this.image = image;
+		rect = (new Rectangle2D.Double(x,y,w,h));
 		setTransformOnce();
 	}
 	
@@ -72,16 +78,6 @@ public class Stage
 //		return false;
 //	}
 
-	public int getStageNumber()
-	{
-		return stageNumber;
-	}
-
-	public void setStageNumber(int stageNumber)
-	{
-		this.stageNumber = stageNumber;
-	}
-	
 	public AffineTransform setTransformOnce()
 	{
 		AffineTransform tx = new AffineTransform();
@@ -93,7 +89,7 @@ public class Stage
 	public void updateCo()
 	{
 //		tx.((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
-		tx.rotate(0,(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
+		tx.rotate(0,(int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 	}
 	
 	public void setTransform(AffineTransform form)
@@ -109,7 +105,7 @@ public class Stage
 	
 	public void drawStage(Graphics2D g2)
 	{
-		g2.translate(-600,-350);
+		//g2.translate(-600,-350);
 		if(rotate != 0)
 		{
 
@@ -154,14 +150,14 @@ public class Stage
 		}
 
 		
-		g2.transform(tx);
+		//g2.transform(tx);
 //		rotaterRect();
 
-		g2.drawImage(image.getImage(),(int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY() ,null);
+		g2.drawImage(image.getImage(),(int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY() ,null);
 
 		if(selected == true)
 		{
-			g2.draw(Rect);
+			g2.draw(rect);
 		}
 
 		
@@ -170,7 +166,7 @@ public class Stage
 
 
 	public Shape getRect() {
-		return Rect;
+		return rect;
 	}
 	
 	public boolean isLocated()
@@ -181,7 +177,7 @@ public class Stage
 
 
 	public void setRect2(Shape rect) {
-		Rect = rect;
+		rect = rect;
 	}
 
 
@@ -216,12 +212,13 @@ public class Stage
 
 	public Point getPos() 
 	{
-		pos = new Point((int)Rect.getBounds().getMinX(),(int)Rect.getBounds().getMinY());
+		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 		return pos;
 	}
 
 	public void setPos(Point pos) {
 		this.pos = pos;
+		rect = (new Rectangle2D.Double(pos.getX(),pos.getY(),rect.getBounds().getWidth(),rect.getBounds().getHeight()));
 	}
 
 	public int getScale() {
@@ -260,7 +257,13 @@ public class Stage
 			tx.rotate(-5*(Math.PI/180),getRect().getBounds().getCenterX(),getRect().getBounds().getCenterY());
 		}
 		rotateOld = 0;
-		Rect = tx.createTransformedShape(Rect);
+		rect = tx.createTransformedShape(rect);
+	}
+	
+	public boolean isClicked(int x, int y)
+	{
+		System.out.println(this.getName() + " is clicked!");
+		return (rect.contains(x, y));
 	}
 	
 	
