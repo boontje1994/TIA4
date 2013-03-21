@@ -167,22 +167,28 @@ public class MainWindow extends JFrame
 	        	for (Stage stage : data.getStages())
 	        	{
 	        		System.out.println("this stage loc is " + stage.getPos().x + "x" + stage.getPos().y);
-	        		if (stage.isClicked((int)lelpos.getX(), (int)lelpos.getY()))
-	        		{
-	        			moving = true;
-	        			stage.setSelected(true);
-	        		}
+	        		if (stage.isLocated())
+		        		{
+		        			if (stage.isClicked((int)lelpos.getX(), (int)lelpos.getY()))
+			        		{
+			        			moving = true;
+			        			stage.setSelected(true);
+			        		}
+	        			}
 	        	}
         	}
         	else
         	{
         		for (Stage stage : data.getStages())
 	        	{
-	        		
-	        		if (stage.isSelected())
+        			if (stage.isLocated())
 	        		{
-	        			stage.setSelected(false);
-	        			moving = false;
+	        		
+		        		if (stage.isSelected())
+		        		{
+		        			stage.setSelected(false);
+		        			moving = false;
+		        		}
 	        		}
 	        	}
         	}
@@ -312,11 +318,14 @@ public class MainWindow extends JFrame
         	{
 	        	for (Stage stage : data.getStages())
 	        	{
-	        		
-	        		if (stage.isSelected())
+	        	
+	        		if (stage.isLocated())
 	        		{
-	        			System.out.println("stage " + stage.getName() + " is being moved!");
-	        			stage.setPos(new Point(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t)));
+		        		if (stage.isSelected())
+		        		{
+		        			System.out.println("stage " + stage.getName() + " is being moved!");
+		        			stage.setPos(new Point(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t)));
+		        		}
 	        		}
 	        	}
         	}
