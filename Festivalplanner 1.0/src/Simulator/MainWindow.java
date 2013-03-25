@@ -333,7 +333,20 @@ public class MainWindow extends JFrame
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent event) 
 		{
-			
+			if (moving)
+        	{
+	        	for (Stage stage : data.getStages())
+	        	{
+	        	
+	        		if (stage.isLocated())
+	        		{
+		        		if (stage.isSelected())
+		        		{
+		        			stage.setRotate(stage.getRotate() + event.getWheelRotation()*6);
+		        		}
+	        		}
+	        	}
+        	}
 		}
         
     }
