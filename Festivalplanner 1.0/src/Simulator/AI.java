@@ -5,7 +5,7 @@ import javax.swing.*;
 
 import Agenda.AgendaData;
 import Agenda.Stage;
-import OOP.avans.nl.WordfeudHulp;
+//import OOP.avans.nl.WordfeudHulp;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -54,13 +54,20 @@ public class AI {
             visitor.add(henk);
         }
     }
+    
+    
+    public Point getDestination()
+    {
+    	return data.getStages().get(randomWithRange(0, data.getStages().size())).getPos();
+    }
     public void update()
     {
     	
     	for(Visitor henk : visitor)
         {
-        	//if (henk.locationReached())
-        		henk.step();
+        	if (henk.locationReached() && data.getStages().size() > 0)
+        		henk.setPath(givePath(henk.getLocation(), getDestination()));
+        	henk.step();
         }
     }
     
@@ -77,7 +84,7 @@ public class AI {
     	ArrayList points = data.getCrossroadsWithin(loc, stage);
     	points.add(stage);
     	points.add(loc);
-    	Collections.sort(points, c);
+//    	Collections.sort(points, c);
 		return null;
     	
     }
@@ -121,6 +128,12 @@ public class AI {
     			v.followPath();
     		}
         }
+    }
+    
+    int randomWithRange(int min, int max)
+    {
+       int range = (max - min) + 1;     
+       return (int)(Math.random() * range) + min;
     }
     
     //Tekent de visitors op de map.

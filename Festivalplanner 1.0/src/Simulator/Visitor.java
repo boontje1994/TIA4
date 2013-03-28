@@ -93,7 +93,7 @@ public class Visitor {
        direction = angle;
        //Thread.sleep(1);
        //location.setLocation(point);
-       System.out.println("a visitor's location changed to " + location.getX() + "x" + location.getY());
+//       System.out.println("a visitor's location changed to " + location.getX() + "x" + location.getY());
        if (((int)point.getX()/10) == ((int)location.getX()/10) && ((int)point.getY()/10) == ((int)location.getY()/10))
        {
     	   location.setLocation(point);
@@ -219,6 +219,13 @@ public class Visitor {
 			else
 				atLocation = true;
     	}
+		
+	}
+
+	public Point getLocation() {
+		Point henk = new Point();
+		henk.setLocation(location);
+		return henk;
 		
 	}
     
