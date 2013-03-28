@@ -14,10 +14,12 @@ public class Visitor {
     private double speed;
     private ArrayList<Point> path;
 	private boolean atLocation;
+	private int stepCount;
     
     public Visitor() {
         this.speed = Math.random() * 4;
         atLocation = true;
+        stepCount = 0;
     }
     
     public void followPath()
@@ -35,8 +37,10 @@ public class Visitor {
     }
     
     private void navigateToTarget(final Point2D point) {
+    	
     	while (!point.equals(location))
     	{
+    		
      	   if (point.getX() > location.getX())
      		   location.setLocation(location.getX()+0.01, location.getY());
     		else if (point.getX() < location.getX())
@@ -154,6 +158,24 @@ public class Visitor {
 	public boolean locationReached()
 	{
 		return atLocation;
+	}
+
+	public void step() {
+		if (!atLocation)
+    	{
+			if (stepCount < path.size())
+			{
+				
+				navigateToTarget(path.get(stepCount));
+			}
+    		/*for (Point2D point : path)
+    		{
+    			navigateToTarget(point);
+    		}*/
+			else
+				atLocation = true;
+    	}
+		
 	}
     
 }

@@ -301,6 +301,7 @@ public class inputFrame
 		if (numberOnly)
 		{
 			data.addAct(new Act(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString()));
+			data.addStage(new Stage((String) podium3.getSelectedItem()));
 			//System.out.println(podium3.getSelectedItem().toString();
 			artist3.setSelectedItem(null);
 			popularity3.setSelectedItem(null);
@@ -314,6 +315,7 @@ public class inputFrame
 			if (artist3.getSelectedItem() != null && popularity3.getSelectedItem() != null && podium3.getSelectedItem() != null && startTime3.getSelectedItem() != null && endTime3.getSelectedItem() != null)
 			{
 				data.addAct(new Act(artist3.getSelectedItem().toString(), Integer.parseInt(popularity3.getSelectedItem().toString()), podium3.getSelectedItem().toString(), startTime3.getSelectedItem().toString(), endTime3.getSelectedItem().toString()));
+				data.addStage(new Stage((String) podium3.getSelectedItem()));
 				artist3.setSelectedItem(null);
 				popularity3.setSelectedItem(null);
 				podium3.setSelectedItem(null);

@@ -30,6 +30,7 @@ public class Main
 					e.printStackTrace();
 				}
                 app.tick();
+                //System.out.println("tick");
                 if (!app.isShowing())
                 {
                 	if (data.isSimVisible())
