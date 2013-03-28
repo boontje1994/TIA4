@@ -1,4 +1,5 @@
 package Agenda;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -73,6 +74,42 @@ public class AgendaData
 	public ArrayList<Crossroad> getCrossroads()
 	{
 		return dataC;
+	}
+	
+	public ArrayList<Crossroad> getCrossroadsWithin(Point pos1, Point pos2)
+	{
+		ArrayList<Crossroad> list = new ArrayList<Crossroad>();
+		int smallX;
+		int smallY;
+		int largeX;
+		int largeY;
+		if (pos1.x < pos2.x)
+		{
+			smallX = (int) pos1.getX();
+			largeX = (int) pos2.getX();
+		}
+		else
+		{
+			smallX = (int) pos2.getX();
+			largeX = (int) pos1.getX();
+		}
+		if (pos1.y < pos2.y)
+		{
+			smallY = (int) pos1.getY();
+			largeY = (int) pos2.getY();
+		}
+		else
+		{
+			smallY= (int) pos2.getY();
+			largeY = (int) pos1.getY();
+		}
+		
+		for (Crossroad item : dataC)
+		{
+			if (item.getPosition().x > smallX && item.getPosition().x < largeX && item.getPosition().y > smallY && item.getPosition().y < largeY)
+				list.add(item);
+		}
+		return list;
 	}
 	
 	public boolean doesStageExist(String stage)

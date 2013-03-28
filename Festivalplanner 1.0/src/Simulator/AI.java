@@ -1,9 +1,11 @@
 package Simulator;
 import java.util.*;
+
 import javax.swing.*;
 
 import Agenda.AgendaData;
 import Agenda.Stage;
+import OOP.avans.nl.WordfeudHulp;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -70,6 +72,16 @@ public class AI {
         setTarget();
     }
     
+    public ArrayList<Point> givePath(Point loc, Point stage)
+    {
+    	ArrayList points = data.getCrossroadsWithin(loc, stage);
+    	points.add(stage);
+    	points.add(loc);
+    	Collections.sort(points, c);
+		return null;
+    	
+    }
+    
     public void calculatePaths()
     {
     	if (!data.getStages().isEmpty())
@@ -77,7 +89,6 @@ public class AI {
 	    	int amountOfStages = 5; //TODO maak dit werkend
 	    	for (Stage stage : data.getStages())
 	    	{
-	    		System.out.println("path made!");
 	    		ArrayList<Point> path = new ArrayList<Point>();
 	    		Point stageloc = stage.getPos();
 	    		Point entrance = new Point(0,0);
@@ -228,4 +239,19 @@ public class AI {
     
     
     
+}
+
+
+class scoreComparator implements Comparator<String>
+{
+    public int compare(String w1, String w2)
+    {
+		int l1 = WordfeudHulp.berekenWoordScore(w1);
+		int l2 = WordfeudHulp.berekenWoordScore(w2);
+		if  (l1 > l2)
+			return 0;
+		else
+			return 1;
+        //eturn c1.getColor().compareTo(c2.getColor());
+    }
 }
