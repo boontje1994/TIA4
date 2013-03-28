@@ -21,8 +21,15 @@ public class AI {
     public AI(AgendaData data) {  
     	this.data = data;
     	
-        for(int i = 0; i < 100; i++) {
- 
+        init();
+        //waitForChange();
+    }
+    
+    
+    public void init()
+    {
+    	for(int i = 0; i < 100; i++) {
+    		 
             //Point2D location = new Point2D.Double(Math.random() * 500, Math.random() * 500);
         	Point2D location = new Point2D.Double(581, 3);
             //TODO laat visitors spawnen bij ingang
@@ -44,9 +51,7 @@ public class AI {
             
             visitor.add(henk);
         }
-        //waitForChange();
     }
-    
     public void update()
     {
     	
@@ -210,6 +215,16 @@ public class AI {
         Thread thread1 = new Thread(run1);
         thread1.start();
     }
+
+	public void reset() {
+		for (Visitor item: visitor)
+    	{
+    		item.setVisible(false);
+    	}
+		ArrayList<Visitor> visitor = new ArrayList <Visitor>();
+		init();
+		
+	}
     
     
     
