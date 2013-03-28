@@ -1,10 +1,15 @@
 package Agenda;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
+import Simulator.Crossroad;
+
 public class AgendaData
 {
 	private ArrayList<Act> dataA;
 	private ArrayList<Stage> dataS;
+	private ArrayList<Crossroad> dataC;
 	private boolean agendaVisible = true;
 	private boolean simVisible = false;
 
@@ -12,6 +17,7 @@ public class AgendaData
 	{
 		dataA = new ArrayList<Act>();
 		dataS = new ArrayList<Stage>();
+		dataC = new ArrayList<Crossroad>();
 	}
 
 	public void getData()
@@ -64,6 +70,11 @@ public class AgendaData
 		return dataS;
 	}
 	
+	public ArrayList<Crossroad> getCrossroads()
+	{
+		return dataC;
+	}
+	
 	public boolean doesStageExist(String stage)
 	{
 		boolean yes = false;
@@ -92,6 +103,11 @@ public class AgendaData
 	public void addStage(Stage stage)
 	{
 		dataS.add(stage);
+	}
+	
+	public void addCrossroad(Crossroad cross)
+	{
+		dataC.add(cross);
 	}
 	
 	public void clear()

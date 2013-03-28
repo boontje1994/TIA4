@@ -24,7 +24,7 @@ public class MainWindow extends JFrame
 {
  
     private Map map;
-    private User user;   
+    private User user;
     private AI ai;
     private AgendaData data;
        
@@ -461,6 +461,14 @@ public class MainWindow extends JFrame
             //AI
             ai.drawVisitor((Graphics2D)g2);
             
+            for(Crossroad cross : data.getCrossroads())
+            {
+            	if(cross.isLocated())
+            	{
+            		cross.drawCrossroad(g2);
+            	}
+            }
+            
             /*Graphics2D a = (Graphics2D)g2.create();
             Graphics2D b = (Graphics2D)g2.create();
             Graphics2D c = (Graphics2D)g2.create();
@@ -766,6 +774,9 @@ public class MainWindow extends JFrame
             constructionMenu.setBackground(Color.WHITE);
             stageBox = new JComboBox();
             JButton place = new JButton("Plaats podium");
+            JButton placeCross = new JButton("Plaats kruispunt");
+            
+            // Define button place
             place.setBackground(Color.WHITE);
             place.setFocusPainted(false);
             place.addActionListener(new ActionListener() {
@@ -781,11 +792,26 @@ public class MainWindow extends JFrame
                 }
             });
             
+            // Define button placeCross
+            placeCross.setBackground(Color.white);
+            placeCross.setFocusPainted(false);
+            placeCross.addActionListener(new ActionListener(){
+            	public void actionPerformed(ActionEvent e){
+            		System.out.println("Wat is deze shit!!!");
+            			Crossroad cross = new Crossroad();
+            			cross.initVisual(0, 0, 50, 50, new ImageIcon("images/stop.png"));
+            			cross.setPosition(new Point(0,0));
+            			data.addCrossroad(cross);
+            			System.out.println("waarom!");
+            	}
+            });
+            
             //dynamic stages
             //stageBox.addItem("lel");
             
             constructionMenu.add(stageBox);
             constructionMenu.add(place);
+            constructionMenu.add(placeCross);
             controlMenu.add(constructionMenu);
             
             

@@ -16,7 +16,7 @@ public class Stage
 	private int scale = 0;
 	private ImageIcon image;
 	private Point pos;
-	private int Button = 0;
+	private int button = 0;
 	private int rotateOld = 0;
 	private boolean rotated;
 		
@@ -71,8 +71,6 @@ public class Stage
 
 		
 	}
-
-
 
 	public Shape getRect() {
 		return rect;
@@ -129,11 +127,11 @@ public class Stage
 	}
 
 	public int getButton() {
-		return Button;
+		return button;
 	}
 
 	public void setButton(int button) {
-		Button = button;
+		this.button = button;
 	}
 
 	public int getRotateOld() {
