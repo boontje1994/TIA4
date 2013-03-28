@@ -180,6 +180,17 @@ public class MainWindow extends JFrame
 			        		}
 	        			}
 	        	}
+	        	for (Crossroad item : data.getCrossroads())
+	        	{
+	        		if (item.isLocated())
+	        		{
+	        			if (item.isClicked((int)lelpos.getX(), (int)lelpos.getY()))
+	        			{
+	        				moving = true;
+	        				item.setSelected(true);
+	        			}
+	        		}
+	        	}
         	}
         	else
         	{
@@ -195,113 +206,27 @@ public class MainWindow extends JFrame
 		        		}
 	        		}
 	        	}
+        		for (Crossroad item : data.getCrossroads())
+	        	{
+	        		if (item.isLocated())
+	        		{
+	        			if (item.isSelected())
+	        			{
+	        				moving = false;
+	        				item.setSelected(false);
+	        			}
+	        		}
+	        	}
         	}
         }
         public void mouseReleased(MouseEvent event) 
         {
-        	/*if(stageA != null)
-        	{
-            	if(stageA.isSelected() == true)
-            	{
-            		stageA.setSelected(false);
-            	}
-        	}
-        	if(stageB != null)
-        	{
-            	if(stageB.isSelected() == true && stageB != null)
-            	{
-            		stageB.setSelected(false);
-            	}
-        	}
-        	if(stageC != null)
-        	{
-            	if(stageC.isSelected() == true && stageC != null)
-            	{
-            		stageC.setSelected(false);
-            	}
-        	}
-        	if(stageD != null)
-        	{
-            	if(stageD.isSelected() == true && stageD != null)
-            	{
-            		stageD.setSelected(false);
-            	}
-        	}
-        	if(stageE != null)
-        	{
-            	if(stageE.isSelected() == true && stageE != null)
-            	{
-            		stageE.setSelected(false);
-            	}
-        	}*/
+        	
         }
         public void mousePressed(MouseEvent event) 
         {
         	
-        	/*if(stageA != null)
         	
-            	if(stageA.getRect().contains(event.getPoint()))
-            	{
-            		if(stageA.isSelected() == false)
-            		{
-            			System.out.println("Selected A");
-            			stageA.setSelected(true);
-            			lastMousePosition = event.getPoint();
-            		}
-            	}
-        	}
-        	if(stageB != null)
-        	{
-        		/*System.out.println("X: " + stageB.getRect().getBounds().x + " Y: " +  stageB.getRect().getBounds().y);
-            	if(stageB.getRect().contains(event.getPoint()))
-            	{
-            		
-            		if(stageB.isSelected() == false)
-            		{
-            			System.out.println("Selected B");*/
-            	/*if(stageB.getRect().contains(event.getPoint()))
-            	{
-            		if(stageB.isSelected() == false)
-            		{
-            			stageB.setSelected(true);
-            			lastMousePosition = event.getPoint();
-            		}
-            	}
-        	}
-        	if(stageC != null)
-        	{
-            	if(stageC.getRect().contains(event.getPoint()) )
-            	{
-            		if(stageC.isSelected() == false)
-            		{
-            			stageC.setSelected(true);
-            			lastMousePosition = event.getPoint();
-            		}
-            	}
-        	}
-        	if(stageD != null)
-        	{
-        		//System.out.println("X: " + stageD.getRect().getBounds().x + " Y: " +  stageD.getRect().getBounds().y);
-            	if(stageD.getRect().contains(event.getPoint()));
-            	{
-            		if(stageD.isSelected() == false)
-            		{
-            			stageD.setSelected(true);
-            			lastMousePosition = event.getPoint();
-            		}
-            	}
-        	}
-        	if(stageE != null)
-        	{
-            	if(stageE.getRect().contains(event.getPoint()))
-            	{
-            		if(stageE.isSelected() == false)
-            		{
-            			stageE.setSelected(true);
-            			lastMousePosition = event.getPoint();
-            		}
-            	}
-        	}*/
         }
         public void mouseEntered(MouseEvent event) {}
         public void mouseExited(MouseEvent event) {}
@@ -330,6 +255,16 @@ public class MainWindow extends JFrame
 		        			System.out.println("stage " + stage.getName() + " is being moved!");
 		        			stage.setPos(new Point(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t)));
 		        		}
+	        		}
+	        	}
+	        	for (Crossroad item : data.getCrossroads())
+	        	{
+	        		if (item.isLocated())
+	        		{
+	        			if (item.isSelected())
+	        			{
+	        				item.setPosition(new Point(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t)));
+	        			}
 	        		}
 	        	}
         	}

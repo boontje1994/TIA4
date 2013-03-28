@@ -80,14 +80,10 @@ public class Visitor {
     	   location.setLocation(location.getX()+speed, location.getY());
        else if (point.getX() < location.getX())
     		location.setLocation(location.getX()-speed, location.getY());
-       else
-    	   System.out.println("X is mooi");
        if (point.getY() > location.getY())
     		location.setLocation(location.getX(), location.getY()+speed);
        else if (point.getY() < location.getY())
     		location.setLocation(location.getX(), location.getY()-speed); 
-       else
-    	   System.out.println("Y is mooi");
 //       else
     //	   location.setLocation(point);
     		
