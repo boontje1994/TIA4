@@ -36,7 +36,6 @@ public class Main
                 app.tick();
                 nowPlaying.updateNP();
                 
-                System.out.println("tick");
                 if (!app.isShowing())
                 {
                 	if (data.isSimVisible())
