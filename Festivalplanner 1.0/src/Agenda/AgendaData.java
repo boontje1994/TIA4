@@ -107,7 +107,7 @@ public class AgendaData
 		for (Crossroad item : dataC)
 		{
 			if (item.getPosition().x > smallX && item.getPosition().x < largeX && item.getPosition().y > smallY && item.getPosition().y < largeY)
-				list.add(item.getPosition());
+				list.add(new Point(item.getPosition().x + 50, item.getPosition().y + 120));
 		}
 		return list;
 	}

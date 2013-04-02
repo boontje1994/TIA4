@@ -84,7 +84,7 @@ public class AI {
     {
     	ArrayList<Point> points = data.getCrossroadsWithin(loc, stage);
     	points.add(loc);
-    	points.add(stage);
+    	points.add(new Point(stage.x + (randomWithRange(0, 48)*10), stage.y + 270 + randomWithRange(0, 2)*10));
     	
     	leftTopComparator leftTop = new leftTopComparator();
     	rightTopComparator rightTop = new rightTopComparator();
