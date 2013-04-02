@@ -28,6 +28,7 @@ public class Stage
 	{
 		this.name = name;
 		rect = (new Rectangle2D.Double(0,0,0,0));
+		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 	}
 	
 	public Stage(String name, double x, double y, double w, double h, ImageIcon image)
@@ -35,6 +36,7 @@ public class Stage
 		this.setName(name);
 		this.image = image;
 		rect = (new Rectangle2D.Double(x,y,w,h));
+		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 		
 	}
 	
@@ -43,6 +45,7 @@ public class Stage
 		this.image = image;
 		rect = (new Rectangle2D.Double(x,y,w,h));
 		rotated = true;
+		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 	}
 	
 	public AffineTransform getTransform()
@@ -109,7 +112,6 @@ public class Stage
 
 	public Point getPos() 
 	{
-		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 		return pos;
 	}
 
