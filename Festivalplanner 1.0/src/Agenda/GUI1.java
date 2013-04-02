@@ -3,7 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +11,6 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,7 +27,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.TableView.TableRow;
 
 public class GUI1 {
 	private static JFrame frame;
@@ -41,15 +38,15 @@ public class GUI1 {
 	private String endTime;
 	private int index = 0;
 	private inputFrame frame2;
-	private JComboBox test;
 	private String fileName;
 	private AgendaData data;
 	private NowPlaying nowPlaying;
 	private JPanel info;
 	private JScrollPane npScroller;
 
-	public GUI1(AgendaData data) {
-		nowPlaying = new NowPlaying(data, this);
+	public GUI1(AgendaData data, NowPlaying nowPlaying) {
+		this.nowPlaying = nowPlaying;
+		nowPlaying.setGUI(this);
 		makeFrame();
 		this.data = data;
 		frame2 = new inputFrame(data);
