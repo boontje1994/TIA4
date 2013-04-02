@@ -168,6 +168,7 @@ public class inputFrame
 			}
 		});
 		
+		
 		mainPanel.add(top, BorderLayout.NORTH);
 		mainPanel.add(center, BorderLayout.CENTER);
 		mainPanel.add(bottom, BorderLayout.SOUTH);
