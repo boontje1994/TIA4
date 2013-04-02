@@ -22,6 +22,7 @@ public class Visitor {
         atLocation = true;
         stepCount = 0;
         visible = true;
+        path = new ArrayList<Point>();
     }
     
     public void setVisible(boolean s)
@@ -110,6 +111,7 @@ public class Visitor {
 	public void setPath(ArrayList<Point> arrayList)
     {
     	this.path = arrayList;
+    	atLocation = false;
     }
     
     public Visitor(Point2D location, double direction, int imageType) {
@@ -125,6 +127,9 @@ public class Visitor {
             break;
         }
         visible = true;
+        atLocation = true;
+        stepCount = 0;
+        path = new ArrayList<Point>();
     }
         
     public void update(ArrayList<Visitor> otherVisitor) {

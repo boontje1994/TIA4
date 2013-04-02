@@ -3,9 +3,10 @@ import java.util.*;
 
 import javax.swing.*;
 
+import sun.misc.Compare;
+
 import Agenda.AgendaData;
 import Agenda.Stage;
-//import OOP.avans.nl.WordfeudHulp;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -43,12 +44,12 @@ public class AI {
             Visitor henk = new Visitor(location,direction,imageType);
             
             ArrayList<Point> path = new ArrayList<Point>();
-            path.add(new Point(581, 3));
+            /*path.add(new Point(581, 3));
             path.add(new Point(200, 3));
             path.add(new Point(200, 250));
             path.add(new Point(300, 250));
             
-            henk.setPath(path);
+            henk.setPath(path);*/
             //henk.followPath();
             
             visitor.add(henk);
@@ -58,7 +59,7 @@ public class AI {
     
     public Point getDestination()
     {
-    	return data.getStages().get(randomWithRange(0, data.getStages().size())).getPos();
+    	return data.getStages().get(randomWithRange(0, data.getStages().size()-1)).getPos();
     }
     public void update()
     {
@@ -81,11 +82,49 @@ public class AI {
     
     public ArrayList<Point> givePath(Point loc, Point stage)
     {
-    	ArrayList points = data.getCrossroadsWithin(loc, stage);
-    	points.add(stage);
+    	ArrayList<Point> points = data.getCrossroadsWithin(loc, stage);
     	points.add(loc);
-//    	Collections.sort(points, c);
-		return null;
+    	points.add(stage);
+    	
+    	leftTopComparator leftTop = new leftTopComparator();
+    	rightTopComparator rightTop = new rightTopComparator();
+    	leftBottomComparator leftBot = new leftBottomComparator();
+    	rightBottomComparator rightBot = new rightBottomComparator();
+    	//Visitor visit = new Visitor();
+    	
+    	if(leftTop.compare(loc, stage) == 0)
+    	{
+    		// Visitor must go to leftTop of the field
+    		Collections.sort(points,leftTop);
+    	}
+    	
+    	else if(rightTop.compare(loc, stage) == 0)
+    	{
+    		// Visitor must go to rightTop of the field
+    		Collections.sort(points, rightTop);
+    	}
+    	
+    	else if(leftBot.compare(loc, stage) == 0)
+    	{
+    		//Visitor must go to leftBottom of the field
+    		Collections.sort(points, leftBot);
+    	}
+    	
+    	else if(rightBot.compare(loc, stage) == 0)
+    	{
+    		// Visitor must go to rightBottom of the field
+    		Collections.sort(points, rightBot);
+    	}
+
+    	// deze regel in elke if/else 
+    	// in de if else de richting aangeven
+    	//Collections.sort(points, c);
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlist is given");
+		for (Point punt : points)
+		{
+			System.out.println("location of point: " + punt.x + "x" + punt.y);
+		}
+    	return points;
     	
     }
     
@@ -118,7 +157,7 @@ public class AI {
     	
     }
     
-    public void givePath()
+    /*public void givePath()
     {
     	for(Visitor v : visitor) {
     		if (v.locationReached())
@@ -128,7 +167,7 @@ public class AI {
     			v.followPath();
     		}
         }
-    }
+    }*/
     
     int randomWithRange(int min, int max)
     {
@@ -209,36 +248,6 @@ public class AI {
     		}
     	}
     }
-    
-    public void waitForChange()
-    {
-    	System.out.println("wait loop started!");
-    	Runnable run1 = new Runnable() {
-            public void run() {
-            	while (true)
-            	{
-	                try {
-	                    Thread.sleep(1000);
-	                    
-	                    for(Visitor henk : visitor)
-	                    {
-	                    	//if (henk.locationReached())
-	                    		henk.followPath();
-	                    }
-	                    System.out.println("check!");
-	                    //calculatePaths();
-                    	//givePath();
-	                    //System.out.println(ai.getData());
-	                } catch(Exception e) {
-	                    System.out.println(e);
-	                }
-            	}
-            }
-            
-        };
-        Thread thread1 = new Thread(run1);
-        thread1.start();
-    }
 
 	public void reset() {
 		for (Visitor item: visitor)
@@ -249,22 +258,52 @@ public class AI {
 		init();
 		
 	}
+	
     
     
     
 }
 
 
-class scoreComparator implements Comparator<String>
+class leftTopComparator implements Comparator<Point>
 {
-    public int compare(String w1, String w2)
+    public int compare(Point p1, Point p2)
     {
-		int l1 = WordfeudHulp.berekenWoordScore(w1);
-		int l2 = WordfeudHulp.berekenWoordScore(w2);
-		if  (l1 > l2)
+    	// p1 = location
+    	// p2 = stage
+		if  (p2.getX() < p1.getX() && p2.getY() > p1.getY())
 			return 0;
 		else
 			return 1;
-        //eturn c1.getColor().compareTo(c2.getColor());
+    }
+}
+class leftBottomComparator implements Comparator<Point>
+{
+    public int compare(Point p1, Point p2)
+    {
+		if  (p2.getX() < p1.getX() && p2.getY() < p1.getY())
+			return 0;
+		else
+			return 1;
+    }
+}
+class rightTopComparator implements Comparator<Point>
+{
+    public int compare(Point p1, Point p2)
+    {
+		if  (p2.getX() > p1.getX() && p2.getY() > p1.getY())
+			return 0;
+		else
+			return 1;
+    }
+}
+class rightBottomComparator implements Comparator<Point>
+{
+    public int compare(Point p1, Point p2)
+    {
+		if  (p2.getX() < p1.getX() && p2.getY() < p1.getY())
+			return 0;
+		else
+			return 1;
     }
 }

@@ -76,9 +76,9 @@ public class AgendaData
 		return dataC;
 	}
 	
-	public ArrayList<Crossroad> getCrossroadsWithin(Point pos1, Point pos2)
+	public ArrayList<Point> getCrossroadsWithin(Point pos1, Point pos2)
 	{
-		ArrayList<Crossroad> list = new ArrayList<Crossroad>();
+		ArrayList<Point> list = new ArrayList<Point>();
 		int smallX;
 		int smallY;
 		int largeX;
@@ -107,7 +107,7 @@ public class AgendaData
 		for (Crossroad item : dataC)
 		{
 			if (item.getPosition().x > smallX && item.getPosition().x < largeX && item.getPosition().y > smallY && item.getPosition().y < largeY)
-				list.add(item);
+				list.add(item.getPosition());
 		}
 		return list;
 	}
