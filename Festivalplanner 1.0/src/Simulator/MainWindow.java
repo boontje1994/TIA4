@@ -750,7 +750,7 @@ public class MainWindow extends JFrame
                 	{
                 		if (stage.getName().equals(stageBox.getSelectedItem()))
                 		{
-                			stage.initVisual(0, 0, 50, 50, new ImageIcon("images/rotateRight.png"));
+                			stage.initVisual(0, 0, 50, 50);
                 			stage.setPos(new Point(0,0));
                 		}
                 	}

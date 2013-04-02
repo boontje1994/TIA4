@@ -22,25 +22,25 @@ public class Stage
 		
 	public Stage()
 	{
+		this.image = new ImageIcon("images/MainStage.png");
 	}
 	
 	public Stage(String name)
 	{
 		this.name = name;
 		rect = (new Rectangle2D.Double(0,0,0,0));
+		this.image = new ImageIcon("images/MainStage.png");
 	}
 	
-	public Stage(String name, double x, double y, double w, double h, ImageIcon image)
+	public Stage(String name, double x, double y, double w, double h)
 	{
 		this.setName(name);
-		this.image = image;
 		rect = (new Rectangle2D.Double(x,y,w,h));
-		
+		this.image = new ImageIcon("images/MainStage.png");
 	}
 	
-	public void initVisual(double x, double y, double w, double h, ImageIcon image)
+	public void initVisual(double x, double y, double w, double h)
 	{
-		this.image = image;
 		rect = (new Rectangle2D.Double(x,y,w,h));
 		rotated = true;
 	}
