@@ -1,6 +1,7 @@
 package Simulator;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -24,18 +25,27 @@ public class Crossroad
 	
 	public Crossroad()
 	{
-		
+		ImageIcon icon = new ImageIcon("images/Kruispunt.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(207, 225, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
 	}
 	
-	public Crossroad(int ID, double x, double y, double w, double h, ImageIcon image)
+	public Crossroad(int ID, double x, double y, double w, double h)
 	{
-		this.image = image;
+		ImageIcon icon = new ImageIcon("images/Kruispunt.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(207, 225, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
 		rect = (new Rectangle2D.Double(x,y,w,h));	
 	}
 	
-	public void initVisual(double x, double y, double w, double h, ImageIcon image)
+	public void initVisual(double x, double y, double w, double h)
 	{
-		this.image = image;
+		ImageIcon icon = new ImageIcon("images/Kruispunt.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(100, 120, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
 		rect = (new Rectangle2D.Double(x,y,w,h));
 		rotated = true;
 	}

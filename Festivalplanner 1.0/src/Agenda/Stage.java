@@ -23,14 +23,20 @@ public class Stage
 		
 	public Stage()
 	{
-		this.image = new ImageIcon("images/MainStage.png");
+		ImageIcon icon = new ImageIcon("images/MainStage.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(480, 280, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
 	}
 	
 	public Stage(String name)
 	{
 		this.name = name;
 		rect = (new Rectangle2D.Double(0,0,0,0));
-		this.image = new ImageIcon("images/MainStage.png");
+		ImageIcon icon = new ImageIcon("images/MainStage.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(480, 280, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
 		locate = false;
 	}
 	
@@ -38,7 +44,10 @@ public class Stage
 	{
 		this.setName(name);
 		rect = (new Rectangle2D.Double(x,y,w,h));
-		this.image = new ImageIcon("images/MainStage.png");
+		ImageIcon icon = new ImageIcon("images/MainStage.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(480, 280, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
 		locate = false;
 	}
 	

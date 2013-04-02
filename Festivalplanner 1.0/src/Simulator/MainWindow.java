@@ -750,7 +750,7 @@ public class MainWindow extends JFrame
                 	{
                 		if (stage.getName().equals(stageBox.getSelectedItem()))
                 		{
-                			stage.initVisual(0, 0, 50, 50);
+                			stage.initVisual(0, 0, 480, 280);
                 			stage.setPos(new Point(0,0));
                 		}
                 	}
@@ -764,7 +764,7 @@ public class MainWindow extends JFrame
             	public void actionPerformed(ActionEvent e){
             		System.out.println("Wat is deze shit!!!");
             			Crossroad cross = new Crossroad();
-            			cross.initVisual(0, 0, 50, 50, new ImageIcon("images/stop.png"));
+            			cross.initVisual(0, 0, 100, 120);
             			cross.setPosition(new Point(0,0));
             			data.addCrossroad(cross);
             			System.out.println("waarom!");
