@@ -3,9 +3,10 @@ import java.util.*;
 
 import javax.swing.*;
 
+import sun.misc.Compare;
+
 import Agenda.AgendaData;
 import Agenda.Stage;
-import OOP.avans.nl.WordfeudHulp;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -77,8 +78,41 @@ public class AI {
     	ArrayList points = data.getCrossroadsWithin(loc, stage);
     	points.add(stage);
     	points.add(loc);
-    	Collections.sort(points, c);
-		return null;
+    	leftTopComparator leftTop = new leftTopComparator();
+    	rightTopComparator rightTop = new rightTopComparator();
+    	leftBottomComparator leftBot = new leftBottomComparator();
+    	rightBottomComparator rightBot = new rightBottomComparator();
+    	Visitor visit = new Visitor();
+    	
+    	if(leftTop.compare(loc, stage) == 0)
+    	{
+    		// Visitor must go to leftTop of the field
+    		Collections.sort(points,leftTop);
+    	}
+    	
+    	else if(rightTop.compare(loc, stage) == 0)
+    	{
+    		// Visitor must go to rightTop of the field
+    		Collections.sort(points, rightTop);
+    	}
+    	
+    	else if(leftBot.compare(loc, stage) == 0)
+    	{
+    		//Visitor must go to leftBottom of the field
+    		Collections.sort(points, leftBot);
+    	}
+    	
+    	else if(rightBot.compare(loc, stage) == 0)
+    	{
+    		// Visitor must go to rightBottom of the field
+    		Collections.sort(points, rightBot);
+    	}
+
+    	// deze regel in elke if/else 
+    	// in de if else de richting aangeven
+    	//Collections.sort(points, c);
+		
+    	return points;
     	
     }
     
@@ -236,22 +270,52 @@ public class AI {
 		init();
 		
 	}
+	
     
     
     
 }
 
 
-class scoreComparator implements Comparator<String>
+class leftTopComparator implements Comparator<Point>
 {
-    public int compare(String w1, String w2)
+    public int compare(Point p1, Point p2)
     {
-		int l1 = WordfeudHulp.berekenWoordScore(w1);
-		int l2 = WordfeudHulp.berekenWoordScore(w2);
-		if  (l1 > l2)
+    	// p1 = location
+    	// p2 = stage
+		if  (p2.getX() < p1.getX() && p2.getY() > p1.getY())
 			return 0;
 		else
 			return 1;
-        //eturn c1.getColor().compareTo(c2.getColor());
+    }
+}
+class leftBottomComparator implements Comparator<Point>
+{
+    public int compare(Point p1, Point p2)
+    {
+		if  (p2.getX() < p1.getX() && p2.getY() < p1.getY())
+			return 0;
+		else
+			return 1;
+    }
+}
+class rightTopComparator implements Comparator<Point>
+{
+    public int compare(Point p1, Point p2)
+    {
+		if  (p2.getX() > p1.getX() && p2.getY() > p1.getY())
+			return 0;
+		else
+			return 1;
+    }
+}
+class rightBottomComparator implements Comparator<Point>
+{
+    public int compare(Point p1, Point p2)
+    {
+		if  (p2.getX() < p1.getX() && p2.getY() < p1.getY())
+			return 0;
+		else
+			return 1;
     }
 }
