@@ -37,7 +37,7 @@ public class GUI1 {
 	private String startTime;
 	private String endTime;
 	private int index = 0;
-	private inputFrame frame2;
+	private InputDialog frame2;
 	private String fileName;
 	private AgendaData data;
 	private NowPlaying nowPlaying;
@@ -49,8 +49,8 @@ public class GUI1 {
 		nowPlaying.setGUI(this);
 		makeFrame();
 		this.data = data;
-		frame2 = new inputFrame(data);
-		frame2.getGui(this);
+		frame2 = new InputDialog(data);
+		//frame2.getGui(this);
 		
 	}
 
@@ -246,8 +246,7 @@ public class GUI1 {
 		buttons.add(addAct);
 		addAct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame2.setType(false);
-				frame2.Visible(true);
+				frame2.setVisible(true);
 			}
 		});
 
@@ -279,8 +278,7 @@ public class GUI1 {
 		buttons.add(editAct);
 		editAct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame2.setType(true);
-				frame2.Visible(true);
+				frame2.setVisible(true);
 			}
 		});
 
@@ -341,13 +339,13 @@ public class GUI1 {
 	
 	
 
-	public void setInfo() {
+	/*public void setInfo() {
 		artist = frame2.getArtist();
 		popu = frame2.getPopularity();
 		podium = frame2.getPodium();
 		startTime = frame2.getStartTime();
 		endTime = frame2.getEndTime();
-	}
+	}*/
 
 	public int getStageNumberOfActs(int index) {
 		return index;
