@@ -118,8 +118,8 @@ public class Stage
 	}
 
 	public void setPos(Point pos) {
-		this.pos = pos;
-		rect = (new Rectangle2D.Double(pos.getX(),pos.getY(),rect.getBounds().getWidth(),rect.getBounds().getHeight()));
+		rect = (new Rectangle2D.Double(((int)pos.getX()/10)*10,((int)pos.getY()/10)*10,(int)rect.getBounds().getWidth(),(int)rect.getBounds().getHeight()));
+		this.pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 	}
 
 	public int getScale() {

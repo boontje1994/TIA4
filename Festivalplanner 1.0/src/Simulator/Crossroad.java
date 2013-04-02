@@ -101,8 +101,8 @@ public class Crossroad
 	
 	public void setPosition(Point position)
 	{
-		this.position = position;
-		rect = (new Rectangle2D.Double(position.getX(), position.getY(), rect.getBounds().getWidth(), rect.getBounds().getHeight()));
+		rect = (new Rectangle2D.Double(((int)position.getX()/10)*10, ((int)position.getY()/10)*10, (int)rect.getBounds().getWidth(),(int) rect.getBounds().getHeight()));
+		this.position = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 	}
 	
 	public int getScale()

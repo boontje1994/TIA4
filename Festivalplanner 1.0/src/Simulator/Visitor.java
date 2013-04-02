@@ -134,11 +134,11 @@ public class Visitor {
         
     public void update(ArrayList<Visitor> otherVisitor) {
         Point2D oldLocation = location;
-		location = new Point2D.Double(location.getX() + speed * Math.cos(direction), 
-									  location.getY() + speed * Math.sin(direction));
+		location = new Point2D.Double((int)location.getX() + (int)(speed * Math.cos(direction)), 
+									  (int)location.getY() + (int)(speed * Math.sin(direction)));
 		
-		if(location.getX() < 0 || location.getY() < 0 || location.getX() > 800 || location.getY() > 800)
-			direction += Math.PI;
+		/*if(location.getX() < 0 || location.getY() < 0 || location.getX() > 800 || location.getY() > 800)
+			direction += Math.PI;*/
 		
 		double x = targetLocation.getX() - location.getX();
 		double y = targetLocation.getY() - location.getY();
@@ -147,7 +147,7 @@ public class Visitor {
 		
 		boolean collision = false;
 	
-		for(Visitor v : otherVisitor) 
+		/*for(Visitor v : otherVisitor) 
 		{
 			if(v == this)
 				continue;
@@ -158,7 +158,7 @@ public class Visitor {
 		if(collision)
 		{
 			location = oldLocation;
-		}
+		}*/
     }
     
     private boolean collidesWith(Visitor b) {
