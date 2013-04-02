@@ -19,30 +19,32 @@ public class Stage
 	private int button = 0;
 	private int rotateOld = 0;
 	private boolean rotated;
+	private boolean locate;
 		
 	public Stage()
 	{
+		this.image = new ImageIcon("images/MainStage.png");
 	}
 	
 	public Stage(String name)
 	{
 		this.name = name;
 		rect = (new Rectangle2D.Double(0,0,0,0));
-		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
+		this.image = new ImageIcon("images/MainStage.png");
+		locate = false;
 	}
 	
-	public Stage(String name, double x, double y, double w, double h, ImageIcon image)
+	public Stage(String name, double x, double y, double w, double h)
 	{
 		this.setName(name);
-		this.image = image;
 		rect = (new Rectangle2D.Double(x,y,w,h));
-		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
-		
+		this.image = new ImageIcon("images/MainStage.png");
+		locate = false;
 	}
 	
-	public void initVisual(double x, double y, double w, double h, ImageIcon image)
+	public void initVisual(double x, double y, double w, double h)
 	{
-		this.image = image;
+		locate = true;
 		rect = (new Rectangle2D.Double(x,y,w,h));
 		rotated = true;
 		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
@@ -81,7 +83,7 @@ public class Stage
 	
 	public boolean isLocated()
 	{
-		return (pos != null);
+		return locate;
 	}
 
 	public boolean isSelected() {
