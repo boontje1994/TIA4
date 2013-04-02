@@ -46,6 +46,7 @@ public class MainWindow extends JFrame
 	public boolean moving;
 	private int state;
 	private boolean reset;
+	public JLabel	timeLabel;
     
     //Velden
     private static JTextField xLength;
@@ -375,6 +376,10 @@ public class MainWindow extends JFrame
     			}
 
     		});
+            
+            timeLabel = new JLabel();
+            leftMenuPanel.add(timeLabel);
+            
             
             Color c = new Color(111,111,111);
             leftMenuPanel.setBackground(c);
@@ -827,11 +832,15 @@ public class MainWindow extends JFrame
 		{
 			ai.update();
 			reset = false;
+			timeLabel.setText(data.getTime());
+			data.tick();
 		}
 		if (state == 0 && !reset)
 		{
 			ai.reset();
 			reset = true;
+			data.resetTime();
+			timeLabel.setText(data.getTime());
 		}
 		repaint();
 		rightcontent.updateStageBox();

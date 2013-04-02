@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 import Simulator.Crossroad;
+import Simulator.MainWindow;
 
 public class AgendaData
 {
@@ -13,12 +14,16 @@ public class AgendaData
 	private ArrayList<Crossroad> dataC;
 	private boolean agendaVisible = true;
 	private boolean simVisible = false;
+	private int minute;
+	private int hour;
 
 	public AgendaData()
 	{
 		dataA = new ArrayList<Act>();
 		dataS = new ArrayList<Stage>();
 		dataC = new ArrayList<Crossroad>();
+		hour = 11;
+		minute = 00;
 	}
 
 	public void getData()
@@ -170,5 +175,30 @@ public class AgendaData
 		agendaVisible = b;
 		
 	}
-
+	
+	public void tick()
+	{
+		minute +=1;
+		if(minute == 60)
+		{
+			minute = 00;
+			hour += 1;
+			if(hour == 24)
+			{
+				hour = 00;
+			}
+		}
+	}
+	
+	public String getTime()
+	{
+		return hour + ":" + minute;
+	}
+	
+	public void resetTime()
+	{
+		minute = 00;
+		hour = 11;
+	}
+	
 }
