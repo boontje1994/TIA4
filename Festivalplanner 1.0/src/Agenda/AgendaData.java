@@ -15,6 +15,7 @@ public class AgendaData
 	private boolean agendaVisible = true;
 	private boolean simVisible = false;
 	private int minute;
+	private int tenthMinute;
 	private int hour;
 
 	public AgendaData()
@@ -179,25 +180,31 @@ public class AgendaData
 	public void tick()
 	{
 		minute +=1;
-		if(minute == 60)
+		if(minute == 10)
 		{
-			minute = 00;
-			hour += 1;
-			if(hour == 24)
+			minute = 0;
+			tenthMinute +=1;
+			if(tenthMinute == 6)
 			{
-				hour = 00;
+				tenthMinute = 0;
+				hour += 1;
+				if(hour == 24)
+				{
+					hour = 00;
+				}
 			}
 		}
 	}
 	
 	public String getTime()
 	{
-		return hour + ":" + minute;
+		return hour + ":" + tenthMinute + "" + minute;
 	}
 	
 	public void resetTime()
 	{
-		minute = 00;
+		minute = 0;
+		tenthMinute = 0;
 		hour = 11;
 	}
 	

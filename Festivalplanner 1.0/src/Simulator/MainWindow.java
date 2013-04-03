@@ -47,6 +47,7 @@ public class MainWindow extends JFrame
 	private int state;
 	private boolean reset;
 	public JLabel	timeLabel;
+	private int tickCounter;
     
     //Velden
     private static JTextField xLength;
@@ -830,10 +831,15 @@ public class MainWindow extends JFrame
 	public void tick() {
 		if (state == 1)
 		{
+			tickCounter ++;
 			ai.update();
 			reset = false;
 			timeLabel.setText(data.getTime());
-			data.tick();
+			if(tickCounter == 3)
+			{
+				tickCounter = 0;
+				data.tick();
+			}
 		}
 		if (state == 0 && !reset)
 		{
