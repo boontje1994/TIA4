@@ -79,7 +79,7 @@ private Point exitBlock;
        calculate();
        Rectangle2D exit = new Rectangle2D.Double(xTotal+70,-40,90,80);
        if (!(exit.getCenterX() == 0 && exit.getCenterY() == 0))
-    	   data.(exit.getCenterX(), exit.getCenterY());
+//    	   data.(exit.getCenterX(), exit.getCenterY());
        //System.out.println("exit is at " + exitBlock.x + "x" + exitBlock.y);
        g2.setColor(c);
        g2.fill(exit);
@@ -151,5 +151,13 @@ private Point exitBlock;
        xTotal = xLength / 2;
        yTotal = yLength / 2;        
    }
+
+public Point getExitBlock() {
+	return exitBlock;
+}
+
+public void setExitBlock(Point exitBlock) {
+	this.exitBlock = exitBlock;
+}
    
 }
