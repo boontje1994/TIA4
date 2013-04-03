@@ -173,6 +173,14 @@ public class MainWindow extends JFrame
 			        		{
 			        			moving = true;
 			        			stage.setSelected(true);
+			        			if(event.getButton() == event.BUTTON3)
+			        			{
+			        				stage.setScaleSign(true);
+			        			}
+			        			if(event.getButton() == event.BUTTON1)
+			        			{
+			        				stage.setScaleSign(false);
+			        			}
 			        		}
 	        			}
 	        	}
@@ -343,6 +351,7 @@ public class MainWindow extends JFrame
 		        		if (stage.isSelected())
 		        		{
 		        			stage.setRotate(stage.getRotate() + event.getWheelRotation()*6);
+//		        			stage.setScaleMag(event.getWheelRotation());
 		        		}
 	        		}
 	        	}
@@ -774,7 +783,7 @@ public class MainWindow extends JFrame
                 	{
                 		if (stage.getName().equals(stageBox.getSelectedItem()))
                 		{
-                			stage.initVisual(0, 0, 50, 50, new ImageIcon("images/rotateRight.png"));
+                			stage.initVisual(0, 0, 100, 91, new ImageIcon("images/Troll.png"));
                 			stage.setPos(new Point(0,0));
                 		}
                 	}
