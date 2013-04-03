@@ -48,6 +48,8 @@ public class MainWindow extends JFrame
 	private boolean reset;
 	public JLabel	timeLabel;
 	private int tickCounter;
+	
+	public JSlider timeSlider;
     
     //Velden
     private static JTextField xLength;
@@ -361,13 +363,16 @@ public class MainWindow extends JFrame
             });
             leftMenuPanel.add(stop);            
             
-            final JSlider timeSlider = new JSlider(JSlider.HORIZONTAL,0,1000,100);
+            timeSlider = new JSlider(JSlider.HORIZONTAL,0,24*60,0);    //TODO
             Color colorSlider = new Color(111,111,111);
             timeSlider.setBackground(colorSlider);
             timeSlider.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
 //                     int value = timeSlider.getValue();
 //                     AI ai = new AI(value);
+                	System.out.println(timeSlider.getValue());
+//                	data.setTime(timeSlider.getValue()%60, timeSlider.getValue()/60);
+                	
                 }
             });
             leftMenuPanel.add(timeSlider);
@@ -835,14 +840,16 @@ public class MainWindow extends JFrame
 
 	public void tick() {
 		if (state == 1)
-		{
+		{	
 			tickCounter ++;
 			ai.update();
 			reset = false;
 			timeLabel.setText(data.getTime());
+//			timeSlider.setValue(tickCounter);
 			if(tickCounter == 3)
 			{
 				tickCounter = 0;
+				timeSlider.setValue(data.getHour()*60+data.getTenthMinute()*10+data.getMinute()+1);
 				data.tick();
 			}
 		}

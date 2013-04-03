@@ -1,5 +1,6 @@
 package Agenda;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -198,6 +199,28 @@ public class AgendaData
 		}
 	}
 	
+	public void setTime(int minute, int hour)
+	{
+		this.minute = minute;
+		this.hour = hour;
+		this.tenthMinute = 0;
+	}
+	
+	public int getHour()
+	{
+		return hour;
+	}
+	
+	public int getTenthMinute()
+	{
+		return tenthMinute;
+	}
+	
+	public int getMinute()
+	{
+		return minute;
+	}
+	
 	public String getTime()
 	{
 		return hour + ":" + tenthMinute + "" + minute;
@@ -207,7 +230,7 @@ public class AgendaData
 	{
 		minute = 0;
 		tenthMinute = 0;
-		hour = 11;
+		hour = 0;
 	}
 
 	public ArrayList<Act> getActsHappiningAtN(String time) {
@@ -267,7 +290,8 @@ public class AgendaData
 	
 	public Point getLocationExit()
 	{
-		return exit;
+		Point temp = new Point(10, 10);            //TODO
+		return temp;
 	}
 	
 	public void setLocationExit(Point p)
