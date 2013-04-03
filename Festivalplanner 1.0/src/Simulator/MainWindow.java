@@ -175,7 +175,7 @@ public class MainWindow extends JFrame
         	{
 	        	for (Stage stage : data.getStages())
 	        	{
-	        		System.out.println("this stage loc is " + stage.getPos().x + "x" + stage.getPos().y);
+	        		//System.out.println("this stage loc is " + stage.getPos().x + "x" + stage.getPos().y);
 	        		if (stage.isLocated())
 		        		{
 		        			if (stage.isClicked((int)lelpos.getX(), (int)lelpos.getY()))
@@ -265,7 +265,7 @@ public class MainWindow extends JFrame
 	        		{
 		        		if (stage.isSelected())
 		        		{
-		        			System.out.println("stage " + stage.getName() + " is being moved!");
+		        			//System.out.println("stage " + stage.getName() + " is being moved!");
 		        			stage.setPos(new Point(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t)));
 		        		}
 	        		}
@@ -368,17 +368,44 @@ public class MainWindow extends JFrame
             Color colorSlider = new Color(111,111,111);
             timeSlider.setBackground(colorSlider);
             timeSlider.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent e) {
+
+				public void stateChanged(ChangeEvent e) {
 //                     int value = timeSlider.getValue();
 //                     AI ai = new AI(value);
                 	//System.out.println((timeSlider.getValue() > (data.getHour()*60 + data.getMinute()))?timeSlider.getValue()-(data.getHour()*60 + data.getMinute()):"");
-                	
-                	int diff =(timeSlider.getValue() > (data.getHour()*60 + data.getMinute()))?timeSlider.getValue()-(data.getHour()*60 + data.getMinute()):0;
-                	while (diff>0)
+                	int diff =timeSlider.getValue()-(data.getHour()*60 + data.getTenthMinute()*10 + data.getMinute());
+                	//System.out.println(diff);
+                	while (diff>1)
                 	{
-                		tick();
+                		tick(true);
                 		diff--;
+//                		System.out.println(diff);
                 	}
+                	boolean timeSet = false;
+                	int h = 0;
+                	while (diff<-30)
+                	{
+                		boolean bcNo = false;
+                		if (data.getTenthMinute() > 3)
+                		{
+                			h= data.getHour()+1;
+                		}
+                		else
+                		{
+                			 bcNo = true;
+                			h = data.getHour();
+                		}
+                		if (bcNo)
+                		{
+                			h--;
+                		}
+                		ai.setFromData(data.getAIDump(h));
+                		timeSet = true;
+                		diff += 30;
+                	}
+                	if (timeSet)
+                		data.setTime(0, h);
+//                	System.out.println("escaped!");
 //                	data.setTime(timeSlider.getValue()%60, timeSlider.getValue()/60);
                 	
                 }
@@ -786,12 +813,10 @@ public class MainWindow extends JFrame
             placeCross.setFocusPainted(false);
             placeCross.addActionListener(new ActionListener(){
             	public void actionPerformed(ActionEvent e){
-            		System.out.println("Wat is deze shit!!!");
             			Crossroad cross = new Crossroad();
             			cross.initVisual(0, 0, 100, 120);
             			cross.setPosition(new Point(0,0));
             			data.addCrossroad(cross);
-            			System.out.println("waarom!");
             	}
             });
             
@@ -846,19 +871,24 @@ public class MainWindow extends JFrame
        
     }
 
-	public void tick() {
+	public void tick(boolean ff) {
 		if (state == 1)
 		{	
 			tickCounter ++;
+			
+//			System.out.println("tick");
 			ai.update();
 			reset = false;
 			timeLabel.setText(data.getTime());
 //			timeSlider.setValue(tickCounter);
-			if(tickCounter == 8)
+			if(tickCounter >= 8)
 			{
 				tickCounter = 0;
-				timeSlider.setValue(data.getHour()*60+data.getTenthMinute()*10+data.getMinute()+1);
+				if (!ff)
+					timeSlider.setValue(data.getHour()*60+data.getTenthMinute()*10+data.getMinute()+1);
 				data.tick();
+				if (data.hourChange())
+					data.addAIdump(ai.dump(), data.getHour());
 			}
 		}
 		if (state == 0 && !reset)

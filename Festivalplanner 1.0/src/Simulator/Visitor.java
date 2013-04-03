@@ -12,31 +12,21 @@ import java.awt.geom.Point2D;
 public class Visitor {
 
     private Point2D location;
-    private Point2D targetLocation;
     private double direction;
     private Image image;
-    private double speed;
     private ArrayList<Point> path;
 	private boolean atLocation;
 	private int stepCount;
-	private boolean visible;
-	private Point exit;
 	private int spawnCountDown;
 	private String end;
 	private String time;
     
     public Visitor() {
-        this.speed = Math.random() * 4;
         atLocation = true;
         stepCount = 0;
-        visible = true;
         path = new ArrayList<Point>();
     }
-    
-    public void setVisible(boolean s)
-    {
-    	visible = s;
-    }
+ 
     
     public void followPath()
     {
@@ -119,7 +109,7 @@ public class Visitor {
 	public void setPath(ArrayList<Point> arrayList, String endTime)
     {
     	this.path = arrayList;
-    	System.out.println("path set");
+    //	System.out.println("path set");
     	atLocation = false;
     	stepCount = 0;
     	end = endTime;
@@ -137,7 +127,6 @@ public class Visitor {
                 image = new ImageIcon("images/visitor2.png").getImage();
             break;
         }
-        visible = true;
         atLocation = true;
         stepCount = 0;
         path = new ArrayList<Point>();
@@ -147,7 +136,7 @@ public class Visitor {
         
     }
         
-    public void update(ArrayList<Visitor> otherVisitor) {
+   /* public void update(ArrayList<Visitor> otherVisitor) {
     	if (spawnCountDown > 0)
     	{
     		spawnCountDown -= 1;
@@ -159,12 +148,12 @@ public class Visitor {
 		/*if(location.getX() < 0 || location.getY() < 0 || location.getX() > 800 || location.getY() > 800)
 			direction += Math.PI;*/
 		
-		double x = targetLocation.getX() - location.getX();
-		double y = targetLocation.getY() - location.getY();
-		double angle = Math.atan2(y, x);
-		direction = angle;
-		
-		boolean collision = false;
+//		double x = targetLocation.getX() - location.getX();
+//		double y = targetLocation.getY() - location.getY();
+//		double angle = Math.atan2(y, x);
+//		direction = angle;
+//		
+//		boolean collision = false;
 		/*for(Visitor v : otherlnisitor) 
 		{
 			if(v == this)
@@ -177,9 +166,31 @@ public class Visitor {
 		{
 			location = oldLocation;
 		}*/
-    }
+    //}
     
-    public boolean isAlive()
+    public Visitor(Point loc, Double dir, ArrayList<Point> pth, boolean atLo,
+			int step, int noSpa, String end2, int img) {
+    	this.location = loc;
+        this.direction = dir;  
+        //Afbeeldingen
+        switch(img) {
+            case 0:
+                image = new ImageIcon("images/visitor1.png").getImage();
+                break;
+            case 1:
+                image = new ImageIcon("images/visitor2.png").getImage();
+            break;
+        }
+        atLocation = atLo;
+        stepCount = step;
+        path = pth;
+        spawnCountDown = noSpa;
+        time = "0:01";
+        end = end2;
+	}
+
+
+	public boolean isAlive()
     {
     	return (spawnCountDown == 0);
     }
@@ -197,8 +208,7 @@ public class Visitor {
     
     public void drawImage(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
-        if (visible)
-        	g2.drawImage(image,getTransform(),null);
+        g2.drawImage(image,getTransform(),null);
     }
 
     private AffineTransform getTransform() {
@@ -208,21 +218,21 @@ public class Visitor {
         return tx;
     }
     
-    public void setTarget(int x, int y) {
-		targetLocation = new Point2D.Double(x,y);		
-	}
-    
-    public void setTarget(Point2D point) {
-		targetLocation = point;		
-	}
-    
+
     public String getAllData()
     {
-    	String vis = location.getX() + ":" + location.getY();
-    	//vis += "*" + targetLocation.getX() + ":" + targetLocation.getY();
-    	vis += "=+=" + direction;
-    	//vis += "*" + image.
-    	//vis += "*" + speed;
+    	String vis = "@" + location.getX() + "X" + location.getY();
+    	vis += "@" + direction + "@";
+    	for (Point item : path)
+    	{
+    		vis += "!" + item.x + "X" + item.y;
+    	}
+    	vis += "@" + atLocation;
+    	vis += "@" + stepCount;
+    	vis += "@" + spawnCountDown;
+    	vis += "@" + end;
+    	//vis += "@" + image.
+    	//vis += "@" + speed;
     	return vis;
     }
 
@@ -271,9 +281,5 @@ public class Visitor {
 		
 	}
 
-	public void setExit(Point locationExit) {
-		exit = locationExit;
-		
-	}
     
 }

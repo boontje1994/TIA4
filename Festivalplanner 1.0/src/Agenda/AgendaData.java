@@ -2,6 +2,8 @@ package Agenda;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.swing.ImageIcon;
 
@@ -20,12 +22,15 @@ public class AgendaData
 	private int tenthMinute;
 	private int hour;
 	private Point exit;
+	private boolean chan;
+	private SortedMap<Integer, String> dataD;
 
 	public AgendaData()
 	{
 		dataA = new ArrayList<Act>();
 		dataS = new ArrayList<Stage>();
 		dataC = new ArrayList<Crossroad>();
+		dataD = new TreeMap<Integer, String>();
 		hour = 8;
 		minute = 00;
 	}
@@ -182,6 +187,8 @@ public class AgendaData
 	
 	public void tick()
 	{
+		if (chan)
+			chan = false;
 		minute +=1;
 		if(minute == 10)
 		{
@@ -190,6 +197,7 @@ public class AgendaData
 			if(tenthMinute == 6)
 			{
 				tenthMinute = 0;
+				chan = true;
 				hour += 1;
 				if(hour == 24)
 				{
@@ -248,7 +256,7 @@ public class AgendaData
 		ArrayList<Stage> happens = new ArrayList<Stage>();
 		for (Act item : dataA)
 		{
-			System.out.println("time start : " + Double.parseDouble(item.getStartTime().replace(":", ".")) + "\ntime end: " + Double.parseDouble(item.getEndTime().replace(":", ".")) + "\nTime now: " +  Double.parseDouble(getTime().replace(":", ".")));
+			//System.out.println("time start : " + Double.parseDouble(item.getStartTime().replace(":", ".")) + "\ntime end: " + Double.parseDouble(item.getEndTime().replace(":", ".")) + "\nTime now: " +  Double.parseDouble(getTime().replace(":", ".")));
 			if (Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getEndTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")))
 			{
 				for (Stage link : dataS)
@@ -318,6 +326,20 @@ public class AgendaData
 			haslel += act.getPopularity();
 		}
 		return haslel;
+	}
+
+	public boolean hourChange() {
+		// TODO Auto-generated method stub
+		return chan;
+	}
+
+	public void addAIdump(String dump, int hour) {
+		dataD.put(hour, dump);
+	}
+	
+	public String getAIDump(int hour)
+	{
+		return dataD.get(hour);
 	}
 	
 }

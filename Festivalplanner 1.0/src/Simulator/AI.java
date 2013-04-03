@@ -182,22 +182,52 @@ public class AI {
     
     public void setFromData(String data)
     {
-    	for (String stream : data.split("-+-"))
+    	if (data != null)
     	{
-    		String[] items = stream.split("=+=");
     		visitor.clear();
-    		if (items.length > 0)
-    		{
-    			System.out.println(items.length);
-    			System.out.println("adding visitor from string " + stream);
-    			//visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[1].split(":")[0]), Double.parseDouble(items[1].split(":")[1])),Double.parseDouble(items[2]),1));
-    		}
+	    	for (String stream : data.split("="))
+	    	{
+	    		//System.out.println(stream);
+	    		if (!stream.equals("#"))
+	    		{
+		    		String[] items = stream.split("@");
+		    		
+		    		if (items.length > 1)
+		    		{
+		    			Point loc = new Point((int)Double.parseDouble(items[1].split("X")[0]), (int)Double.parseDouble(items[1].split("X")[1]));
+		    			Double dir = Double.parseDouble(items[2]);
+		    			ArrayList<Point> pth = new ArrayList<Point>();
+		    			for (String po : items[3].split("!"))
+		    			{
+		    				//pth.add(new Point(Integer.parseInt(po.split("X")[0]), Integer.parseInt(po.split("X")[1])));
+		    			}
+		    			boolean atLo = true;//Boolean.parseBoolean(items[4]);
+		    			int step = Integer.parseInt(items[5]);
+		    			int noSpa = Integer.parseInt(items[6]);
+		    			String end = items[7];
+		    			visitor.add(new Visitor(loc, dir, pth, atLo, step, noSpa, end, randomWithRange(0, 1)));
+		    			//visitor.add(new Visitor(new Point2D.Double(Double.parseDouble(items[1].split(":")[0]), Double.parseDouble(items[1].split(":")[1])),Double.parseDouble(items[2]),1));
+		    		}
+	    		}
+	    	}
     	}
     }
     
 
 	public void reset() {
 		visitor = new ArrayList <Visitor>();
+	}
+
+	public String dump() {
+		String dump = "";
+		
+		for (Visitor item: visitor)
+    	{
+    		dump += "=" + item.getAllData();
+    	}
+		if (dump.equals(""))
+			dump = "#";
+		return dump;
 	}
 	
     

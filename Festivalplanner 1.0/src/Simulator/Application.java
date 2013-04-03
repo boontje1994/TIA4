@@ -25,7 +25,7 @@ public void init(AgendaData data) {
 }
 
 public void tick() {
- MW.tick();
+ MW.tick(false);
 }
 
 public void shutDown() {
