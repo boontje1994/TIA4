@@ -214,7 +214,8 @@ public class AgendaData
 		ArrayList<Act> happens = new ArrayList<Act>();
 		for (Act item : dataA)
 		{
-			if (Double.parseDouble(item.getStartTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")))
+			System.out.println("time start : " + Double.parseDouble(item.getStartTime().replace(":", ".")) + "\ntime end: " + Double.parseDouble(item.getEndTime().replace(":", ".")) + "\nTime now: " +  Double.parseDouble(getTime().replace(":", ".")));
+			if (Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getEndTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")))
 				happens.add(item);
 		}
 		return happens;
@@ -224,7 +225,8 @@ public class AgendaData
 		ArrayList<Stage> happens = new ArrayList<Stage>();
 		for (Act item : dataA)
 		{
-			if (Double.parseDouble(item.getStartTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")))
+			System.out.println("time start : " + Double.parseDouble(item.getStartTime().replace(":", ".")) + "\ntime end: " + Double.parseDouble(item.getEndTime().replace(":", ".")) + "\nTime now: " +  Double.parseDouble(getTime().replace(":", ".")));
+			if (Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getEndTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")))
 			{
 				for (Stage link : dataS)
 				{
@@ -273,6 +275,26 @@ public class AgendaData
 	public void setLocationExit(Point p)
 	{
 		exit = p;
+	}
+
+	public ArrayList<Act> getActsFromStageAtTime(String name, String time) {
+		ArrayList<Act> acts = new ArrayList<Act>();
+		for (Act item : getActsHappiningAtN(time))
+		{
+			if (item.getStage().equals(name))
+				acts.add(item);
+		}
+		return acts;
+	}
+	
+	public int getTotalCurrentPopularity()
+	{
+		int haslel = 0;
+		for (Act act : getActsHappiningAtN(getTime()))
+		{
+			haslel += act.getPopularity();
+		}
+		return haslel;
 	}
 	
 }

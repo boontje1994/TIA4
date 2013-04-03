@@ -847,7 +847,7 @@ public class MainWindow extends JFrame
 			ai.update();
 			reset = false;
 			timeLabel.setText(data.getTime());
-			if(tickCounter == 3)
+			if(tickCounter == 1)
 			{
 				tickCounter = 0;
 				data.tick();
@@ -863,6 +863,8 @@ public class MainWindow extends JFrame
 			data.resetTime();
 			timeLabel.setText(data.getTime());
 		}
+		if (data.getLocationExit().equals(new Point()))
+			data.setLocationExit(map.getExitBlock());
 		repaint();
 		rightcontent.updateStageBox();
 		//1/(float)time/1000)
