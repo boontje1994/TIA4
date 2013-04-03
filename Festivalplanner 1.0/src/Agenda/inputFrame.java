@@ -135,7 +135,7 @@ public class inputFrame
 						setEndTime(endTime3.getSelectedItem().toString());
 					}
 					frame.setVisible(false);
-					//gui.setInfo();
+					gui.setInfo(); //TODO
 					if (type == true)
 					{
 						gui.setRow(gui.table.getSelectedRow());

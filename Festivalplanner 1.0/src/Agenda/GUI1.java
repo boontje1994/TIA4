@@ -32,7 +32,7 @@ public class GUI1 {
 	private static JFrame frame;
 	public JTable table;
 	private String artist;
-	private int popu;
+	private String popu;
 	private String podium;
 	private String startTime;
 	private String endTime;
@@ -339,13 +339,13 @@ public class GUI1 {
 	
 	
 
-//	public void setInfo() {    //TODO
-//		artist = frame2.getArtist();
-//		popu = frame2.getPopularity();
-//		podium = frame2.getPodium();
-//		startTime = frame2.getStartTime();
-//		endTime = frame2.getEndTime();
-//	}
+	public void setInfo() {    //TODO
+		artist = frame2.getArtist();
+		popu = frame2.getPopularity();
+		podium = frame2.getPodium();
+		startTime = frame2.getStartTime();
+		endTime = frame2.getEndTime();
+	}
 
 	public int getStageNumberOfActs(int index) {
 		return index;

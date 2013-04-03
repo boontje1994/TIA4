@@ -83,7 +83,7 @@ private Point exitBlock;
        g2.fill(exit);
    }
    
-   public Point getExitBlock()
+   public Point getExitPointBlock()
    {
 	   
 	   if (this.exitBlock == null)
@@ -95,7 +95,7 @@ private Point exitBlock;
 	   }
    }
    
-   public void setExitBlock(Point p)
+   public void setExitPointBlock(Point p)
    {
 	   exitBlock = p;
    }
