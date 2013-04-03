@@ -59,7 +59,7 @@ public class AI {
     
     public Point getDestination()
     {
-    	return data.getStages().get(randomWithRange(0, data.getStages().size()-1)).getPos();
+    	return data.getStagesWithActsOnTime(data.getTimePlusMinutes(30)).get(randomWithRange(0, data.getStages().size()-1)).getPos();
     }
     public void update()
     {

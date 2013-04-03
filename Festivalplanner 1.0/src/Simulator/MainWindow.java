@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Agenda.Act;
 import Agenda.AgendaData;
 import Agenda.Stage;
 
@@ -456,6 +457,12 @@ public class MainWindow extends JFrame
             {
             	g2.draw(new Rectangle2D.Double(lelpos.getX(), lelpos.getY(), 20, 20));
             }
+            /*int a = 10;
+            for (Act item : data.getActsHappiningAtN(data.getTime()))
+            {
+            	g2.drawString("Act " + item.getArtist() + " on stage " + item.getStage() + " is now starting", 10, a);
+            	a += 15;
+            }*/
 
             //threadOne((Graphics2D)g2);
             
@@ -775,7 +782,7 @@ public class MainWindow extends JFrame
             			System.out.println("waarom!");
             	}
             });
-            
+           
             //dynamic stages
             //stageBox.addItem("lel");
             

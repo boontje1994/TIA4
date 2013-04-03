@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 import Simulator.Crossroad;
 import Simulator.MainWindow;
+import Simulator.Visitor;
 
 public class AgendaData
 {
@@ -22,7 +23,7 @@ public class AgendaData
 		dataA = new ArrayList<Act>();
 		dataS = new ArrayList<Stage>();
 		dataC = new ArrayList<Crossroad>();
-		hour = 11;
+		hour = 8;
 		minute = 00;
 	}
 
@@ -198,7 +199,41 @@ public class AgendaData
 	public void resetTime()
 	{
 		minute = 00;
-		hour = 11;
+		hour = 8;
+	}
+
+	public ArrayList<Act> getActsHappiningAtN(String time) {
+		ArrayList<Act> happens = new ArrayList<Act>();
+		for (Act item : dataA)
+		{
+			if (Double.parseDouble(item.getStartTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")))
+				happens.add(item);
+		}
+		return happens;
+	}
+
+	public ArrayList<Stage> getStagesWithActsOnTime(String time) {
+		ArrayList<Stage> happens = new ArrayList<Stage>();
+		for (Act item : dataA)
+		{
+			if (Double.parseDouble(item.getStartTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")))
+			{
+				for (Stage link : dataS)
+				{
+					if (link.getName().equals(item.getStage()))
+					{
+						happens.add(link);
+					}
+				}
+			}
+		}
+		
+		return happens;
+	}
+
+	public String getTimePlusMinutes(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
