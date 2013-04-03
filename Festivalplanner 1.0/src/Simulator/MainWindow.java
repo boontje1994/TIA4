@@ -404,8 +404,6 @@ public class MainWindow extends JFrame
     
     class Maincontent extends JPanel {
              
-        private Map map;
-        private User user;
         private Thread thread1;
         
         public Maincontent() {
@@ -413,8 +411,6 @@ public class MainWindow extends JFrame
             Color c = new Color(64,179,57);
             setBackground(c);
             
-            map = new Map();
-            user = new User();
             
         }
         
