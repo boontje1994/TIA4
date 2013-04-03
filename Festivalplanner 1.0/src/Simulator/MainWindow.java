@@ -248,11 +248,11 @@ public class MainWindow extends JFrame
         	
         }
         public void mouseMoved(MouseEvent event) {
-        	System.out.println(event.getPoint());
+        	/*System.out.println(event.getPoint());
         	System.out.println("the camera is now at " + posX + "x" + posY);
         	System.out.println("the zoom is now " + zoom);
         	System.out.println("the rotation is " + Math.toRadians(t)); //TODO there are still issues when rotated
-        	System.out.println("meaning the virtual cursor position is " + ((event.getPoint().x/zoom)-posX) + "x" + ((event.getPoint().y/zoom)-posY));
+        	System.out.println("meaning the virtual cursor position is " + ((event.getPoint().x/zoom)-posX) + "x" + ((event.getPoint().y/zoom)-posY));*/
         	leltest = true;
         	lelpos.setLocation(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t));
         	if (moving)
@@ -855,12 +855,13 @@ public class MainWindow extends JFrame
 		}
 		if (state == 0 && !reset)
 		{
+			data.setLocationExit(map.getExitBlock());
 			ai.reset();
 			reset = true;
 			data.resetTime();
 			timeLabel.setText(data.getTime());
 		}
-		if (data.getLocationExit().equals(new Point()))
+		/*if (data.getLocationExit().equals(new Point()))*/
 			data.setLocationExit(map.getExitBlock());
 		repaint();
 		rightcontent.updateStageBox();
