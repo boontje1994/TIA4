@@ -1,5 +1,9 @@
 package Simulator;
 import javax.swing.*;
+
+import com.sun.org.apache.xml.internal.utils.StopParseException;
+
+import java.sql.Time;
 import java.util.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -18,6 +22,8 @@ public class Visitor {
 	private boolean visible;
 	private Point exit;
 	private int spawnCountDown;
+	private String end;
+	private String time;
     
     public Visitor() {
         this.speed = Math.random() * 4;
@@ -78,7 +84,7 @@ public class Visitor {
     
  private boolean stepToTarget(final Point2D point) {
     	    		
-	   int speed = 10;
+	   int speed = 1;
        if (point.getX() > location.getX())
     	   location.setLocation(location.getX()+speed, location.getY());
        else if (point.getX() < location.getX())
@@ -110,10 +116,13 @@ public class Visitor {
        
 	}
 
-	public void setPath(ArrayList<Point> arrayList)
+	public void setPath(ArrayList<Point> arrayList, String endTime)
     {
     	this.path = arrayList;
+    	System.out.println("path set");
     	atLocation = false;
+    	stepCount = 0;
+    	end = endTime;
     }
     
     public Visitor(Point2D location, double direction, int imageType) {
@@ -133,6 +142,9 @@ public class Visitor {
         stepCount = 0;
         path = new ArrayList<Point>();
         spawnCountDown = 50;
+        time = "0:01";
+        end = "0:00";
+        
     }
         
     public void update(ArrayList<Visitor> otherVisitor) {
@@ -216,16 +228,26 @@ public class Visitor {
 
 	public boolean locationReached()
 	{
-		return atLocation;
+		return atLocation && (end.equals("NaN"))?true:(Double.parseDouble(time.replace(":", ".")) > Double.parseDouble(end.replace(":", ".")));
 	}
 
-	public void step() {
+	public void step(String time) {
+		this.time = time;
 		if (!atLocation)
     	{
 			if (stepCount < path.size())
 			{
 				
-				if (stepToTarget(path.get(stepCount)))
+				
+				
+				
+				boolean stept = false;
+				for (int i=0; i<10; i++)
+				{
+					stept = stepToTarget(path.get(stepCount));
+				}
+				
+				if (stept)
 					stepCount++;
 			}
     		/*for (Point2D point : path)

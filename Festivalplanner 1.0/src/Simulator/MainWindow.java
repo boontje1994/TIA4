@@ -846,7 +846,7 @@ public class MainWindow extends JFrame
 			reset = false;
 			timeLabel.setText(data.getTime());
 //			timeSlider.setValue(tickCounter);
-			if(tickCounter == 3)
+			if(tickCounter == 1)
 			{
 				tickCounter = 0;
 				timeSlider.setValue(data.getHour()*60+data.getTenthMinute()*10+data.getMinute()+1);
@@ -860,6 +860,8 @@ public class MainWindow extends JFrame
 			data.resetTime();
 			timeLabel.setText(data.getTime());
 		}
+		if (data.getLocationExit().equals(new Point()))
+			data.setLocationExit(map.getExitBlock());
 		repaint();
 		rightcontent.updateStageBox();
 		//1/(float)time/1000)

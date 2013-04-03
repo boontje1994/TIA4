@@ -64,23 +64,30 @@ public class AI {
         Random r = new Random();
         int imageType = r.nextInt(2); 
         
-        return new Visitor(data.getLocationExit(),direction,imageType);
+        return new Visitor(new Point(data.getLocationExit().x-5, data.getLocationExit().y),direction,imageType);
     }
 
     
     
-    public Point getDestination()
+    public Stage getDestination()
     {
     	ArrayList<Stage> nya = data.getStagesWithActsOnTime(data.getTimePlusMinutes(0));
     	if (nya.size() < 1)
-    		return data.getLocationExit();
+    		return null;
     	else
-    		return nya.get(randomWithRange(0, nya.size()-1)).getPos();
+    		return nya.get(randomWithRange(0, nya.size()-1));
     }
     public void update()
     {
-    	visitor.add(makeVis());
-    	System.out.println("amount of visitors is " + visitor.size());
+    	if (data.getStagesWithActsOnTime(data.getTimePlusMinutes(0)).size() > 0)
+    	{
+    		if (visitor.size() < data.getTotalCurrentPopularity()*20)
+    		{
+    			visitor.add(makeVis());
+    		}
+    	}
+    		 
+    	//System.out.println("amount of visitors is " + visitor.size());
     	Iterator it = visitor.iterator();
     	while (it.hasNext())
     	{
@@ -88,8 +95,22 @@ public class AI {
     		if (henk.getLocation().x/10 == data.getLocationExit().x/10 && henk.getLocation().y/10 == data.getLocationExit().y/10 && henk.isAlive())
     			it.remove();
         	if (henk.locationReached())// && data.getStages().size() > 0)
-        		henk.setPath(givePath(henk.getLocation(), getDestination()));
-        	henk.step();
+        	{
+        		Stage dest = getDestination();
+        		Point pos;
+        		if (dest == null)
+        		{
+        			pos = data.getLocationExit();
+        			henk.setPath(givePath(henk.getLocation(), pos), "NaN");
+        		}
+        		else
+        		{
+        			pos = dest.getPos();
+        			henk.setPath(givePath(henk.getLocation(), pos), data.getActsFromStageAtTime(dest.getName(), data.getTime()).get(0).getEndTime());
+        		}
+        			
+        	}
+        	henk.step(data.getTime());
         }
     }
     
