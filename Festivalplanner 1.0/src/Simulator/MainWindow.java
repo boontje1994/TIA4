@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Agenda.Act;
 import Agenda.AgendaData;
 import Agenda.Stage;
 
@@ -370,7 +371,14 @@ public class MainWindow extends JFrame
                 public void stateChanged(ChangeEvent e) {
 //                     int value = timeSlider.getValue();
 //                     AI ai = new AI(value);
-                	System.out.println(timeSlider.getValue());
+                	//System.out.println((timeSlider.getValue() > (data.getHour()*60 + data.getMinute()))?timeSlider.getValue()-(data.getHour()*60 + data.getMinute()):"");
+                	
+                	int diff =(timeSlider.getValue() > (data.getHour()*60 + data.getMinute()))?timeSlider.getValue()-(data.getHour()*60 + data.getMinute()):0;
+                	while (diff>0)
+                	{
+                		tick();
+                		diff--;
+                	}
 //                	data.setTime(timeSlider.getValue()%60, timeSlider.getValue()/60);
                 	
                 }
@@ -469,8 +477,6 @@ public class MainWindow extends JFrame
             {
             	g2.draw(new Rectangle2D.Double(lelpos.getX(), lelpos.getY(), 20, 20));
             }
-
-            //threadOne((Graphics2D)g2);
             
         }
         
@@ -848,7 +854,7 @@ public class MainWindow extends JFrame
 			reset = false;
 			timeLabel.setText(data.getTime());
 //			timeSlider.setValue(tickCounter);
-			if(tickCounter == 1)
+			if(tickCounter == 8)
 			{
 				tickCounter = 0;
 				timeSlider.setValue(data.getHour()*60+data.getTenthMinute()*10+data.getMinute()+1);

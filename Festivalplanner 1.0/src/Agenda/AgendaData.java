@@ -237,7 +237,7 @@ public class AgendaData
 		ArrayList<Act> happens = new ArrayList<Act>();
 		for (Act item : dataA)
 		{
-			System.out.println("time start : " + Double.parseDouble(item.getStartTime().replace(":", ".")) + "\ntime end: " + Double.parseDouble(item.getEndTime().replace(":", ".")) + "\nTime now: " +  Double.parseDouble(getTime().replace(":", ".")));
+			//System.out.println("time start : " + Double.parseDouble(item.getStartTime().replace(":", ".")) + "\ntime end: " + Double.parseDouble(item.getEndTime().replace(":", ".")) + "\nTime now: " +  Double.parseDouble(getTime().replace(":", ".")));
 			if (Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getEndTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")))
 				happens.add(item);
 		}

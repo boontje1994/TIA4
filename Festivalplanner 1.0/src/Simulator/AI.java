@@ -20,45 +20,12 @@ public class AI {
     private static ArrayList<ArrayList<Point>> paths;
     private AgendaData data;
     
-    //Maakt 100 visitors aan met een random locatie, richting en afbeelding.
     public AI(AgendaData data) {  
     	this.data = data;
-    	
-        init();
-        //waitForChange();
-    }
-    
-    
-    public void init()
-    {
-    	/*for(int i = 0; i < 100; i++) {
-    		 
-            //Point2D location = new Point2D.Double(Math.random() * 500, Math.random() * 500);
-        	Point2D location = new Point2D.Double(581, 3);
-            //TODO laat visitors spawnen bij ingang
-            double direction = Math.random() * 2 * Math.PI;
-            
-            Random r = new Random();
-            int imageType = r.nextInt(2); 
-            
-            Visitor henk = new Visitor(location,direction,imageType);
-            
-            ArrayList<Point> path = new ArrayList<Point>();
-            /*path.add(new Point(581, 3));
-            path.add(new Point(200, 3));
-            path.add(new Point(200, 250));
-            path.add(new Point(300, 250));
-            
-            henk.setPath(path);*/
-            //henk.followPath();
-            
-            //visitor.add(henk);
-        //}
     }
 
     public Visitor makeVis()
     {
-        //TODO laat visitors spawnen bij ingang
         double direction = Math.random() * 2 * Math.PI;
         
         Random r = new Random();
@@ -72,10 +39,38 @@ public class AI {
     public Stage getDestination()
     {
     	ArrayList<Stage> nya = data.getStagesWithActsOnTime(data.getTimePlusMinutes(0));
+    	ArrayList<String> nyan = new ArrayList<String>();
     	if (nya.size() < 1)
     		return null;
     	else
-    		return nya.get(randomWithRange(0, nya.size()-1));
+    	{
+    		for (Stage item : nya)
+    		{
+    			int i =0;
+    			while (i<data.getActsFromStageAtTime(item.getName(), data.getTime()).get(0).getPopularity())
+    			{
+    				nyan.add(item.getName());
+    				i++;
+    			}
+    		}
+    		Stage lol = null;
+    		if (nyan.size() > 0)//this should never EVER be less than 1
+    		{
+	        	String name = nyan.get(randomWithRange(0, nyan.size()-1));
+	        	for (Stage item :data.getStages())
+	        	{
+	        		if (item.getName().equals(name))
+	        		{
+	        			lol = item;
+	        			break;
+	        		}
+	        	}
+	        	return lol;
+    		}
+    		else
+    			return null;
+    	}
+    	
     }
     public void update()
     {
@@ -118,8 +113,6 @@ public class AI {
     	this.data = data;
         this.x = x;
         this.y = y;
-        updateVisitor();
-        setTarget();
     }
     
     public ArrayList<Point> givePath(Point loc, Point stage)
@@ -159,59 +152,9 @@ public class AI {
     		// Visitor must go to rightBottom of the field
     		Collections.sort(points, rightBot);
     	}
-
-    	// deze regel in elke if/else 
-    	// in de if else de richting aangeven
-    	//Collections.sort(points, c);
-//		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlist is given");
-		/*for (Point punt : points)
-		{
-			System.out.println("location of point: " + punt.x + "x" + punt.y);
-		}*/
     	return points;
     	
     }
-    
-    public void calculatePaths()
-    {
-    	if (!data.getStages().isEmpty())
-    	{
-	    	int amountOfStages = 5; //TODO maak dit werkend
-	    	for (Stage stage : data.getStages())
-	    	{
-	    		ArrayList<Point> path = new ArrayList<Point>();
-	    		Point stageloc = stage.getPos();
-	    		Point entrance = new Point(0,0);
-	    		Point point = entrance;
-	    		while (!point.equals(stageloc))
-	    		{
-	    			if (point.getX() != stageloc.getX())
-	    			{
-	    				point.setLocation(stageloc.getX(), point.getY());
-	    			}
-	    			else if (point.getY() != stageloc.getY());
-	    			{
-	    				point.setLocation(point.getX(), stageloc.getY());
-	    			}
-	    			path.add(point);
-	    		}
-	    		paths.add(path);
-	    	}
-    	}
-    	
-    }
-    
-    /*public void givePath()
-    {
-    	for(Visitor v : visitor) {
-    		if (v.locationReached())
-    		{
-    			System.out.println("do");
-    			v.setPath(paths.get(0));
-    			v.followPath();
-    		}
-        }
-    }*/
     
     int randomWithRange(int min, int max)
     {
@@ -225,47 +168,6 @@ public class AI {
         for(Visitor v : visitor) {
             v.drawImage(g2);
         }          
-    }
-    
-    public void addRemoveVisitors()
-    {
-    	int totalPopularity = 25; //maak manier om populariteit te meten
-    	if (totalPopularity > 20)
-    	{
-    		if (visitor.size() > 100) //make sane values
-    		{
-    			//kill visitors here
-    		}
-    		else if (visitor.size() <= 100) //make sane values
-    		{
-    			//add visitors here
-    		}
-    	}
-    	else if (totalPopularity <= 20)
-    	{
-    		if (visitor.size() > 100) //make sane values
-    		{
-    			//kill visitors here
-    		}
-    		else if (visitor.size() <= 100) //make sane values
-    		{
-    			//add visitors here
-    		}
-    	}
-    }
-    
-    public void updateVisitor() {
-        for(Visitor v : visitor) {
-            v.update(visitor);
-        }       
-    }
-    
-    public void setTarget() {
-        System.out.println(x + ""+ y);
-        
-        for(Visitor v : visitor) {
-            v.setTarget(x,y);   
-        }
     }
     
     public String getData()
@@ -292,15 +194,10 @@ public class AI {
     		}
     	}
     }
+    
 
 	public void reset() {
-		for (Visitor item: visitor)
-    	{
-    		item.setVisible(false);
-    	}
-		ArrayList<Visitor> visitor = new ArrayList <Visitor>();
-		init();
-		
+		visitor = new ArrayList <Visitor>();
 	}
 	
     
