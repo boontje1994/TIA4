@@ -1,8 +1,5 @@
 package Simulator;
 import javax.swing.*;
-
-import Agenda.AgendaData;
-
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
@@ -19,11 +16,10 @@ public class Map {
  
    int width = 15;
    int height = 15;
-   private AgendaData data;
 private Point exitBlock;
    
-   public Map(AgendaData dl) {
-	   data = dl;
+   public Map() {
+
    }
    
    public Map(int x, int y) {
@@ -78,13 +74,31 @@ private Point exitBlock;
        Color c = new Color(155,151,244);
        calculate();
        Rectangle2D exit = new Rectangle2D.Double(xTotal+70,-40,90,80);
+       if (this.exitBlock == null)
+    	   this.exitBlock = new Point();
        if (!(exit.getCenterX() == 0 && exit.getCenterY() == 0))
-    	   data.(exit.getCenterX(), exit.getCenterY());
+    	   this.exitBlock.setLocation(exit.getCenterX(), exit.getCenterY());
        //System.out.println("exit is at " + exitBlock.x + "x" + exitBlock.y);
        g2.setColor(c);
        g2.fill(exit);
    }
    
+   public Point getExitBlock()
+   {
+	   
+	   if (this.exitBlock == null)
+		   return new Point();
+	   else
+	   {
+		   System.out.println("exit is at " + this.exitBlock.x + "x" + this.exitBlock.y);
+		   return this.exitBlock;
+	   }
+   }
+   
+   public void setExitBlock(Point p)
+   {
+	   exitBlock = p;
+   }
     
    //Bomen
    public void drawTree(Graphics g) {
