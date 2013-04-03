@@ -1,6 +1,7 @@
 package Simulator;
 import Agenda.AgendaData;
 import Agenda.GUI1;
+import Agenda.NowPlaying;
 
 /**
  * Write a description of class Main here.
@@ -17,8 +18,11 @@ public class Main
 
     public static void main(String[] args) {
     	
+    	NowPlaying nowPlaying = new NowPlaying(data);
+    	GUI1 agenda = new GUI1(data, nowPlaying);
+    	//nowPlaying.setGUI(agenda);
     	
-    	GUI1 agenda = new GUI1(data);
+    	
         Application app = Application.create();
         app.init(data);
                 	
@@ -30,7 +34,8 @@ public class Main
 					e.printStackTrace();
 				}
                 app.tick();
-                //System.out.println("tick");
+                nowPlaying.updateNP();
+                
                 if (!app.isShowing())
                 {
                 	if (data.isSimVisible())

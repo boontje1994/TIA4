@@ -17,36 +17,50 @@ public class Stage
 	private int scale = 0;
 	private ImageIcon image;
 	private Point pos;
-	private int Button = 0;
+	private int button = 0;
 	private int rotateOld = 0;
 	private boolean rotated;
+	private boolean locate;
 	private boolean scaleSign = false;
 	private boolean scaleSign2 = false;
 	private int scaleMag;
 		
 	public Stage()
 	{
+		ImageIcon icon = new ImageIcon("images/MainStage.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(480, 280, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
 	}
 	
 	public Stage(String name)
 	{
 		this.name = name;
 		rect = (new Rectangle2D.Double(0,0,0,0));
+		ImageIcon icon = new ImageIcon("images/MainStage.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(480, 280, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
+		locate = false;
 	}
 	
-	public Stage(String name, double x, double y, double w, double h, ImageIcon image)
+	public Stage(String name, double x, double y, double w, double h)
 	{
 		this.setName(name);
-		this.image = image;
 		rect = (new Rectangle2D.Double(x,y,w,h));
-		
+		ImageIcon icon = new ImageIcon("images/MainStage.png");
+		Image img = icon.getImage();
+		Image newImg = img.getScaledInstance(480, 280, java.awt.Image.SCALE_SMOOTH);
+		this.image = new ImageIcon(newImg);
+		locate = false;
 	}
 	
-	public void initVisual(double x, double y, double w, double h, ImageIcon image)
+	public void initVisual(double x, double y, double w, double h)
 	{
-		this.image = image;
+		locate = true;
 		rect = (new Rectangle2D.Double(x,y,w,h));
 		rotated = true;
+		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 	}
 	
 	public AffineTransform getTransform()
@@ -87,15 +101,13 @@ public class Stage
 		
 	}
 
-
-
 	public Shape getRect() {
 		return rect;
 	}
 	
 	public boolean isLocated()
 	{
-		return (pos != null);
+		return locate;
 	}
 
 	public boolean isSelected() {
@@ -127,13 +139,12 @@ public class Stage
 
 	public Point getPos() 
 	{
-		pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 		return pos;
 	}
 
 	public void setPos(Point pos) {
-		this.pos = pos;
-		rect = (new Rectangle2D.Double(pos.getX(),pos.getY(),rect.getBounds().getWidth(),rect.getBounds().getHeight()));
+		rect = (new Rectangle2D.Double(((int)pos.getX()/10)*10,((int)pos.getY()/10)*10,(int)rect.getBounds().getWidth(),(int)rect.getBounds().getHeight()));
+		this.pos = new Point((int)rect.getBounds().getMinX(),(int)rect.getBounds().getMinY());
 	}
 
 	public int getScale() {
@@ -145,11 +156,11 @@ public class Stage
 	}
 
 	public int getButton() {
-		return Button;
+		return button;
 	}
 
 	public void setButton(int button) {
-		Button = button;
+		this.button = button;
 	}
 
 	public int getRotateOld() {

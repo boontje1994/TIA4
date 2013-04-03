@@ -3,7 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +11,6 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,7 +27,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.TableView.TableRow;
 
 public class GUI1 {
 	private static JFrame frame;
@@ -40,20 +37,20 @@ public class GUI1 {
 	private String startTime;
 	private String endTime;
 	private int index = 0;
-	private inputFrame frame2;
-	private JComboBox test;
+	private InputDialog frame2;
 	private String fileName;
 	private AgendaData data;
 	private NowPlaying nowPlaying;
 	private JPanel info;
 	private JScrollPane npScroller;
 
-	public GUI1(AgendaData data) {
-		nowPlaying = new NowPlaying(data, this);
+	public GUI1(AgendaData data, NowPlaying nowPlaying) {
+		this.nowPlaying = nowPlaying;
+		nowPlaying.setGUI(this);
 		makeFrame();
 		this.data = data;
-		frame2 = new inputFrame(data);
-		frame2.getGui(this);
+		frame2 = new InputDialog(data);
+		//frame2.getGui(this);
 		
 	}
 
@@ -249,8 +246,7 @@ public class GUI1 {
 		buttons.add(addAct);
 		addAct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame2.setType(false);
-				frame2.Visible(true);
+				frame2.setVisible(true);
 			}
 		});
 
@@ -282,8 +278,7 @@ public class GUI1 {
 		buttons.add(editAct);
 		editAct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame2.setType(true);
-				frame2.Visible(true);
+				frame2.setVisible(true);
 			}
 		});
 
@@ -344,13 +339,13 @@ public class GUI1 {
 	
 	
 
-	public void setInfo() {
+	/*public void setInfo() {
 		artist = frame2.getArtist();
 		popu = frame2.getPopularity();
 		podium = frame2.getPodium();
 		startTime = frame2.getStartTime();
 		endTime = frame2.getEndTime();
-	}
+	}*/
 
 	public int getStageNumberOfActs(int index) {
 		return index;

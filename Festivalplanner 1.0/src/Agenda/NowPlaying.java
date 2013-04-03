@@ -19,13 +19,17 @@ public class NowPlaying implements Runnable {
 	private GUI1 gui;
 
 
-	public NowPlaying(AgendaData data, GUI1 gui)
+	public NowPlaying(AgendaData data)
 	{
-		this.gui = gui;
+		//this.gui = gui;
 		this.data = data;
 		makeFrame();
-		new Thread(this).start();
+		updateNP();
 		
+	}
+	
+	public void setGUI(GUI1 gui){
+		this.gui = gui;
 	}
 	
 	public void updateNP(){

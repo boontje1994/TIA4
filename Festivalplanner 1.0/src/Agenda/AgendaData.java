@@ -1,17 +1,30 @@
 package Agenda;
+import java.awt.Point;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+
+import Simulator.Crossroad;
+import Simulator.MainWindow;
 
 public class AgendaData
 {
 	private ArrayList<Act> dataA;
 	private ArrayList<Stage> dataS;
+	private ArrayList<Crossroad> dataC;
 	private boolean agendaVisible = true;
 	private boolean simVisible = false;
+	private int minute;
+	private int tenthMinute;
+	private int hour;
 
 	public AgendaData()
 	{
 		dataA = new ArrayList<Act>();
 		dataS = new ArrayList<Stage>();
+		dataC = new ArrayList<Crossroad>();
+		hour = 11;
+		minute = 00;
 	}
 
 	public void getData()
@@ -64,6 +77,47 @@ public class AgendaData
 		return dataS;
 	}
 	
+	public ArrayList<Crossroad> getCrossroads()
+	{
+		return dataC;
+	}
+	
+	public ArrayList<Point> getCrossroadsWithin(Point pos1, Point pos2)
+	{
+		ArrayList<Point> list = new ArrayList<Point>();
+		int smallX;
+		int smallY;
+		int largeX;
+		int largeY;
+		if (pos1.x < pos2.x)
+		{
+			smallX = (int) pos1.getX();
+			largeX = (int) pos2.getX();
+		}
+		else
+		{
+			smallX = (int) pos2.getX();
+			largeX = (int) pos1.getX();
+		}
+		if (pos1.y < pos2.y)
+		{
+			smallY = (int) pos1.getY();
+			largeY = (int) pos2.getY();
+		}
+		else
+		{
+			smallY= (int) pos2.getY();
+			largeY = (int) pos1.getY();
+		}
+		
+		for (Crossroad item : dataC)
+		{
+			if (item.getPosition().x > smallX && item.getPosition().x < largeX && item.getPosition().y > smallY && item.getPosition().y < largeY)
+				list.add(new Point(item.getPosition().x + 50, item.getPosition().y + 120));
+		}
+		return list;
+	}
+	
 	public boolean doesStageExist(String stage)
 	{
 		boolean yes = false;
@@ -94,6 +148,11 @@ public class AgendaData
 		dataS.add(stage);
 	}
 	
+	public void addCrossroad(Crossroad cross)
+	{
+		dataC.add(cross);
+	}
+	
 	public void clear()
 	{
 		dataA = new ArrayList<Act>();
@@ -117,5 +176,36 @@ public class AgendaData
 		agendaVisible = b;
 		
 	}
-
+	
+	public void tick()
+	{
+		minute +=1;
+		if(minute == 10)
+		{
+			minute = 0;
+			tenthMinute +=1;
+			if(tenthMinute == 6)
+			{
+				tenthMinute = 0;
+				hour += 1;
+				if(hour == 24)
+				{
+					hour = 00;
+				}
+			}
+		}
+	}
+	
+	public String getTime()
+	{
+		return hour + ":" + tenthMinute + "" + minute;
+	}
+	
+	public void resetTime()
+	{
+		minute = 0;
+		tenthMinute = 0;
+		hour = 11;
+	}
+	
 }
