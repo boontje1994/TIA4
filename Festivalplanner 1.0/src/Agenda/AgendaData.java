@@ -292,8 +292,7 @@ public class AgendaData
 	
 	public Point getLocationExit()
 	{
-		Point temp = new Point(10, 10);            //TODO
-		return temp;
+		return exit;
 	}
 	
 	public void setLocationExit(Point p)
