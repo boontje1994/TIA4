@@ -31,7 +31,7 @@ public class AI {
     
     public void init()
     {
-    	for(int i = 0; i < 100; i++) {
+    	/*for(int i = 0; i < 100; i++) {
     		 
             //Point2D location = new Point2D.Double(Math.random() * 500, Math.random() * 500);
         	Point2D location = new Point2D.Double(581, 3);
@@ -52,9 +52,21 @@ public class AI {
             henk.setPath(path);*/
             //henk.followPath();
             
-            visitor.add(henk);
-        }
+            //visitor.add(henk);
+        //}
     }
+
+    public Visitor makeVis()
+    {
+        //TODO laat visitors spawnen bij ingang
+        double direction = Math.random() * 2 * Math.PI;
+        
+        Random r = new Random();
+        int imageType = r.nextInt(2); 
+        
+        return new Visitor(data.getLocationExit(),direction,imageType);
+    }
+
     
     
     public Point getDestination()
@@ -67,10 +79,14 @@ public class AI {
     }
     public void update()
     {
-    	
-    	for(Visitor henk : visitor)
-        {
-    		henk.setExit(data.getLocationExit());
+    	visitor.add(makeVis());
+    	System.out.println("amount of visitors is " + visitor.size());
+    	Iterator it = visitor.iterator();
+    	while (it.hasNext())
+    	{
+    		Visitor henk = (Visitor) it.next();
+    		if (henk.getLocation().x/10 == data.getLocationExit().x/10 && henk.getLocation().y/10 == data.getLocationExit().y/10 && henk.isAlive())
+    			it.remove();
         	if (henk.locationReached())// && data.getStages().size() > 0)
         		henk.setPath(givePath(henk.getLocation(), getDestination()));
         	henk.step();
@@ -89,8 +105,10 @@ public class AI {
     {
     	ArrayList<Point> points = data.getCrossroadsWithin(loc, stage);
     	points.add(loc);
-    	points.add(new Point(stage.x + (randomWithRange(0, 48)*10), stage.y + 270 + randomWithRange(0, 2)*10));
-    	
+    	if (!stage.equals(data.getLocationExit()))
+    		points.add(new Point(stage.x + (randomWithRange(0, 48)*10), stage.y + 270 + randomWithRange(0, 2)*10));
+    	else
+    		points.add(stage);
     	leftTopComparator leftTop = new leftTopComparator();
     	rightTopComparator rightTop = new rightTopComparator();
     	leftBottomComparator leftBot = new leftBottomComparator();
