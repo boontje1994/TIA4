@@ -393,6 +393,8 @@ public class MainWindow extends JFrame
     		});
             
             timeLabel = new JLabel();
+            timeLabel.setForeground(Color.white);
+            timeLabel.setFont(new Font("Serif", Font.PLAIN, 14));
             leftMenuPanel.add(timeLabel);
             
             
