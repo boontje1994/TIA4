@@ -17,6 +17,7 @@ public class Visitor {
 	private int stepCount;
 	private boolean visible;
 	private Point exit;
+	private int spawnCountDown;
     
     public Visitor() {
         this.speed = Math.random() * 4;
@@ -131,9 +132,14 @@ public class Visitor {
         atLocation = true;
         stepCount = 0;
         path = new ArrayList<Point>();
+        spawnCountDown = 50;
     }
         
     public void update(ArrayList<Visitor> otherVisitor) {
+    	if (spawnCountDown > 0)
+    	{
+    		spawnCountDown -= 1;
+    	}
         Point2D oldLocation = location;
 		location = new Point2D.Double((int)location.getX() + (int)(speed * Math.cos(direction)), 
 									  (int)location.getY() + (int)(speed * Math.sin(direction)));
@@ -147,11 +153,6 @@ public class Visitor {
 		direction = angle;
 		
 		boolean collision = false;
-	
-		if (location.equals(exit))
-		{
-			System.out.println("ik ben er!");
-		}
 		/*for(Visitor v : otherlnisitor) 
 		{
 			if(v == this)
@@ -164,6 +165,11 @@ public class Visitor {
 		{
 			location = oldLocation;
 		}*/
+    }
+    
+    public boolean isAlive()
+    {
+    	return (spawnCountDown == 0);
     }
     
     private boolean collidesWith(Visitor b) {
@@ -228,6 +234,10 @@ public class Visitor {
     		}*/
 			else
 				atLocation = true;
+    	}
+		if (spawnCountDown > 0)
+    	{
+    		spawnCountDown -= 1;
     	}
 		
 	}
