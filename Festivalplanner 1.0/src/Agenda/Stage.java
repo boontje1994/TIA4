@@ -1,4 +1,5 @@
 package Agenda;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -20,6 +21,9 @@ public class Stage
 	private int rotateOld = 0;
 	private boolean rotated;
 	private boolean locate;
+	private boolean scaleSign = false;
+	private boolean scaleSign2 = false;
+	private int scaleMag;
 		
 	public Stage()
 	{
@@ -63,22 +67,33 @@ public class Stage
 	{
 		AffineTransform tx = new AffineTransform();
         tx.translate(getRect().getBounds().getMinX(),getRect().getBounds().getMinY());
-        tx.rotate(rotate*(-5*(Math.PI/180)),0.0,0.0);
+//        tx.rotate(rotate*(-5*(Math.PI/180)),0.0,0.0);
+        tx.rotate(Math.toRadians(rotate),rect.getBounds().getWidth()/2,rect.getBounds().getHeight()/2);
 		return tx;
 	}
 	
 	
 	public void drawStage(Graphics2D g2)
 	{
+		
+		if(scaleSign)
+		g2.setColor(Color.ORANGE);
+		else
+		g2.setColor(Color.RED);
 		g2.drawImage(image.getImage(), getTransform(), null);
 
 		if(selected == true)
 		{
 			if (rotated)
 			{
-				rect = getTransform().createTransformedShape(rect);
+				getTransform();
+//				rect = getTransform().createTransformedShape(rect);
+				AffineTransform tx = new AffineTransform();
+				tx.rotate(Math.toRadians(rotate),rect.getBounds().getMinX(),rect.getBounds().getMinY());
+				rect = tx.createTransformedShape(rect);
 				rotated = false;
 			}
+
 			
 			g2.draw(rect);
 		}
@@ -106,6 +121,7 @@ public class Stage
 	public void setRotate(int rotate)
 	{
 		this.rotate = rotate;
+//        rotated = true;
 	}
 	
 	public int getRotate()
@@ -157,6 +173,33 @@ public class Stage
 	public boolean isClicked(int x, int y)
 	{
 		return (rect.contains(x, y));
+	}
+	
+	public void setScaleSign(boolean set)
+	{
+		scaleSign = set;
+		scaleSign2 = true;
+	}
+	
+	public boolean getScaleSign()
+	{
+		return scaleSign;
+	}
+
+	public int getScaleMag() {
+		return scaleMag;
+	}
+
+	public void setScaleMag(int scaleMag) {
+		this.scaleMag = scaleMag;
+	}
+
+	public boolean isScaleSign2() {
+		return scaleSign2;
+	}
+
+	public void setScaleSign2(boolean scaleSign2) {
+		this.scaleSign2 = scaleSign2;
 	}
 	
 	

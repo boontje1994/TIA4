@@ -180,6 +180,14 @@ public class MainWindow extends JFrame
 			        		{
 			        			moving = true;
 			        			stage.setSelected(true);
+			        			if(event.getButton() == event.BUTTON3)
+			        			{
+			        				stage.setScaleSign(true);
+			        			}
+			        			if(event.getButton() == event.BUTTON1)
+			        			{
+			        				stage.setScaleSign(false);
+			        			}
 			        		}
 	        			}
 	        	}
@@ -285,6 +293,7 @@ public class MainWindow extends JFrame
 		        		if (stage.isSelected())
 		        		{
 		        			stage.setRotate(stage.getRotate() + event.getWheelRotation()*6);
+//		        			stage.setScaleMag(event.getWheelRotation());
 		        		}
 	        		}
 	        	}
