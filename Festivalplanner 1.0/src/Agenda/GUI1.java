@@ -37,7 +37,7 @@ public class GUI1 {
 	private String startTime;
 	private String endTime;
 	private int index = 0;
-	private InputDialog frame2;
+	private inputFrame frame2;
 	private String fileName;
 	private AgendaData data;
 	private NowPlaying nowPlaying;
@@ -49,8 +49,8 @@ public class GUI1 {
 		nowPlaying.setGUI(this);
 		makeFrame();
 		this.data = data;
-		frame2 = new InputDialog(data);
-		//frame2.getGui(this);
+		frame2 = new inputFrame(data);
+		frame2.getGui(this);
 		
 	}
 

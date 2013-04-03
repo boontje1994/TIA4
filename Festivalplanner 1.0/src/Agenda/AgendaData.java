@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 import Simulator.Crossroad;
 import Simulator.MainWindow;
+import Simulator.Visitor;
 
 public class AgendaData
 {
@@ -17,13 +18,14 @@ public class AgendaData
 	private int minute;
 	private int tenthMinute;
 	private int hour;
+	private Point exit;
 
 	public AgendaData()
 	{
 		dataA = new ArrayList<Act>();
 		dataS = new ArrayList<Stage>();
 		dataC = new ArrayList<Crossroad>();
-		hour = 11;
+		hour = 8;
 		minute = 00;
 	}
 
@@ -206,6 +208,71 @@ public class AgendaData
 		minute = 0;
 		tenthMinute = 0;
 		hour = 11;
+	}
+
+	public ArrayList<Act> getActsHappiningAtN(String time) {
+		ArrayList<Act> happens = new ArrayList<Act>();
+		for (Act item : dataA)
+		{
+			if (Double.parseDouble(item.getStartTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")))
+				happens.add(item);
+		}
+		return happens;
+	}
+
+	public ArrayList<Stage> getStagesWithActsOnTime(String time) {
+		ArrayList<Stage> happens = new ArrayList<Stage>();
+		for (Act item : dataA)
+		{
+			if (Double.parseDouble(item.getStartTime().replace(":", ".")) >= Double.parseDouble(getTime().replace(":", ".")) && Double.parseDouble(item.getStartTime().replace(":", ".")) <= Double.parseDouble(getTime().replace(":", ".")))
+			{
+				for (Stage link : dataS)
+				{
+					if (link.getName().equals(item.getStage()))
+					{
+						happens.add(link);
+					}
+				}
+			}
+		}
+		
+		return happens;
+	}
+
+	public String getTimePlusMinutes(int i) {
+		int min = minute;
+		int hr = hour;
+		int tentmin = tenthMinute;
+		minute +=i;
+		if(minute == 10)
+		{
+			minute = 0;
+			tenthMinute +=1;
+			if(tenthMinute == 6)
+			{
+				tenthMinute = 0;
+				hour += 1;
+				if(hour == 24)
+				{
+					hour = 00;
+				}
+			}
+		}
+		String nya =  hour + ":" + tenthMinute + "" + minute ;
+		minute = min;
+		hour = hr;
+		tenthMinute = tentmin;
+		return nya;
+	}
+	
+	public Point getLocationExit()
+	{
+		return exit;
+	}
+	
+	public void setLocationExit(Point p)
+	{
+		exit = p;
 	}
 	
 }

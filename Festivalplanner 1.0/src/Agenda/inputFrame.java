@@ -135,7 +135,7 @@ public class inputFrame
 						setEndTime(endTime3.getSelectedItem().toString());
 					}
 					frame.setVisible(false);
-					gui.setInfo();
+					//gui.setInfo();
 					if (type == true)
 					{
 						gui.setRow(gui.table.getSelectedRow());
@@ -396,7 +396,7 @@ public class inputFrame
 
 	public void setVisible(boolean a)
 	{
-		frame2.setVisible(a);
+		frame.setVisible(a);
 	}
 
 }

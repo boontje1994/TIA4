@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Agenda.Act;
 import Agenda.AgendaData;
 import Agenda.Stage;
 
@@ -246,11 +247,11 @@ public class MainWindow extends JFrame
         	
         }
         public void mouseMoved(MouseEvent event) {
-        	System.out.println(event.getPoint());
-        	System.out.println("the camera is now at " + posX + "x" + posY);
-        	System.out.println("the zoom is now " + zoom);
-        	System.out.println("the rotation is " + Math.toRadians(t)); //TODO there are still issues when rotated
-        	System.out.println("meaning the virtual cursor position is " + ((event.getPoint().x/zoom)-posX) + "x" + ((event.getPoint().y/zoom)-posY));
+//        	System.out.println(event.getPoint());
+//        	System.out.println("the camera is now at " + posX + "x" + posY);
+//        	System.out.println("the zoom is now " + zoom);
+//        	System.out.println("the rotation is " + Math.toRadians(t)); //TODO there are still issues when rotated
+//        	System.out.println("meaning the virtual cursor position is " + ((event.getPoint().x/zoom)-posX) + "x" + ((event.getPoint().y/zoom)-posY));
         	leltest = true;
         	lelpos.setLocation(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t));
         	if (moving)
@@ -466,6 +467,12 @@ public class MainWindow extends JFrame
             {
             	g2.draw(new Rectangle2D.Double(lelpos.getX(), lelpos.getY(), 20, 20));
             }
+            /*int a = 10;
+            for (Act item : data.getActsHappiningAtN(data.getTime()))
+            {
+            	g2.drawString("Act " + item.getArtist() + " on stage " + item.getStage() + " is now starting", 10, a);
+            	a += 15;
+            }*/
 
             //threadOne((Graphics2D)g2);
             
@@ -785,7 +792,7 @@ public class MainWindow extends JFrame
             			System.out.println("waarom!");
             	}
             });
-            
+           
             //dynamic stages
             //stageBox.addItem("lel");
             
@@ -852,6 +859,9 @@ public class MainWindow extends JFrame
 		}
 		if (state == 0 && !reset)
 		{
+			Point p = map.getExitBlock();
+			System.out.println("exit is at " + p.x + "x" + p.y);
+			data.setLocationExit(p);
 			ai.reset();
 			reset = true;
 			data.resetTime();
