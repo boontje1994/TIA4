@@ -82,23 +82,6 @@ private Point exitBlock;
        g2.setColor(c);
        g2.fill(exit);
    }
-   
-   public Point getExitPointBlock()
-   {
-	   
-	   if (this.exitBlock == null)
-		   return new Point();
-	   else
-	   {
-		   System.out.println("exit is at " + this.exitBlock.x + "x" + this.exitBlock.y);
-		   return this.exitBlock;
-	   }
-   }
-   
-   public void setExitPointBlock(Point p)
-   {
-	   exitBlock = p;
-   }
     
    //Bomen
    public void drawTree(Graphics g) {
