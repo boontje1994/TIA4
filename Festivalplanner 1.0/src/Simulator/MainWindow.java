@@ -48,6 +48,7 @@ public class MainWindow extends JFrame
 	private int state;
 	private boolean reset;
 	public JLabel	timeLabel;
+	private int tickCounter;
     
     //Velden
     private static JTextField xLength;
@@ -238,11 +239,11 @@ public class MainWindow extends JFrame
         	
         }
         public void mouseMoved(MouseEvent event) {
-        	System.out.println(event.getPoint());
-        	System.out.println("the camera is now at " + posX + "x" + posY);
-        	System.out.println("the zoom is now " + zoom);
-        	System.out.println("the rotation is " + Math.toRadians(t)); //TODO there are still issues when rotated
-        	System.out.println("meaning the virtual cursor position is " + ((event.getPoint().x/zoom)-posX) + "x" + ((event.getPoint().y/zoom)-posY));
+//        	System.out.println(event.getPoint());
+//        	System.out.println("the camera is now at " + posX + "x" + posY);
+//        	System.out.println("the zoom is now " + zoom);
+//        	System.out.println("the rotation is " + Math.toRadians(t)); //TODO there are still issues when rotated
+//        	System.out.println("meaning the virtual cursor position is " + ((event.getPoint().x/zoom)-posX) + "x" + ((event.getPoint().y/zoom)-posY));
         	leltest = true;
         	lelpos.setLocation(((int)((event.getPoint().x)/zoom)-posX+ t), (int) (((event.getPoint().y)/zoom)-posY+ t));
         	if (moving)
@@ -837,13 +838,21 @@ public class MainWindow extends JFrame
 	public void tick() {
 		if (state == 1)
 		{
+			tickCounter ++;
 			ai.update();
 			reset = false;
 			timeLabel.setText(data.getTime());
-			data.tick();
+			if(tickCounter == 3)
+			{
+				tickCounter = 0;
+				data.tick();
+			}
 		}
 		if (state == 0 && !reset)
 		{
+			Point p = map.getExitBlock();
+			System.out.println("exit is at " + p.x + "x" + p.y);
+			data.setLocationExit(p);
 			ai.reset();
 			reset = true;
 			data.resetTime();

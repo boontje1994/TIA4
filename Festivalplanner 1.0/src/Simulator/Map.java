@@ -1,8 +1,12 @@
 package Simulator;
 import javax.swing.*;
+
+import Agenda.AgendaData;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.*;
 
 public class Map {
@@ -15,9 +19,11 @@ public class Map {
  
    int width = 15;
    int height = 15;
+   private AgendaData data;
+private Point exitBlock;
    
-   public Map() {
-       
+   public Map(AgendaData dl) {
+	   data = dl;
    }
    
    public Map(int x, int y) {
@@ -71,10 +77,14 @@ public class Map {
        Graphics2D g2 = (Graphics2D)g;
        Color c = new Color(155,151,244);
        calculate();
-       Rectangle2D rectangle = new Rectangle2D.Double(xTotal+70,-40,90,80);
+       Rectangle2D exit = new Rectangle2D.Double(xTotal+70,-40,90,80);
+       if (!(exit.getCenterX() == 0 && exit.getCenterY() == 0))
+    	   data.(exit.getCenterX(), exit.getCenterY());
+       //System.out.println("exit is at " + exitBlock.x + "x" + exitBlock.y);
        g2.setColor(c);
-       g2.fill(rectangle);
+       g2.fill(exit);
    }
+   
     
    //Bomen
    public void drawTree(Graphics g) {

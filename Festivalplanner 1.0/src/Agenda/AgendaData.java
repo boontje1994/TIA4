@@ -16,7 +16,9 @@ public class AgendaData
 	private boolean agendaVisible = true;
 	private boolean simVisible = false;
 	private int minute;
+	private int tenthMinute;
 	private int hour;
+	private Point exit;
 
 	public AgendaData()
 	{
@@ -180,26 +182,32 @@ public class AgendaData
 	public void tick()
 	{
 		minute +=1;
-		if(minute == 60)
+		if(minute == 10)
 		{
-			minute = 00;
-			hour += 1;
-			if(hour == 24)
+			minute = 0;
+			tenthMinute +=1;
+			if(tenthMinute == 6)
 			{
-				hour = 00;
+				tenthMinute = 0;
+				hour += 1;
+				if(hour == 24)
+				{
+					hour = 00;
+				}
 			}
 		}
 	}
 	
 	public String getTime()
 	{
-		return hour + ":" + minute;
+		return hour + ":" + tenthMinute + "" + minute;
 	}
 	
 	public void resetTime()
 	{
-		minute = 00;
-		hour = 8;
+		minute = 0;
+		tenthMinute = 0;
+		hour = 11;
 	}
 
 	public ArrayList<Act> getActsHappiningAtN(String time) {
@@ -232,8 +240,39 @@ public class AgendaData
 	}
 
 	public String getTimePlusMinutes(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		int min = minute;
+		int hr = hour;
+		int tentmin = tenthMinute;
+		minute +=i;
+		if(minute == 10)
+		{
+			minute = 0;
+			tenthMinute +=1;
+			if(tenthMinute == 6)
+			{
+				tenthMinute = 0;
+				hour += 1;
+				if(hour == 24)
+				{
+					hour = 00;
+				}
+			}
+		}
+		String nya =  hour + ":" + tenthMinute + "" + minute ;
+		minute = min;
+		hour = hr;
+		tenthMinute = tentmin;
+		return nya;
+	}
+	
+	public Point getLocationExit()
+	{
+		return exit;
+	}
+	
+	public void setLocationExit(Point p)
+	{
+		exit = p;
 	}
 	
 }

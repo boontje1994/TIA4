@@ -59,14 +59,19 @@ public class AI {
     
     public Point getDestination()
     {
-    	return data.getStagesWithActsOnTime(data.getTimePlusMinutes(30)).get(randomWithRange(0, data.getStages().size()-1)).getPos();
+    	ArrayList<Stage> nya = data.getStagesWithActsOnTime(data.getTimePlusMinutes(0));
+    	if (nya.size() < 1)
+    		return data.getLocationExit();
+    	else
+    		return nya.get(randomWithRange(0, nya.size()-1)).getPos();
     }
     public void update()
     {
     	
     	for(Visitor henk : visitor)
         {
-        	if (henk.locationReached() && data.getStages().size() > 0)
+    		henk.setExit(data.getLocationExit());
+        	if (henk.locationReached())// && data.getStages().size() > 0)
         		henk.setPath(givePath(henk.getLocation(), getDestination()));
         	henk.step();
         }
@@ -119,11 +124,11 @@ public class AI {
     	// deze regel in elke if/else 
     	// in de if else de richting aangeven
     	//Collections.sort(points, c);
-		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlist is given");
-		for (Point punt : points)
+//		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlist is given");
+		/*for (Point punt : points)
 		{
 			System.out.println("location of point: " + punt.x + "x" + punt.y);
-		}
+		}*/
     	return points;
     	
     }

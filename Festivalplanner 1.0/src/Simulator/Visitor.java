@@ -16,6 +16,7 @@ public class Visitor {
 	private boolean atLocation;
 	private int stepCount;
 	private boolean visible;
+	private Point exit;
     
     public Visitor() {
         this.speed = Math.random() * 4;
@@ -147,7 +148,11 @@ public class Visitor {
 		
 		boolean collision = false;
 	
-		/*for(Visitor v : otherVisitor) 
+		if (location.equals(exit))
+		{
+			System.out.println("ik ben er!");
+		}
+		/*for(Visitor v : otherlnisitor) 
 		{
 			if(v == this)
 				continue;
@@ -231,6 +236,11 @@ public class Visitor {
 		Point henk = new Point();
 		henk.setLocation(location);
 		return henk;
+		
+	}
+
+	public void setExit(Point locationExit) {
+		exit = locationExit;
 		
 	}
     
