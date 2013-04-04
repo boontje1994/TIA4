@@ -377,7 +377,8 @@ public class MainWindow extends JFrame
                 	//System.out.println(diff);
                 	while (diff>1)
                 	{
-                		tick(true);
+                		for (int i=0; i<8;i++)
+                			tick(true);
                 		diff--;
 //                		System.out.println(diff);
                 	}
